@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<PLAYER>
+	<CFG>
+		<SHIP>sm</SHIP>
+		<PRIMARY_WEP>shoot2</PRIMARY_WEP>
+		<SECOND_WEP/>
+		<SPEC_WEP/>
+		<ENERGY>100</ENERGY>
+		<SHIELD>100</SHIELD>
+		<TOTAL_SCORE>0</TOTAL_SCORE>
+	    <MONEY>0</MONEY>
+	</CFG>
+	<GAME_POS>
+		<EPIZODE id="1">
+		    <LEVEL id="1">
+		        <SCORE>0</SCORE>
+		    </LEVEL>
+		</EPIZODE>
+	</GAME_POS>
+</PLAYER>

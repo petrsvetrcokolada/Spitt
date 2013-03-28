@@ -1,0 +1,9 @@
+<resources>
+
+    <string name="app_name">Spatter2</string>
+    <string name="hello_world">Hello world!</string>
+    <string name="menu_settings">Settings</string>
+    <string name="title_activity_main">Spatter</string>
+    <string name="menu_title">main menu</string>
+
+</resources>

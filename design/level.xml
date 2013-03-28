@@ -1,0 +1,12 @@
+<Level>
+<Length>10</Length> // pocet segmentu ???
+<Speed>0.1f</Speed>
+<Graphics>
+</Graphics>
+<BackgroundLayer Background="">
+</BackgroundLayer>
+<EnemyLayer>
+  <Emeny StartTime ="0" X="0.4" Trejectory="LineY"></Enemy>
+  <Emeny StartTime ="0" X="0.8" Trejectory="LineY"></Enemy>
+</EnemyLayer>
+</Level>
