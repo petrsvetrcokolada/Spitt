@@ -49,19 +49,19 @@ public class SpatterGame extends Activity {
     private float _lasty;
     public boolean onTouchEvent(MotionEvent event)
     {
-     	float x = event.getX();
+    	float x = event.getX();
     	float y = event.getY();
     	boolean nomove = false;
     	
     	float rozdilx=Math.abs(_lastx - x);
     	
     	//LogFile.Write("Rozdil:"+rozdilx);
-    	if (_lastx > 0 && rozdilx <= 1.0f)
+    	if (_lastx > 0 && rozdilx <= 4)
     		nomove = true;
     	    	
-    	float fl_x = (float)x/(float)SpatterEngine.display.getWidth(); // /SpatterEngine.scaleX;
-    	float fl_y = SpatterEngine.screen_ratio * (1-(float)y/(float)SpatterEngine.display.getHeight()); // /SpatterEngine.scaleY;    	
-    	//
+    	float fl_x = (float)x/(float)SpatterEngine.display.getWidth()/SpatterEngine.scaleX;
+    	float fl_y = SpatterEngine.screen_ratio * (1-(float)y/(float)SpatterEngine.display.getHeight())/SpatterEngine.scaleY;    	
+    	//int playableArea = SpatterEngine.display.getHeight()-height;
     	Float fl1 = new Float(fl_x);
     	Float fl2 = new Float(fl_y);
     	Float fl_playerx = new Float(SpatterEngine.Player.X+SpatterEngine.scaleX);

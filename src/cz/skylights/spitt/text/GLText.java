@@ -14,47 +14,17 @@ public class GLText {
 	   private Context _context;
 	   private ArrayList _text;
 	   // znaky ... zatim neeresim diakritiku
-	   public static String CharString = " !\"#$%&'()*+,-. 0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[/]^_`abcdefghijklmnopqrstuvwxyz{|}~";
-	   public static float[] CharWidths = new float[256];
+	   public static String CharString = " !\"#$%&'()*+,-. 0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[/]^_┤abcdefghijklmnopqrstuvwxyz{|}~ ýÜŔ°×řßÝÚ˙¨╠�?╚ÄŢ┴�?╔┌�?˛Ď´¤�?Źě";
 
 	   
 	   public void BuildCharacters(String text, float X, float Y)
 	   {
 		   _text = new ArrayList();
 		   
-		   for (int i = 0; i < 256; i++)
-		   {
-		     CharWidths[i]=0.5f;	   
-		   }
-		   
-		   
-		   CharWidths[1] = 0.25f;
-		   CharWidths[7] = 0.25f;
-		   CharWidths[8] = 0.25f;	
-		   CharWidths[9] = 0.25f;
-		   CharWidths[12] = 0.25f;
-		   CharWidths[14] = 0.25f;
-		   CharWidths[26] = 0.25f;
-		   CharWidths[27] = 0.25f;
-		   CharWidths[41] = 0.25f;
-		   CharWidths[59] = 0.25f;
-		   CharWidths[61] = 0.25f;
-		   CharWidths[64] = 0.25f;
-		   CharWidths[73] = 0.25f;
-		   CharWidths[74] = 0.25f;
-		   CharWidths[76] = 0.25f;
-		   CharWidths[84] = 0.25f; //t
-		   CharWidths[91] = 0.25f;
-		   CharWidths[92] = 0.25f;
-		   CharWidths[93] = 0.25f;
-		   
-
-		   float totalx=0.0f;
 		   for(int i = 0; i < text.length();i++)
 		   {
 			   GLCharacter chr = new GLCharacter(text.charAt(i));
-			   chr.X = X+totalx;
-			   totalx+=CharWidths[chr.Index];
+			   chr.X = 0.25f+0.5f*i;
 			   chr.Y = Y;
 			   _text.add(chr);			   
 		   }

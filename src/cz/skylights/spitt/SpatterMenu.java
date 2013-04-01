@@ -1,6 +1,7 @@
 package cz.skylights.spitt;
 
 import cz.skylights.spitt.R;
+import cz.skylights.spitt.activity.SpittSettingsActivity;
 
 import android.app.Activity;
 import android.content.Intent;
@@ -37,6 +38,17 @@ public class SpatterMenu extends Activity {
 				// run game		
 				Intent game = new Intent(getApplicationContext(), SpatterGame.class);
 				SpatterMenu.this.startActivity(game);
+			}
+		});
+        
+        ImageButton settings = (ImageButton)findViewById(R.id.btnSettings);
+        settings.setOnClickListener(new OnClickListener() {			
+			public void onClick(View v) {
+				// run game		
+				Intent sett = new Intent(getApplicationContext(), SpittSettingsActivity.class);
+				SpatterMenu.this.startActivity(sett);
+				
+			
 			}
 		});
         

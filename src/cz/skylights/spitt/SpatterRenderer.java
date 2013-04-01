@@ -160,7 +160,7 @@ public class SpatterRenderer implements Renderer {
 		_background3.loadTexture(gl, SpatterEngine.space_stars2, SpatterEngine.context);
 		_player.loadTexture(gl, SpatterEngine.PLAYER_SHIP, SpatterEngine.PLAYER_BULLET, SpatterEngine.context);
 		_text.loadTexture(gl, SpatterEngine.text_characters, SpatterEngine.context);
-		_text.BuildCharacters("!()LivesJ", 0.25f, 0.95f);
+		_text.BuildCharacters("Lives", 0.25f, 0.95f);
 		// nastaveni parametru animace
 		_animation.loadTexture(gl, SpatterEngine.explose_animation, SpatterEngine.context);
 		_animation.setFramesParameter(16, 128, 128);

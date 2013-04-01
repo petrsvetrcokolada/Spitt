@@ -34,16 +34,14 @@ public class GLCharacter extends GameObject {
 	   
 	   private float chwidth = 1/(float)16;
 	   private float chheight = 1/(float)16;
-	   public int Index=-1;
+	   private int _index=-1;
 	   public float X;
 	   public float Y;
-	   
 	  
 	   // Constructor - Setup the data-array buffers
 	   public GLCharacter(char chr) {
 		  _char = chr;
-		  //chwidth = width;
-		  Index = GLText.CharString.indexOf(chr);
+		  _index = GLText.CharString.indexOf(chr);
 		  
 	      // Setup vertex-array buffer. Vertices in float. A float has 4 bytes
 	      ByteBuffer vbb = ByteBuffer.allocateDirect(vertices.length * 4);
@@ -79,8 +77,8 @@ public class GLCharacter extends GameObject {
 	      
 	      //int rows = _index/16;
 	      //int col = _index-rows*16;
-	      int rows = (Index/16);
-	      int col = Index-rows*16;
+	      int rows = (_index/16);
+	      int col = _index-rows*16;
 	      	     	      	     		  		 
 	      gl.glBindTexture(GL10.GL_TEXTURE_2D, sprite[0]);
 	      gl.glTranslatef(chwidth*(float)col,chheight*(float)rows, 0.0f);
@@ -103,5 +101,6 @@ public class GLCharacter extends GameObject {
 	      gl.glPopMatrix();
 	      gl.glLoadIdentity();
 	   }
+	
 
 }

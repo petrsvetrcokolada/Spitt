@@ -17,12 +17,14 @@
             android:label="@string/title_activity_main" android:screenOrientation="unspecified">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
+
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
         <activity android:name="SpatterMenu" android:screenOrientation="portrait"></activity>
         <service android:name="SpatterSound"></service>
         <activity android:name="SpatterGame" android:screenOrientation="portrait"></activity>
+        <activity android:name="cz.skylights.spitt.activity.SpittSettingsActivity" android:screenOrientation="portrait"></activity>
     </application>
 
 </manifest>
