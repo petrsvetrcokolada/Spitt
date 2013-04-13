@@ -29,9 +29,10 @@ public class SpatterRenderer implements Renderer {
 	TextureManager _textures = new TextureManager();
 	protected ParticleEmitter _particles;
 	protected ParticleEmitter _particlesx;
+	protected ExplosionEmitter _explosions;
 	// Layer - Engine objekty - live prouzek
 	protected Shape _shape;
-	protected SpriteAnimation _animation = new SpriteAnimation();
+	protected SpriteAnimation _animation = new SpriteAnimation(true);
 	private Sprite[] _sprite;
 	
 	private Player _player = new Player();
@@ -49,9 +50,11 @@ public class SpatterRenderer implements Renderer {
 		_enemyLayer = new EnemyLayer();
 		_textures.AddTexture(SpatterEngine.particle);
 		_textures.AddTexture(SpatterEngine.star);
+		_textures.AddTexture(SpatterEngine.explose_animation);
 		
 		_particles = new ParticleEmitter(40, new ParticleShapeCreator());
 		_particlesx = new ParticleEmitter(60, new ParticleCreator(_textures));
+		_explosions = new ExplosionEmitter(_textures);
 		_text = new GLText();
 		/*
 		_shape = new Shape();
@@ -60,7 +63,10 @@ public class SpatterRenderer implements Renderer {
 		_shape.Width = 0.5f;
 		_shape.Height = 0.5f;
 		*/
-		_shape = new Shape();
+		_shape = new Shape(0.35f,0.02f);
+		_shape.X = 0.015f;
+		_shape.Y = 0.015f;
+		
 		_sprite = new Sprite[3];
 		_sprite[0] = new Sprite();
 		_sprite[1] = new Sprite();
@@ -121,14 +127,12 @@ public class SpatterRenderer implements Renderer {
 			_sprite[1].draw(gl);
 		if (SpatterEngine.lives >=1 )
 			_sprite[2].draw(gl);
-	
-
-		gl.glDisable(GL10.GL_BLEND);
-		gl.glShadeModel(GL10.GL_SMOOTH);	
 		
 		// FOREGROUND LAYER
-		
 		_shape.draw(gl); // live rectangle	
+		gl.glDisable(GL10.GL_BLEND);
+		gl.glShadeModel(GL10.GL_SMOOTH);	
+				
 		/// COLLISION
 		CheckCollision();
 		
@@ -160,17 +164,18 @@ public class SpatterRenderer implements Renderer {
 		_background3.loadTexture(gl, SpatterEngine.space_stars2, SpatterEngine.context);
 		_player.loadTexture(gl, SpatterEngine.PLAYER_SHIP, SpatterEngine.PLAYER_BULLET, SpatterEngine.context);
 		_text.loadTexture(gl, SpatterEngine.text_characters, SpatterEngine.context);
-		_text.BuildCharacters("Lives", 0.25f, 0.95f);
-		// nastaveni parametru animace
-		_animation.loadTexture(gl, SpatterEngine.explose_animation, SpatterEngine.context);
-		_animation.setFramesParameter(16, 128, 128);
-		_animation.X = 0.2f;
-		_animation.Y = 0.2f;
-		_animation.setFrame(0);
+		_text.BuildCharacters("!()LivesJ", 0.25f, 0.95f);
 		// vrstva nepratel
 		_enemyLayer.loadTextures(gl,SpatterEngine.context);
 		_enemyLayer.createEnemies();
 		_textures.buildTextures(gl, SpatterEngine.context);
+		
+		// nastaveni parametru animace
+		_animation.setTexture(_textures.GetTexture(SpatterEngine.explose_animation));
+		_animation.setFramesParameter(16, _textures.GetBitmap(SpatterEngine.explose_animation).getWidth(),128, 128);
+		_animation.X = 0.2f;
+		_animation.Y = 0.2f;
+		_animation.setFrame(0);
 		_particles.createParticles();
 		_particlesx.createParticles();
 		_sprite[0].loadTexture(gl,SpatterEngine.sprite_live, SpatterEngine.context);
@@ -197,6 +202,7 @@ public class SpatterRenderer implements Renderer {
 		// xxxx
 	}
 	
+	// check collision enemies and weapon
 	private void CheckWeapon(ArrayList<WeaponFire> fire, ArrayList<Enemy> enemies)
 	{
 		for(int i =0; i < enemies.size(); i++)

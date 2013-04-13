@@ -22,6 +22,7 @@ public class TextureManager {
 		ArrayList<Integer> _list = new ArrayList<Integer>();		
 	    private int[] textures;
 	    Hashtable<Integer,Integer> _table = new  Hashtable<Integer,Integer>();
+	    Hashtable<Integer, Bitmap> _bitmaps = new Hashtable<Integer, Bitmap>();
 	    
 	    public void AddTexture(int texture)
 	    {	    
@@ -46,7 +47,12 @@ public class TextureManager {
 	    public int GetTexture(int resourceID)
 	    {
 	    	return _table.get(resourceID);
-	    }	    
+	    }	
+	    
+	    public Bitmap GetBitmap(int resourceID)
+	    {
+	    	return _bitmaps.get(resourceID);
+	    }
 
 	    // nacte texturu	   
 	    private void loadTexture(GL10 gl, int texture, Context context, int textureNumber) 
@@ -56,6 +62,7 @@ public class TextureManager {
 
 	        try { 
 	            bitmap = BitmapFactory.decodeStream(imagestream); 
+	            _bitmaps.put(texture, bitmap);
 	        }
 	        catch(Exception e) { 
 	        }

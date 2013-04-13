@@ -36,9 +36,9 @@ public class Player extends GameObject {
     private float vertices[] = 
     { 
         0.0f, 0.0f, 0.0f, 
-        1.0f, 0.0f, 0.0f, 
-        1.0f, 1.0f, 0.0f, 
-        0.0f, 1.0f, 0.0f, 
+        0.25f, 0.0f, 0.0f, 
+        0.25f, 0.25f, 0.0f, 
+        0.0f, 0.25f, 0.0f, 
     }; 
 
     private float texture[] = 
@@ -58,9 +58,9 @@ public class Player extends GameObject {
     ///
     public Player() 
     {         
-    	X = 1.75f;
-    	Width = 1.0f;
-    	Height = 1.0f;
+    	X = 0.0f;
+    	Width = 0.25f;
+    	Height = 0.25f;
     	_lastFire = System.currentTimeMillis();
     	
         ByteBuffer byteBuf = ByteBuffer.allocateDirect(vertices.length * 4); 
@@ -228,7 +228,7 @@ public class Player extends GameObject {
             gl.glMatrixMode(GL10.GL_MODELVIEW); 
             gl.glLoadIdentity();
             gl.glPushMatrix(); 
-            gl.glScalef(SpatterEngine.scaleX, SpatterEngine.scaleY, 1f); 
+            //gl.glScalef(SpatterEngine.scaleX, SpatterEngine.scaleY, 1f); 
 
             if (_playerFrame < SpatterEngine.PLAYER_FRAMES_BETWEEN_ANI && X > 0) {
             	
@@ -270,9 +270,9 @@ public class Player extends GameObject {
             gl.glMatrixMode(GL10.GL_MODELVIEW); 
             gl.glLoadIdentity(); 
             gl.glPushMatrix(); 
-            gl.glScalef(SpatterEngine.scaleX, SpatterEngine.scaleY, 1f); 
+            //gl.glScalef(SpatterEngine.scaleX, SpatterEngine.scaleY, 1f); 
 
-            if (_playerFrame < SpatterEngine.PLAYER_FRAMES_BETWEEN_ANI && SpatterEngine.Player.X < 3) {
+            if (_playerFrame < SpatterEngine.PLAYER_FRAMES_BETWEEN_ANI && SpatterEngine.Player.X < 1) {
             	
             	if (fl_playerx < _moveToX)
             		X += _incrementX;
@@ -286,7 +286,7 @@ public class Player extends GameObject {
                 gl.glTranslatef(0.75f, 0.0f, 0.0f);
                 _playerFrame += 1;             	
             }
-            else if (_playerFrame >= SpatterEngine.PLAYER_FRAMES_BETWEEN_ANI && SpatterEngine.Player.X < 3) {
+            else if (_playerFrame >= SpatterEngine.PLAYER_FRAMES_BETWEEN_ANI && SpatterEngine.Player.X < 1) {
 
             	if (fl_playerx < _moveToX)
             		X += _incrementX;
@@ -314,7 +314,7 @@ public class Player extends GameObject {
             gl.glMatrixMode(GL10.GL_MODELVIEW); 
             gl.glLoadIdentity(); 
             gl.glPushMatrix(); 
-            gl.glScalef(SpatterEngine.scaleX, SpatterEngine.scaleY, 1f); 
+            //gl.glScalef(SpatterEngine.scaleX, SpatterEngine.scaleY, 1f); 
             gl.glTranslatef(X, Y, 0f); 
             gl.glMatrixMode(GL10.GL_TEXTURE); 
             gl.glLoadIdentity(); 
@@ -328,7 +328,7 @@ public class Player extends GameObject {
             gl.glMatrixMode(GL10.GL_MODELVIEW); 
             gl.glLoadIdentity(); 
             gl.glPushMatrix(); 
-            gl.glScalef(SpatterEngine.scaleX, SpatterEngine.scaleY, 1f); 
+            //gl.glScalef(SpatterEngine.scaleX, SpatterEngine.scaleY, 1f); 
             gl.glTranslatef(X, Y, 0f); 
             gl.glMatrixMode(GL10.GL_TEXTURE); 
             gl.glLoadIdentity(); 
@@ -345,7 +345,7 @@ public class Player extends GameObject {
     ///
     private void initializePrimaryWeapons() { 
         for (int x = 0; x < SpatterEngine.fire_count; x++) { 
-        	WeaponFire weapon = new WeaponFire(0.08f, this.X, this.Y); 
+        	WeaponFire weapon = new WeaponFire(0.02f, this.X, this.Y); 
             weapon.shotFired = false;           
             weapon.X = this.X; 
             weapon.Y = this.Y;
@@ -373,7 +373,7 @@ public class Player extends GameObject {
     		WeaponFire weapon = _playerFire.get(x);
             if (weapon.shotFired == false) { 
                 weapon.shotFired = true; 
-                weapon.X = X+(Width/4)-weapon.Width/2; // pulka rakety 
+                weapon.X = X+(Width/2)-weapon.Width/2; // pulka rakety 
                 weapon.Y = Y+Height; // vyska ... ta je nasobena pomerem obrazovky
                 _fired.add(weapon);
                 break;
@@ -393,7 +393,7 @@ public class Player extends GameObject {
     	for (int x = 0; x < _playerFire.size(); x++) { 
             WeaponFire weapon = _playerFire.get(x);
     		if (weapon.shotFired==true) {             	
-                if (weapon.Y > 6.25) 
+                if (weapon.Y > 1.1*SpatterEngine.screen_ratio) 
                 { 
                     weapon.shotFired = false;
                     _fired.remove(weapon);

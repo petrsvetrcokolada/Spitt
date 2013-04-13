@@ -6,7 +6,7 @@ public class SinTrajectory implements ITrajectory
 {
 
 	public float getX(GameObject enemy) {
-		return enemy.startX+(float)Math.sin(SpatterEngine.GameObjectTime(enemy)/700.0f)*enemy.scaleX;
+		return enemy.startX+(float)Math.sin(SpatterEngine.GameObjectTime(enemy)/7000.0f);
 	}
 
 	public float getY(GameObject enemy) {		

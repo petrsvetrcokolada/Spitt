@@ -14,7 +14,7 @@ public class GameObject {
 	public float Height; // bylo by dobre znat vysku
 	
 	// aktivni objekt se muze pohybovat
-	public float Speed; // ma rychlost
+	public float Speed=0; // ma rychlost
 	public int StartTime=0;  // aktivni zacina byt v case
 	public int Strength=100; // pokud je znicitelny, ma silu
 	public float startX;

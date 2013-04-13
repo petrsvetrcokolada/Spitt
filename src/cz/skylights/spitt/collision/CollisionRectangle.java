@@ -1,18 +1,14 @@
 package cz.skylights.spitt.collision;
 
-public class CollisionRectangle {
-	public float X;
-	public float Y;
-	public float Width;
-	public float Height;
- // Left, Top, Width, Height
+import cz.skylights.spitt.shape.Shape;
+
+public class CollisionRectangle extends Shape {
 	
-	public CollisionRectangle()
+	public CollisionRectangle(float x, float y, float w, float h)
 	{
-		X=0;
-		Y=0;
-		Width = 1;
-		Height = 1;
+		super(w,h);
+		X=x;
+		Y=y;
 	}
 	
 	public boolean CollisionTo(CollisionRectangle rect)

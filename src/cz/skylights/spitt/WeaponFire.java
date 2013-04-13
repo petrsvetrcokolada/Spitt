@@ -5,14 +5,17 @@ import java.nio.ByteOrder;
 
 import javax.microedition.khronos.opengles.GL10;
 
-import cz.skylights.spitt.collision.CollisionCircle;
+import cz.skylights.spitt.collision.CollisionRectangle;
 import cz.skylights.spitt.collision.CollisionType;
 import cz.skylights.spitt.collision.ICollision;
+
 
 public class WeaponFire extends GameObject implements ICollision {
 	private float  _speed;
 	public boolean shotFired=false;
 	public float _ratio;	
+	
+	private CollisionRectangle _collision;
 	
 	private float vertices[] = { 
         0.0f, 0.0f, 0.0f, 
@@ -38,6 +41,7 @@ public class WeaponFire extends GameObject implements ICollision {
 		super(sx,sy);
 		this.X = sx;
 		this.Y = sy;
+		_collision = new CollisionRectangle(0.1f,0.1f, 0.9f, 0.9f);
 		
 		this.setSizeRatio(ratio);			
 		// 
@@ -75,8 +79,8 @@ public class WeaponFire extends GameObject implements ICollision {
         gl.glMatrixMode(GL10.GL_MODELVIEW); 
         gl.glLoadIdentity(); 
         gl.glPushMatrix(); 
-        gl.glScalef(.25f, .25f, 0f); 
-        gl.glTranslatef(X+0.25f, Y, 0f); 
+        //gl.glScalef(this.scaleX, this.scaleY, 0f); 
+        gl.glTranslatef(X, Y, 0f); 
 
         gl.glMatrixMode(GL10.GL_TEXTURE); 
         gl.glLoadIdentity(); 

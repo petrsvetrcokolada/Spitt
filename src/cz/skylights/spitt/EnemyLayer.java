@@ -14,9 +14,8 @@ public class EnemyLayer {
 	// pole aktivnich objektu
 	ArrayList<Enemy> _enemies;	
 	ArrayList<Enemy> _allenemies;
-	
-	
-	SinTrajectory _trajectory = new SinTrajectory();
+		
+	Trajectory _trajectory = new Trajectory();
 	
 	public EnemyLayer()
 	{
@@ -52,9 +51,9 @@ public class EnemyLayer {
 				
 			sy = 1.1f;
 						
-			Enemy en = new Enemy(sx,sy);
-			
-			en.setScale(0.125f, 0.125f);
+			Enemy en = new Enemy(sx,sy);		
+			en.setSizeRatio(0.125f);
+			en.Speed = 0.007f;
 			en.setTrajectory(t);
 			en.setTexture(_textures.GetTexture(SpatterEngine.enemy1));
 		  
@@ -74,6 +73,8 @@ public class EnemyLayer {
 			Enemy en = _allenemies.get(i);
 			if (en.StartTime <= SpatterEngine.GameTime)
 			{
+				en.X = en.startX;
+				en.Y = en.startY;
 				_enemies.add(en);
 			}
 			else

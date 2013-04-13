@@ -33,6 +33,11 @@ public class Enemy extends GameObject {
 	public Enemy(float sx, float sy)	
 	{
 		super(sx, sy);
+	
+	}
+	
+	private void refreshArray()
+	{
 		// 
         ByteBuffer byteBuf = ByteBuffer.allocateDirect(vertices.length * 4); 
         byteBuf.order(ByteOrder.nativeOrder()); 
@@ -48,7 +53,7 @@ public class Enemy extends GameObject {
 
         indexBuffer = ByteBuffer.allocateDirect(indices.length); 
         indexBuffer.put(indices); 
-        indexBuffer.position(0); 		
+        indexBuffer.position(0); 	
 	}
 	
 	public void setTexture(int tx)
@@ -63,22 +68,16 @@ public class Enemy extends GameObject {
 	}
 	
 	// kazda kulka by mela mit svuj pomer velikosti ... individualne k bitmape
-	private void setSizeRatio(float ratio)
+	public void setSizeRatio(float ratio)
 	{
-		_ratio = ratio;
-		
+		_ratio = ratio;		
 		for(int i = 0; i < vertices.length;i++)
 			vertices[i]*=ratio;
 		
 		Width = 1.0f*ratio;
 		Height = 1.0f*ratio;
-	}
-	
-	public void setScale(float sx, float sy)
-	{
-		scaleX = sx;
-		scaleY = sy;
-		Speed *= sy;
+		Speed *= ratio;
+		refreshArray();
 	}
 	
 	
@@ -88,8 +87,8 @@ public class Enemy extends GameObject {
         gl.glMatrixMode(GL10.GL_MODELVIEW); 
         gl.glLoadIdentity(); 
         gl.glPushMatrix(); 
-        gl.glScalef(scaleX, scaleY, 0f);       
-        gl.glTranslatef(X/scaleX, Y/scaleY*SpatterEngine.screen_ratio, 0f); 
+        //gl.glScalef(scaleX, scaleY, 0f);       
+        gl.glTranslatef(X, Y*SpatterEngine.screen_ratio, 0f); 
 
         gl.glMatrixMode(GL10.GL_TEXTURE); 
         gl.glLoadIdentity(); 

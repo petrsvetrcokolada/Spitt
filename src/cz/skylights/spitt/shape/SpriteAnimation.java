@@ -21,12 +21,13 @@ public class SpriteAnimation  extends GameObject
 {
 	float _ratio;
 	private Context _context;
-	private int[] textures = new int[1];
+	protected int _textureID=-1;	
 	private int _frame = 6;
 	private int _count=0;
 	private int _frameWidth  = 0;
 	private int _frameHeight = 0;
 	private int _texturewidth = 0;
+	private boolean _repeat = false;
 	
 	private float vertices[] = { 
         0.0f, 0.0f, 0.0f, 
@@ -50,10 +51,11 @@ public class SpriteAnimation  extends GameObject
     private float _scaleX = 0.25f;
     private float _scaleY = 0.25f;
 	
-	public SpriteAnimation()
+	public SpriteAnimation(boolean repeat)
 	{
 		this.X = 0;
 		this.Y = 0;		
+		_repeat = repeat;
  		
 	}
 	
@@ -75,6 +77,11 @@ public class SpriteAnimation  extends GameObject
         indexBuffer = ByteBuffer.allocateDirect(indices.length); 
         indexBuffer.put(indices); 
         indexBuffer.position(0);	
+	}
+	
+	public void setTexture(int tx)
+	{
+	  _textureID =tx;
 	}
 	
 	// kazda kulka by mela mit svuj pomer velikosti ... individualne k bitmape
@@ -104,12 +111,13 @@ public class SpriteAnimation  extends GameObject
 	}
 	
 	// nastav parametry
-	public void setFramesParameter(int frames, int fw, int fh)
+	public void setFramesParameter(int frames, int tw,int fw, int fh)
 	{
 	  _frameWidth = fw;
 	  _frameHeight = fh;
 	  _count = frames;
 	  
+	  _texturewidth = tw;
 	  float factor =1/((float)_texturewidth/(float)_frameWidth);
 	  for(int i = 0; i < texture.length;i++)
 			texture[i]*=factor;	  
@@ -122,6 +130,19 @@ public class SpriteAnimation  extends GameObject
 		_frame = frame;
 	}
 	
+	public int Count()
+	{
+		return _count;
+	}
+	
+	public boolean isAnimate()
+	{
+		if (_frame < _count)
+			return true;
+		
+		return false;
+	}
+	
 	long _nextTime = SpatterEngine.GameTime+40;
 	public void animation()
 	{
@@ -130,8 +151,11 @@ public class SpriteAnimation  extends GameObject
 		{
 			return;
 		}
-		_frame++;
-		if (_frame > _count)
+		
+		if (_frame < _count)
+		  _frame++;
+		
+		if (_repeat == true && _frame >= _count)
 			_frame = 0;
 			
 		_nextTime = SpatterEngine.GameTime+40;
@@ -157,7 +181,7 @@ public class SpriteAnimation  extends GameObject
         int ty = _frame / (int)factor;
         gl.glTranslatef(frame_width*tx, frame_width*ty,0.0f); 
 		
-        gl.glBindTexture(GL10.GL_TEXTURE_2D, textures[0]); 
+        gl.glBindTexture(GL10.GL_TEXTURE_2D, _textureID); 
         gl.glFrontFace(GL10.GL_CCW); 
         gl.glEnable(GL10.GL_CULL_FACE); 
         gl.glCullFace(GL10.GL_BACK);
@@ -177,46 +201,5 @@ public class SpriteAnimation  extends GameObject
         
         gl.glPopMatrix(); 
         gl.glLoadIdentity();
-	}	
-	
-    // nahrej texturu ... 
-    public void loadTexture(GL10 gl, int ltexture, Context context) { 
-    	// otevri stream z resources
-        InputStream imagestream = context.getResources().openRawResource(ltexture); 
-        Bitmap bitmap = null;
-        _context = context;
-
-        try { 
-        	//decoduj obrazek
-            bitmap = BitmapFactory.decodeStream(imagestream);
-            _texturewidth = bitmap.getWidth();
-        }
-        catch (Exception e) { 
-        }
-        finally { 
-            //Always clear and close 
-            try { 
-                imagestream.close(); 
-                imagestream = null; 
-            } 
-            catch (IOException e) { 
-            } 
-        } 
-
-        gl.glGenTextures(1, textures, 0); 
-        gl.glBindTexture(GL10.GL_TEXTURE_2D, textures[0]); 
-
-        gl.glTexParameterf(GL10.GL_TEXTURE_2D, GL10.GL_TEXTURE_MIN_FILTER, 
-                           GL10.GL_NEAREST); 
-        gl.glTexParameterf(GL10.GL_TEXTURE_2D, GL10.GL_TEXTURE_MAG_FILTER, 
-                           GL10.GL_LINEAR); 
-        gl.glTexParameterf(GL10.GL_TEXTURE_2D, GL10.GL_TEXTURE_WRAP_S, 
-                           GL10.GL_REPEAT); 
-        gl.glTexParameterf(GL10.GL_TEXTURE_2D, GL10.GL_TEXTURE_WRAP_T, 
-                           GL10.GL_REPEAT); 
-
-        GLUtils.texImage2D(GL10.GL_TEXTURE_2D, 0, bitmap, 0); 
-        bitmap.recycle(); 
-    }
-
+	}		
 }

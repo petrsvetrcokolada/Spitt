@@ -36,7 +36,7 @@ public class OptionsEngine {
     public static final float PLAYER_BANK_SPEED = .1f;
     // fire
     public static final int fire_count = 24;
-    public static final float bullet_speed = .1f;
+    public static final float bullet_speed = .01f;
     public static final int bullet_timeout = 250;
     //public static float playerX=1.75f;
     public static final int lives=3;
@@ -44,7 +44,7 @@ public class OptionsEngine {
     public static final int enemy=R.drawable.enemy;
     public static final int enemy1=R.drawable.enemy1;
     
-    public static float playerY=0f;
+    public static float playerY=0.3f;
     public static float scaleX = .25f;
     static float scaleY = .25f;
     public static boolean onTouch = false;    
