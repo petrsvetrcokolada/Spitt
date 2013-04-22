@@ -30,7 +30,7 @@ public class SpatterRenderer implements Renderer {
 	TextureManager _textures = new TextureManager();
 	protected ParticleEmitter _particles;
 	protected ParticleEmitter _particlesx;
-	//protected ExplosionEmitter _explosions;
+	protected ExplosionEmitter _explosions;
 	// Layer - Engine objekty - live prouzek
 	protected Shape _shape;
 	protected SpriteAnimation _animation = new SpriteAnimation(true);
@@ -52,12 +52,13 @@ public class SpatterRenderer implements Renderer {
 		_textures.AddTexture(SpatterEngine.particle);
 		_textures.AddTexture(SpatterEngine.star);
 		_textures.AddTexture(SpatterEngine.explose_animation);
+		_textures.AddTexture(SpatterEngine.explose_animation1);
+		_textures.AddTexture(SpatterEngine.explose_animation2);
 		
 		_scroll = new ScrollLayer(_textures, SpatterEngine.scroll_bg1);
 		
 		_particles = new ParticleEmitter(40, new ParticleShapeCreator());
-		_particlesx = new ParticleEmitter(60, new ParticleCreator(_textures));
-		//_explosions = new ExplosionEmitter(_textures);
+		_particlesx = new ParticleEmitter(60, new ParticleCreator(_textures));	
 		_text = new GLText();
 		/*
 		_shape = new Shape();
@@ -120,8 +121,9 @@ public class SpatterRenderer implements Renderer {
 		// ANIMATION - vzbuch apod
 		_animation.animation();
 		_animation.draw(gl);
-		//_explosions.animation();
-		//_explosions.draw(gl);
+		// explosions
+		_explosions.animation();
+		_explosions.draw(gl);
 		// PLAYER
 		_player.movePlayer(gl);
 		//
@@ -174,12 +176,13 @@ public class SpatterRenderer implements Renderer {
 		_enemyLayer.loadTextures(gl,SpatterEngine.context);
 		_enemyLayer.createEnemies();
 		_textures.buildTextures(gl, SpatterEngine.context);
+		_explosions = new ExplosionEmitter(_textures);
 		
 		// nastaveni parametru animace
 		_animation.setTexture(_textures.GetTexture(SpatterEngine.explose_animation));
 		_animation.setFramesParameter(16, _textures.GetBitmap(SpatterEngine.explose_animation).getWidth(),128, 128);
-		_animation.X = 0.2f;
-		_animation.Y = 0.2f;
+		_animation.X = 0.4f;
+		_animation.Y = 0.4f;
 		_animation.setFrame(0);
 		_particles.createParticles();
 		_particlesx.createParticles();

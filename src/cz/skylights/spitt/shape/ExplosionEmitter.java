@@ -36,15 +36,35 @@ public class ExplosionEmitter
 	public void setExplosion(float X, float Y)
 	{
 		SpriteAnimation spr = new SpriteAnimation(false);		
-		Integer txID = generator.nextInt(9);
-		spr.setTexture(_textures.GetTexture(txID));
+		Integer rand = generator.nextInt(9);
+		int txID = _array.get(rand);
+		spr.setTexture(txID);
 		spr.X = X;
 		spr.Y = Y;
+		spr.setFramesParameter(16, _textures.GetBitmap(SpatterEngine.explose_animation).getWidth(),128, 128);
+		spr.setFrame(0);
 		_animations.add(spr);
 	}
+	
 	// posun animaci
+	private boolean switch_pos=false;
 	public void animation()
 	{
+		if ((SpatterEngine.GameTime % 1500) == 0)
+		{
+		  if (switch_pos== false)
+		  {
+			  this.setExplosion(0.2f, 0.2f);
+			  switch_pos = true;
+		  }
+		  else			 
+		  {
+			  this.setExplosion(0.7f, 0.7f);
+			  switch_pos = false;
+		  }
+		  
+		}
+				
 		for(int i =_animations.size()-1; i >= 0; i--)
 		{
 			SpriteAnimation s = _animations.get(i);
@@ -61,7 +81,6 @@ public class ExplosionEmitter
 	// kresli animaci
 	public void draw(GL10 gl)
 	{
-	
 		for(int i =0; i < _animations.size(); i++)
 		{
 			SpriteAnimation s = _animations.get(i);
