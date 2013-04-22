@@ -2,31 +2,48 @@ package cz.skylights.spitt.shape;
 
 import java.util.ArrayList;
 import java.util.Hashtable;
+import java.util.Random;
 
 import javax.microedition.khronos.opengles.GL10;
 
 import cz.skylights.spitt.SpatterEngine;
 import cz.skylights.spitt.TextureManager;
 
-public class ExplosionEmitter {
+public class ExplosionEmitter 
+{
 
 	TextureManager _textures;
 	ArrayList<SpriteAnimation> _animations=new  ArrayList<SpriteAnimation>();
+	ArrayList<Integer> _array = new ArrayList<Integer>();
+	Random generator=new Random(); // generator nahodnych cisel
 	
 	public ExplosionEmitter(TextureManager tm)
 	{
 		_textures = tm;
+		_array.add(_textures.GetTexture(SpatterEngine.explose_animation));
+		_array.add(_textures.GetTexture(SpatterEngine.explose_animation1));
+		_array.add(_textures.GetTexture(SpatterEngine.explose_animation2));
+		_array.add(_textures.GetTexture(SpatterEngine.explose_animation));
+		_array.add(_textures.GetTexture(SpatterEngine.explose_animation1));
+		_array.add(_textures.GetTexture(SpatterEngine.explose_animation2));
+		_array.add(_textures.GetTexture(SpatterEngine.explose_animation));
+		_array.add(_textures.GetTexture(SpatterEngine.explose_animation1));
+		_array.add(_textures.GetTexture(SpatterEngine.explose_animation2));
+		_array.add(_textures.GetTexture(SpatterEngine.explose_animation));
 	}
 	
 	// vloz explosi
 	public void setExplosion(float X, float Y)
 	{
-		SpriteAnimation spr = new SpriteAnimation(false);
-		spr.setTexture(_textures.GetTexture(SpatterEngine.explose_animation));
+		SpriteAnimation spr = new SpriteAnimation(false);		
+		Integer txID = generator.nextInt(9);
+		spr.setTexture(_textures.GetTexture(txID));
+		spr.X = X;
+		spr.Y = Y;
 		_animations.add(spr);
 	}
 	// posun animaci
-	public void move()
+	public void animation()
 	{
 		for(int i =_animations.size()-1; i >= 0; i--)
 		{
@@ -38,6 +55,7 @@ public class ExplosionEmitter {
 			}
 			
 			s.move();
+			s.animation();
 		}
 	}
 	// kresli animaci

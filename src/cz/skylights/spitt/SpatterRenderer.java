@@ -22,6 +22,7 @@ public class SpatterRenderer implements Renderer {
 	protected BackgroundLayer _background1;
 	protected BackgroundLayer _background2;
 	protected BackgroundLayer _background3;
+	protected ScrollLayer _scroll;
 	// Layer - Objekty na pozadí .... kontejnéry, plošiny a tak dál
 	// Layer - Enemy
 	protected EnemyLayer _enemyLayer;
@@ -29,7 +30,7 @@ public class SpatterRenderer implements Renderer {
 	TextureManager _textures = new TextureManager();
 	protected ParticleEmitter _particles;
 	protected ParticleEmitter _particlesx;
-	protected ExplosionEmitter _explosions;
+	//protected ExplosionEmitter _explosions;
 	// Layer - Engine objekty - live prouzek
 	protected Shape _shape;
 	protected SpriteAnimation _animation = new SpriteAnimation(true);
@@ -46,15 +47,17 @@ public class SpatterRenderer implements Renderer {
 		SpatterEngine.Player = _player;
 		_background1 = new BackgroundLayer(SpatterEngine.scroll_bg1);
 		_background2 = new BackgroundLayer(3*SpatterEngine.scroll_bg2/2);
-		_background3 = new BackgroundLayer(5*SpatterEngine.scroll_bg2/4);
+		_background3 = new BackgroundLayer(5*SpatterEngine.scroll_bg2/4);		
 		_enemyLayer = new EnemyLayer();
 		_textures.AddTexture(SpatterEngine.particle);
 		_textures.AddTexture(SpatterEngine.star);
 		_textures.AddTexture(SpatterEngine.explose_animation);
 		
+		_scroll = new ScrollLayer(_textures, SpatterEngine.scroll_bg1);
+		
 		_particles = new ParticleEmitter(40, new ParticleShapeCreator());
 		_particlesx = new ParticleEmitter(60, new ParticleCreator(_textures));
-		_explosions = new ExplosionEmitter(_textures);
+		//_explosions = new ExplosionEmitter(_textures);
 		_text = new GLText();
 		/*
 		_shape = new Shape();
@@ -117,6 +120,8 @@ public class SpatterRenderer implements Renderer {
 		// ANIMATION - vzbuch apod
 		_animation.animation();
 		_animation.draw(gl);
+		//_explosions.animation();
+		//_explosions.draw(gl);
 		// PLAYER
 		_player.movePlayer(gl);
 		//
