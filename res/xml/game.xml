@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<GAME>
+	<EPIZODE id="1">
+		<GRAPHICTYPE>tech</GRAPHICTYPE>
+		<LEVELS>
+		    <LEVEL id="0">
+				<NAME>PROLOG</NAME>
+				<TYPE>intro</TYPE>
+				<RESOURCE>strip0.png</RESOURCE>
+			</LEVEL>
+			<LEVEL id="1">
+			    <LEVELNUM>1</LEVELNUM>
+				<NAME>EXODUS</NAME>
+				<TYPE>game</TYPE>
+				<RESOURCE>level1.xml</RESOURCE>
+			</LEVEL>
+			 <LEVEL id="3">
+				<NAME>UNKNOWN</NAME>
+				<TYPE>intro</TYPE>
+				<RESOURCE>level2.xml</RESOURCE>
+			</LEVEL>
+		</LEVELS>
+	</EPIZODE>
+	<EPIZODE id="2">
+		<GRAPHICTYPE>bio</GRAPHICTYPE>
+		<LEVELS>
+		     <LEVEL id="0">
+				<NAME>NEXT</NAME>
+				<TYPE>intro</TYPE>
+				<RESOURCE>strip2.png</RESOURCE>
+			</LEVEL>
+			<LEVEL id="1">
+			    <LEVELNUM>1</LEVELNUM>
+				<NAME>GREENPAECE</NAME>
+				<TYPE>game</TYPE>
+				<RESOURCE>level8.xml</RESOURCE>
+			</LEVEL>
+			<LEVEL id="2">
+			    <LEVELNUM>2</LEVELNUM>
+				<NAME>GREENPAECE</NAME>
+				<TYPE>game</TYPE>
+				<RESOURCE>level9.xml</RESOURCE>
+			</LEVEL>
+		</LEVELS>
+	</EPIZODE>
+	<EPIZODE id="2">
+		<GRAPHICTYPE>maso</GRAPHICTYPE>
+		<LEVELS>
+			<LEVEL id="1">
+			    <LEVELNUM>1</LEVELNUM>
+				<NAME>ROSTBEEF</NAME>
+				<TYPE>game</TYPE>
+				<RESOURCE>level10.xml</RESOURCE>
+			</LEVEL>
+		</LEVELS>
+	</EPIZODE>
+</GAME>

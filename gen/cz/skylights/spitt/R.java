@@ -24,37 +24,47 @@ public final class R {
         public static final int ic_launcher=0x7f020007;
         public static final int ic_spatter=0x7f020008;
         public static final int live=0x7f020009;
-        public static final int menu=0x7f02000a;
-        public static final int mmenu=0x7f02000b;
-        public static final int newdw=0x7f02000c;
-        public static final int newup=0x7f02000d;
-        public static final int particle=0x7f02000e;
-        public static final int pozadi1=0x7f02000f;
-        public static final int quitdw=0x7f020010;
-        public static final int quitup=0x7f020011;
-        public static final int shoot2=0x7f020012;
-        public static final int sm=0x7f020013;
-        public static final int spatter=0x7f020014;
-        public static final int star=0x7f020015;
-        public static final int stars1=0x7f020016;
-        public static final int stars2=0x7f020017;
-        public static final int startselector=0x7f020018;
-        public static final int strely1=0x7f020019;
+        public static final int logooranz=0x7f02000a;
+        public static final int menu=0x7f02000b;
+        public static final int mmenu=0x7f02000c;
+        public static final int nabidka=0x7f02000d;
+        public static final int newdw=0x7f02000e;
+        public static final int newup=0x7f02000f;
+        public static final int particle=0x7f020010;
+        public static final int pozadi1=0x7f020011;
+        public static final int quitdw=0x7f020012;
+        public static final int quitup=0x7f020013;
+        public static final int settingsdw=0x7f020014;
+        public static final int settingsselector=0x7f020015;
+        public static final int settingsup=0x7f020016;
+        public static final int shoot2=0x7f020017;
+        public static final int sm=0x7f020018;
+        public static final int spatter=0x7f020019;
+        public static final int spatterwinner=0x7f02001a;
+        public static final int spittimage=0x7f02001b;
+        public static final int spittimage1=0x7f02001c;
+        public static final int star=0x7f02001d;
+        public static final int stars1=0x7f02001e;
+        public static final int stars2=0x7f02001f;
+        public static final int startselector=0x7f020020;
+        public static final int strely1=0x7f020021;
     }
     public static final class id {
         public static final int btnExit=0x7f0a0003;
+        public static final int btnSettings=0x7f0a0004;
         public static final int btnStart=0x7f0a0002;
         public static final int buttons=0x7f0a0001;
         public static final int menuImage=0x7f0a0000;
-        public static final int menu_settings=0x7f0a0006;
-        public static final int my_xml=0x7f0a0004;
-        public static final int splashScreenImage=0x7f0a0005;
+        public static final int menu_settings=0x7f0a0007;
+        public static final int my_xml=0x7f0a0005;
+        public static final int spittimage=0x7f0a0006;
     }
     public static final class layout {
         public static final int activity_main=0x7f030000;
         public static final int menu=0x7f030001;
-        public static final int settings=0x7f030002;
-        public static final int splashscreen=0x7f030003;
+        public static final int menupaint=0x7f030002;
+        public static final int settings=0x7f030003;
+        public static final int splashscreen=0x7f030004;
     }
     public static final class menu {
         public static final int activity_main=0x7f090000;
@@ -74,7 +84,8 @@ public final class R {
         public static final int AppTheme=0x7f080000;
     }
     public static final class xml {
-        public static final int level1=0x7f040000;
-        public static final int player=0x7f040001;
+        public static final int game=0x7f040000;
+        public static final int level1=0x7f040001;
+        public static final int player=0x7f040002;
     }
 }

@@ -19,8 +19,8 @@ public class OptionsEngine {
     public static final int space_stars2=R.drawable.stars1;
     public static final int sprite_live = R.drawable.live;
     public static final int explose_animation = R.drawable.explose;
-    public static final int explose_animation1 = R.drawable.explose1;
-    public static final int explose_animation2 = R.drawable.explose2;
+    //public static final int explose_animation1 = R.drawable.explose1;
+    //public static final int explose_animation2 = R.drawable.explose2;
     public static final int particle = R.drawable.particle;
     public static final int star = R.drawable.star;
     // text

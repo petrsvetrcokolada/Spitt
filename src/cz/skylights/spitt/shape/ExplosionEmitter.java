@@ -21,14 +21,14 @@ public class ExplosionEmitter
 	{
 		_textures = tm;
 		_array.add(_textures.GetTexture(SpatterEngine.explose_animation));
-		_array.add(_textures.GetTexture(SpatterEngine.explose_animation1));
-		_array.add(_textures.GetTexture(SpatterEngine.explose_animation2));
+		//_array.add(_textures.GetTexture(SpatterEngine.explose_animation1));
+		//_array.add(_textures.GetTexture(SpatterEngine.explose_animation2));
 		_array.add(_textures.GetTexture(SpatterEngine.explose_animation));
-		_array.add(_textures.GetTexture(SpatterEngine.explose_animation1));
-		_array.add(_textures.GetTexture(SpatterEngine.explose_animation2));
+		//_array.add(_textures.GetTexture(SpatterEngine.explose_animation1));
+		//_array.add(_textures.GetTexture(SpatterEngine.explose_animation2));
 		_array.add(_textures.GetTexture(SpatterEngine.explose_animation));
-		_array.add(_textures.GetTexture(SpatterEngine.explose_animation1));
-		_array.add(_textures.GetTexture(SpatterEngine.explose_animation2));
+		//_array.add(_textures.GetTexture(SpatterEngine.explose_animation1));
+		//_array.add(_textures.GetTexture(SpatterEngine.explose_animation2));
 		_array.add(_textures.GetTexture(SpatterEngine.explose_animation));
 	}
 	
