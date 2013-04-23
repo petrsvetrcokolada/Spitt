@@ -52,8 +52,8 @@ public class SpatterRenderer implements Renderer {
 		_textures.AddTexture(SpatterEngine.particle);
 		_textures.AddTexture(SpatterEngine.star);
 		_textures.AddTexture(SpatterEngine.explose_animation);
-		//_textures.AddTexture(SpatterEngine.explose_animation1);
-		//_textures.AddTexture(SpatterEngine.explose_animation2);
+		_textures.AddTexture(SpatterEngine.explose_animation1);
+		_textures.AddTexture(SpatterEngine.explose_animation2);
 		
 		_scroll = new ScrollLayer(_textures, SpatterEngine.scroll_bg1);
 		
