@@ -12,6 +12,6 @@
         android:layout_alignParentTop="true"
         android:contentDescription="TODO"
         android:scaleType="fitXY"
-        android:src="@drawable/nabidka" />
+        android:src="@drawable/nabidka1" />
 
 </RelativeLayout>
