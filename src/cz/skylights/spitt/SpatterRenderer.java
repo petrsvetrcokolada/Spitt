@@ -6,6 +6,8 @@ import javax.microedition.khronos.egl.EGLConfig;
 import javax.microedition.khronos.opengles.GL10;
 
 
+
+import cz.skylights.spitt.layer.ScrollLayer;
 import cz.skylights.spitt.particle.ParticleCreator;
 import cz.skylights.spitt.particle.ParticleEmitter;
 import cz.skylights.spitt.particle.ParticleShapeCreator;
@@ -105,6 +107,10 @@ public class SpatterRenderer implements Renderer {
 		_background1.scrollBackground(gl);
 		_background2.scrollBackground(gl);
 		_background3.scrollBackground(gl);
+		gl.glDisable(GL10.GL_BLEND);
+		_scroll.scrollBackground(gl);
+		gl.glEnable(GL10.GL_BLEND);
+		gl.glBlendFunc(GL10.GL_ONE, GL10.GL_ONE);
 		// missing BackgroundObject - moving objects
 		///
 		// PARTICLE
@@ -172,14 +178,18 @@ public class SpatterRenderer implements Renderer {
 		_player.loadTexture(gl, SpatterEngine.PLAYER_SHIP, SpatterEngine.PLAYER_BULLET, SpatterEngine.context);
 		_text.loadTexture(gl, SpatterEngine.text_characters, SpatterEngine.context);
 		_text.BuildCharacters("!()LivesJ", 0.25f, 0.95f);
+		_textures.buildTextures(gl, SpatterEngine.context);
+		
+		_scroll.buildLayer();
 		// vrstva nepratel
 		_enemyLayer.loadTextures(gl,SpatterEngine.context);
-		_enemyLayer.createEnemies();
-		_textures.buildTextures(gl, SpatterEngine.context);
+		_enemyLayer.createEnemies();		
+		
 		_explosions = new ExplosionEmitter(_textures);
 		
 		// nastaveni parametru animace
 		_animation.setTexture(_textures.GetTexture(SpatterEngine.explose_animation));
+		_animation.setSizeRatio(0.25f);
 		_animation.setFramesParameter(16, _textures.GetBitmap(SpatterEngine.explose_animation).getWidth(),128, 128);
 		_animation.X = 0.4f;
 		_animation.Y = 0.4f;
