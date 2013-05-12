@@ -85,17 +85,25 @@ public class SpriteAnimation  extends GameObject
 	}
 	
 	// kazda kulka by mela mit svuj pomer velikosti ... individualne k bitmape
-	private void setSizeRatio(float ratio)
+	public void setSizeRatio(float ratio)
 	{
 		_ratio = ratio;
 		
 		for(int i = 0; i < vertices.length;i++)
 			vertices[i]*=ratio;
+		/*
+		for(int i = 0; i < texture.length;i++)
+		{
+			if ((i % 2)==0)
+				texture[i]*=ratio;
+			else
+				texture[i]*=ratio;
+		}*/
 		
 		Width = 1.0f*ratio;
 		Height = 1.0f*ratio;
 	}
-	
+	/*
 	public void setScale(float sx, float sy)
 	{
 		_scaleX = sx;
@@ -108,7 +116,7 @@ public class SpriteAnimation  extends GameObject
 			else
 				texture[i]*=sx;
 		}
-	}
+	}*/
 	
 	// nastav parametry
 	public void setFramesParameter(int frames, int tw,int fw, int fh)
@@ -168,9 +176,8 @@ public class SpriteAnimation  extends GameObject
         gl.glMatrixMode(GL10.GL_MODELVIEW); 
         gl.glLoadIdentity(); 
         gl.glPushMatrix(); 
-        gl.glScalef(_scaleX, _scaleY, 0f);
-        //gl.glScalef(0.25f, 0.25f, 0f);
-        gl.glTranslatef(X/_scaleX, Y/_scaleY*SpatterEngine.screen_ratio, 0f); 
+        //gl.glScalef(_scaleX, _scaleY, 0f);      
+        gl.glTranslatef(X, Y, 0f); 
 
         gl.glMatrixMode(GL10.GL_TEXTURE); 
         gl.glLoadIdentity();
