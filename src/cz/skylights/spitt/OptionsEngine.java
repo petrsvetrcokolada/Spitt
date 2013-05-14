@@ -23,6 +23,13 @@ public class OptionsEngine {
     public static final int explose_animation2 = R.drawable.explose2;
     public static final int particle = R.drawable.particle;
     public static final int star = R.drawable.star;
+    public static final int tile1 = R.drawable.tile1;
+    public static final int tile2 = R.drawable.tile2;
+    public static final int tile3 = R.drawable.tile3;
+    public static final int tile4 = R.drawable.tile4;
+    public static final int tile5 = R.drawable.tile5;
+    public static final int tile6 = R.drawable.tile6;
+    public static final int tile7 = R.drawable.tile7;
     // text
     public static final int text_characters = R.drawable.arial;
     // player
