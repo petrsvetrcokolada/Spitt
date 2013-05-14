@@ -49,21 +49,31 @@ public class ScrollLayer {
 		   
     TextureManager _textures;
     ArrayList<Sprite> _layer=new ArrayList<Sprite>();
-    ArrayList<ScrollTile> _tiles = new ArrayList<ScrollTile>();
+    ArrayList<ScrollTile> _tiles_left = new ArrayList<ScrollTile>();
+    ArrayList<ScrollTile> _tiles_right = new ArrayList<ScrollTile>();
 
     public ScrollLayer(TextureManager textures, float speed) 
     { 
     	_textures = textures;
     	_speed = speed;
         //
-    	_textures.AddTexture(SpatterEngine.tile1);
-    	_textures.AddTexture(SpatterEngine.tile2);
-    	_textures.AddTexture(SpatterEngine.tile3);
-    	_textures.AddTexture(SpatterEngine.tile4);
-    	_textures.AddTexture(SpatterEngine.tile5);
-    	_textures.AddTexture(SpatterEngine.tile6);
-    	_textures.AddTexture(SpatterEngine.tile7);
+    	_textures.AddTexture(SpatterEngine.lev1_11);
+    	_textures.AddTexture(SpatterEngine.lev1_12);
+    	_textures.AddTexture(SpatterEngine.lev1_21);
+    	_textures.AddTexture(SpatterEngine.lev1_22);
+    	_textures.AddTexture(SpatterEngine.lev1_31);
+    	_textures.AddTexture(SpatterEngine.lev1_32);
+    	_textures.AddTexture(SpatterEngine.lev1_41);
+    	_textures.AddTexture(SpatterEngine.lev1_42);
+    	_textures.AddTexture(SpatterEngine.lev1_51);
+    	_textures.AddTexture(SpatterEngine.lev1_52);
+    
 
+    	for(int i = 0; i < vertices.length;i++)
+    	{
+    		vertices[i]=vertices[i]*0.5f;
+    	}
+    	
     	/// alokace bufferu
     	ByteBuffer byteBuf = ByteBuffer.allocateDirect(vertices.length * 4); 
         byteBuf.order(ByteOrder.nativeOrder()); 
@@ -90,24 +100,40 @@ public class ScrollLayer {
     	{
     		ScrollTile t = null;
     		if (txt == 0)    			
-    			t = new ScrollTile(_textures.GetTexture(SpatterEngine.tile1),3);
+    			t = new ScrollTile(_textures.GetTexture(SpatterEngine.lev1_11),3);
     		if (txt == 1)    			
-    			t = new ScrollTile(_textures.GetTexture(SpatterEngine.tile2),3);
+    			t = new ScrollTile(_textures.GetTexture(SpatterEngine.lev1_21),3);
     		if (txt == 2)    			
-    			t = new ScrollTile(_textures.GetTexture(SpatterEngine.tile3),3);
+    			t = new ScrollTile(_textures.GetTexture(SpatterEngine.lev1_31),3);
     		if (txt == 3)    			
-    			t = new ScrollTile(_textures.GetTexture(SpatterEngine.tile4),3);
+    			t = new ScrollTile(_textures.GetTexture(SpatterEngine.lev1_41),3);
     		if (txt == 4)    			
-    			t = new ScrollTile(_textures.GetTexture(SpatterEngine.tile5),3);
-    		if (txt == 5)    			
-    			t = new ScrollTile(_textures.GetTexture(SpatterEngine.tile6),3);
-    		if (txt == 6)    			
-    			t = new ScrollTile(_textures.GetTexture(SpatterEngine.tile7),3);
-    		t.Offset = i*1.0f;
+    			t = new ScrollTile(_textures.GetTexture(SpatterEngine.lev1_51),3);
+    		t.Offset = i*0.5f;
     		txt++;
-    		if (txt == 7)
+    		if (txt == 4)
     			txt = 0;
-    		_tiles.add(t);
+    		_tiles_left.add(t);    	
+    	}
+    	txt=0;
+    	for(int i =0; i < 25; i++)    		
+    	{
+    		ScrollTile t = null;
+    		if (txt == 0)    			
+    			t = new ScrollTile(_textures.GetTexture(SpatterEngine.lev1_12),3);
+    		if (txt == 1)    			
+    			t = new ScrollTile(_textures.GetTexture(SpatterEngine.lev1_22),3);
+    		if (txt == 2)    			
+    			t = new ScrollTile(_textures.GetTexture(SpatterEngine.lev1_32),3);
+    		if (txt == 3)    			
+    			t = new ScrollTile(_textures.GetTexture(SpatterEngine.lev1_42),3);
+    		if (txt == 4)    			
+    			t = new ScrollTile(_textures.GetTexture(SpatterEngine.lev1_52),3);
+    		t.Offset = i*0.5f;
+    		txt++;
+    		if (txt == 4)
+    			txt = 0;
+    		_tiles_right.add(t);
     	}
     	/*
     	t = new ScrollTile(_textures.GetTexture(SpatterEngine.tile2),3);
@@ -122,7 +148,7 @@ public class ScrollLayer {
 		if (_offset == Float.MAX_VALUE)
 			_offset=0;	
 		
-		if (_local_offset > 1.0f)
+		if (_local_offset > 0.5f)
 		{
 			_begin_index++;
 			_local_offset = 0.0f;				
@@ -137,16 +163,50 @@ public class ScrollLayer {
 
     public void draw(GL10 gl) 
     { 
-		//gl.glScalef(1f, SpatterEngine.screen_ratio, 1f);
-		for(int i = _begin_index; i < _begin_index+3; i+=1f)
+		
+		for(int i = _begin_index; i < _begin_index+5; i+=1)
 		{
 			gl.glMatrixMode(GL10.GL_MODELVIEW);
 			gl.glLoadIdentity();
 			gl.glPushMatrix();
 			
-	    	ScrollTile t = _tiles.get(i);
+	    	ScrollTile t = _tiles_left.get(i);
 	    	int txID = t.Texture();	    
 			gl.glTranslatef(0f, _offset+t.Offset, 0f);
+			
+			gl.glMatrixMode(GL10.GL_TEXTURE);
+			gl.glLoadIdentity();
+			gl.glTranslatef(0.0f, 0.0f, 0.0f);	    
+	    	
+	        gl.glBindTexture(GL10.GL_TEXTURE_2D, txID); 
+	
+	        gl.glFrontFace(GL10.GL_CCW); 
+	        gl.glEnable(GL10.GL_CULL_FACE); 
+	        gl.glCullFace(GL10.GL_BACK); 
+	
+	        gl.glEnableClientState(GL10.GL_VERTEX_ARRAY); 
+	        gl.glEnableClientState(GL10.GL_TEXTURE_COORD_ARRAY); 
+	
+	        gl.glVertexPointer(3, GL10.GL_FLOAT, 0, vertexBuffer); 
+	        gl.glTexCoordPointer(2, GL10.GL_FLOAT, 0, textureBuffer); 
+	
+	        gl.glDrawElements(GL10.GL_TRIANGLES, indices.length, 
+	                          GL10.GL_UNSIGNED_BYTE, indexBuffer); 
+	
+	        gl.glDisableClientState(GL10.GL_VERTEX_ARRAY); 
+	        gl.glDisableClientState(GL10.GL_TEXTURE_COORD_ARRAY); 
+	        gl.glDisable(GL10.GL_CULL_FACE);
+		}
+		
+		for(int i = _begin_index; i < _begin_index+5; i+=1)
+		{
+			gl.glMatrixMode(GL10.GL_MODELVIEW);
+			gl.glLoadIdentity();
+			gl.glPushMatrix();
+			
+	    	ScrollTile t = _tiles_right.get(i);
+	    	int txID = t.Texture();	    
+			gl.glTranslatef(0.5f, _offset+t.Offset, 0f);
 			
 			gl.glMatrixMode(GL10.GL_TEXTURE);
 			gl.glLoadIdentity();

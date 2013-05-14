@@ -23,13 +23,17 @@ public class OptionsEngine {
     public static final int explose_animation2 = R.drawable.explose2;
     public static final int particle = R.drawable.particle;
     public static final int star = R.drawable.star;
-    public static final int tile1 = R.drawable.tile1;
-    public static final int tile2 = R.drawable.tile2;
-    public static final int tile3 = R.drawable.tile3;
-    public static final int tile4 = R.drawable.tile4;
-    public static final int tile5 = R.drawable.tile5;
-    public static final int tile6 = R.drawable.tile6;
-    public static final int tile7 = R.drawable.tile7;
+    // lev1 - background
+    public static final int lev1_11 = R.drawable.l11;
+    public static final int lev1_12 = R.drawable.l12;
+    public static final int lev1_21 = R.drawable.l21;
+    public static final int lev1_22 = R.drawable.l22;
+    public static final int lev1_31 = R.drawable.l31;
+    public static final int lev1_32 = R.drawable.l32;
+    public static final int lev1_41 = R.drawable.l41;
+    public static final int lev1_42 = R.drawable.l42;
+    public static final int lev1_51 = R.drawable.l51;
+    public static final int lev1_52 = R.drawable.l52;
     // text
     public static final int text_characters = R.drawable.arial;
     // player
