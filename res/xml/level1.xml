@@ -1,10 +1,46 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<rootelement1>
-<subelement>
- Hello XML Sub-Element 1
-</subelement>
-<subelement>
- Hello XML Sub-Element 2
- <subsubelement>Sub Sub Element</subsubelement>
-</subelement>
-</rootelement1>
+<LEVEL>
+	<LAYER id="0">
+    	    <SPEED>0.1</SPEED>
+    	    <OBJECTS>
+    	        <OBJECT type="bg" opaque="3">
+    	            <SPEED>0.1</SPEED>
+    	            <TRAJECTORY>LineY</TRAJECTORY>
+    	        </OBJECT>
+    	    </OBJECTS>
+    	</LAYER>
+    	<LAYER id="1">
+    	    <OBJECTS>
+    	        <OBJECT type="gr" id="1000">
+    	            <SPEED>0.1</SPEED>
+    	            <TRAJECTORY>LineY</TRAJECTORY>
+    	            <START_TIME>0</START_TIME>
+    	            <X_POS>0.4</X_POS>
+    	        </OBJECT>
+    	    </OBJECTS>
+    	</LAYER>
+    	<LAYER id="2">
+    	    <OBJECTS>
+    	        <OBJECT type="enemy" id="2000">
+    	            <SPEED>0.1</SPEED>
+    	            <SOURCE></SOURCE>
+    	            <TRAJECTORY>LineY</TRAJECTORY>
+    	            <START_TIME>0</START_TIME>
+    	            <X_POS>0.4</X_POS>
+    	            <MOVE_DELAY>1000</MOVE_DELAY>
+    	            <STRENGH></STRENGH>
+    	        </OBJECT>
+    	    </OBJECTS>
+    	</LAYER>
+    	<LAYER id="3">
+			<OBJECTS>
+    	        <OBJECT type="gr">
+    	            <SPEED>0.1</SPEED>
+    	            <SOURCE></SOURCE>
+    	            <TRAJECTORY>LineY</TRAJECTORY>
+    	            <START_TIME>0</START_TIME>
+    	            <X_POS>0.4</X_POS>
+    	        </OBJECT>
+    	    </OBJECTS>
+    	</LAYER>    	
+</LEVEL>
