@@ -1,17 +1,17 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <LEVEL>
-	<LAYER id="0">
+	<LAYER id="0" name="SCROLL">
     	    <SPEED>0.1</SPEED>
     	    <OBJECTS>
-    	        <OBJECT type="bg" opaque="3">
+    	        <OBJECT type="background" opaque="3">
     	            <SPEED>0.1</SPEED>
     	            <TRAJECTORY>LineY</TRAJECTORY>
     	        </OBJECT>
     	    </OBJECTS>
     	</LAYER>
-    	<LAYER id="1">
+    	<LAYER id="1" name="BGOBJ">
     	    <OBJECTS>
-    	        <OBJECT type="gr" id="1000">
+    	        <OBJECT type="gr_obj">
     	            <SPEED>0.1</SPEED>
     	            <TRAJECTORY>LineY</TRAJECTORY>
     	            <START_TIME>0</START_TIME>
@@ -19,11 +19,11 @@
     	        </OBJECT>
     	    </OBJECTS>
     	</LAYER>
-    	<LAYER id="2">
+    	<LAYER id="2" name="COLISION">
     	    <OBJECTS>
-    	        <OBJECT type="enemy" id="2000">
+    	        <OBJECT type="enemy">
+    	            <TYPE_ID>mina01</TYPE_ID>
     	            <SPEED>0.1</SPEED>
-    	            <SOURCE></SOURCE>
     	            <TRAJECTORY>LineY</TRAJECTORY>
     	            <START_TIME>0</START_TIME>
     	            <X_POS>0.4</X_POS>
@@ -32,11 +32,10 @@
     	        </OBJECT>
     	    </OBJECTS>
     	</LAYER>
-    	<LAYER id="3">
+    	<LAYER id="3" name="FOREGROUND">
 			<OBJECTS>
-    	        <OBJECT type="gr">
+    	        <OBJECT type="gr_obj">
     	            <SPEED>0.1</SPEED>
-    	            <SOURCE></SOURCE>
     	            <TRAJECTORY>LineY</TRAJECTORY>
     	            <START_TIME>0</START_TIME>
     	            <X_POS>0.4</X_POS>
