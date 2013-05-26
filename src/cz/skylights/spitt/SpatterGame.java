@@ -56,7 +56,7 @@ public class SpatterGame extends Activity {
     	float rozdilx=Math.abs(_lastx - x);
     	
     	//LogFile.Write("Rozdil:"+rozdilx);
-    	if (_lastx > 0 && rozdilx <= 1.0f)
+    	if (_lastx > 0 && rozdilx <= 3.0f)
     		nomove = true;
     	    	
     	float fl_x = (float)x/(float)SpatterEngine.display.getWidth(); // /SpatterEngine.scaleX;

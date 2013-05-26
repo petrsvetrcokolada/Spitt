@@ -14,9 +14,7 @@ public class SpatterMenu extends Activity {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.menu);
-        
-        
+        setContentView(R.layout.menu);           
         
         SpatterEngine.soundThread = new Thread()
     	{

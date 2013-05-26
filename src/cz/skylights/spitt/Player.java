@@ -58,7 +58,7 @@ public class Player extends GameObject {
     ///
     public Player() 
     {         
-    	X = 0.0f;
+    	X = 0.375f;
     	Width = 0.25f;
     	Height = 0.25f;
     	_lastFire = System.currentTimeMillis();

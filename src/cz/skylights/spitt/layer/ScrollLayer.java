@@ -28,8 +28,8 @@ public class ScrollLayer {
     private float vertices[] = { 
         0.0f, 0.0f, 0.0f, 
         1.0f, 0.0f, 0.0f, 
-        1.0f, 1.0f, 0.0f, 
-        0.0f, 1.0f, 0.0f, 
+        1.0f, 0.5f, 0.0f, 
+        0.0f, 0.5f, 0.0f, 
     }; // vrcholy pozadi
     private float texture[] = { 
         0.0f, 1.0f, 
@@ -57,6 +57,7 @@ public class ScrollLayer {
     	_textures = textures;
     	_speed = speed;
         //
+    	/*
     	_textures.AddTexture(SpatterEngine.lev1_11);
     	_textures.AddTexture(SpatterEngine.lev1_12);
     	_textures.AddTexture(SpatterEngine.lev1_21);
@@ -67,12 +68,19 @@ public class ScrollLayer {
     	_textures.AddTexture(SpatterEngine.lev1_42);
     	_textures.AddTexture(SpatterEngine.lev1_51);
     	_textures.AddTexture(SpatterEngine.lev1_52);
-    
-
+    	*/
+    	//
+    	_textures.AddTexture("level1a");
+    	_textures.AddTexture("level1b");
+    	_textures.AddTexture("level1c");
+    	_textures.AddTexture("level1d");
+    	_textures.AddTexture("level1e");    	    
+        /*
     	for(int i = 0; i < vertices.length;i++)
     	{
     		vertices[i]=vertices[i]*0.5f;
     	}
+    	*/
     	
     	/// alokace bufferu
     	ByteBuffer byteBuf = ByteBuffer.allocateDirect(vertices.length * 4); 
@@ -98,6 +106,7 @@ public class ScrollLayer {
     	int txt = 0;
     	for(int i =0; i < 25; i++)    		
     	{
+    		/*
     		ScrollTile t = null;
     		if (txt == 0)    			
     			t = new ScrollTile(_textures.GetTexture(SpatterEngine.lev1_11),3);
@@ -109,12 +118,25 @@ public class ScrollLayer {
     			t = new ScrollTile(_textures.GetTexture(SpatterEngine.lev1_41),3);
     		if (txt == 4)    			
     			t = new ScrollTile(_textures.GetTexture(SpatterEngine.lev1_51),3);
+    			*/
+    		ScrollTile t = null;
+    		if (txt == 0)    			
+    			t = new ScrollTile(_textures.GetTexture(SpatterEngine.level1a),3);
+    		if (txt == 1)    			
+    			t = new ScrollTile(_textures.GetTexture(SpatterEngine.level1b),3);
+    		if (txt == 2)    			
+    			t = new ScrollTile(_textures.GetTexture(SpatterEngine.level1c),3);
+    		if (txt == 3)    			
+    			t = new ScrollTile(_textures.GetTexture(SpatterEngine.level1d),3);
+    		if (txt == 4)    			
+    			t = new ScrollTile(_textures.GetTexture(SpatterEngine.level1e),3);
     		t.Offset = i*0.5f;
     		txt++;
     		if (txt == 4)
     			txt = 0;
     		_tiles_left.add(t);    	
     	}
+    	/*
     	txt=0;
     	for(int i =0; i < 25; i++)    		
     	{
@@ -134,7 +156,8 @@ public class ScrollLayer {
     		if (txt == 4)
     			txt = 0;
     		_tiles_right.add(t);
-    	}
+    	}*/
+    	
     	/*
     	t = new ScrollTile(_textures.GetTexture(SpatterEngine.tile2),3);
     	_tiles.add(t);
@@ -162,8 +185,7 @@ public class ScrollLayer {
 	}
 
     public void draw(GL10 gl) 
-    { 
-		
+    { 		
 		for(int i = _begin_index; i < _begin_index+5; i+=1)
 		{
 			gl.glMatrixMode(GL10.GL_MODELVIEW);
@@ -197,7 +219,7 @@ public class ScrollLayer {
 	        gl.glDisableClientState(GL10.GL_TEXTURE_COORD_ARRAY); 
 	        gl.glDisable(GL10.GL_CULL_FACE);
 		}
-		
+		/*
 		for(int i = _begin_index; i < _begin_index+5; i+=1)
 		{
 			gl.glMatrixMode(GL10.GL_MODELVIEW);
@@ -231,5 +253,6 @@ public class ScrollLayer {
 	        gl.glDisableClientState(GL10.GL_TEXTURE_COORD_ARRAY); 
 	        gl.glDisable(GL10.GL_CULL_FACE);
 		}
+		*/
     }     
 }

@@ -24,16 +24,11 @@ public class OptionsEngine {
     public static final int particle = R.drawable.particle;
     public static final int star = R.drawable.star;
     // lev1 - background
-    public static final int lev1_11 = R.drawable.l11;
-    public static final int lev1_12 = R.drawable.l12;
-    public static final int lev1_21 = R.drawable.l21;
-    public static final int lev1_22 = R.drawable.l22;
-    public static final int lev1_31 = R.drawable.l31;
-    public static final int lev1_32 = R.drawable.l32;
-    public static final int lev1_41 = R.drawable.l41;
-    public static final int lev1_42 = R.drawable.l42;
-    public static final int lev1_51 = R.drawable.l51;
-    public static final int lev1_52 = R.drawable.l52;
+    public static final int level1a = R.drawable.level1a;
+    public static final int level1b = R.drawable.level1b;
+    public static final int level1c = R.drawable.level1c;
+    public static final int level1d = R.drawable.level1d;
+    public static final int level1e = R.drawable.level1e;
     // text
     public static final int text_characters = R.drawable.arial;
     // player

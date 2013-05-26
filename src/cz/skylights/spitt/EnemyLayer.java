@@ -21,8 +21,8 @@ public class EnemyLayer {
 	{
 		_enemies = new ArrayList<Enemy>();
 		_allenemies = new ArrayList<Enemy>();
-		_textures.AddTexture(SpatterEngine.enemy);
-		_textures.AddTexture(SpatterEngine.enemy1);		
+		_textures.AddTexture("enemy");
+		_textures.AddTexture("enemy1");		
 	}
 	
 	public void loadTextures(GL10 gl, Context context)

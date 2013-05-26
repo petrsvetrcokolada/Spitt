@@ -5,8 +5,6 @@ import java.util.ArrayList;
 import javax.microedition.khronos.egl.EGLConfig;
 import javax.microedition.khronos.opengles.GL10;
 
-
-
 import cz.skylights.spitt.layer.ScrollLayer;
 import cz.skylights.spitt.particle.ParticleCreator;
 import cz.skylights.spitt.particle.ParticleEmitter;
@@ -51,11 +49,11 @@ public class SpatterRenderer implements Renderer {
 		_background2 = new BackgroundLayer(3*SpatterEngine.scroll_bg2/2);
 		_background3 = new BackgroundLayer(5*SpatterEngine.scroll_bg2/4);		
 		_enemyLayer = new EnemyLayer();
-		_textures.AddTexture(SpatterEngine.particle);
-		_textures.AddTexture(SpatterEngine.star);
-		_textures.AddTexture(SpatterEngine.explose_animation);
-		_textures.AddTexture(SpatterEngine.explose_animation1);
-		_textures.AddTexture(SpatterEngine.explose_animation2);
+		_textures.AddTexture("particle");
+		_textures.AddTexture("star");
+		_textures.AddTexture("explose");
+		_textures.AddTexture("explose1");
+		_textures.AddTexture("explose2");
 		
 		_scroll = new ScrollLayer(_textures, SpatterEngine.scroll_bg1);
 		
@@ -104,9 +102,9 @@ public class SpatterRenderer implements Renderer {
 		gl.glBlendFunc(GL10.GL_ONE, GL10.GL_ONE);
 		// BACKGROUND LAYER
 		// scrolling background
-		_background1.scrollBackground(gl);
-		_background2.scrollBackground(gl);
-		_background3.scrollBackground(gl);
+		//_background1.scrollBackground(gl);
+		//_background2.scrollBackground(gl);
+		//_background3.scrollBackground(gl);
 		gl.glDisable(GL10.GL_BLEND);
 		_scroll.scrollBackground(gl);
 		gl.glEnable(GL10.GL_BLEND);
@@ -120,17 +118,19 @@ public class SpatterRenderer implements Renderer {
 		_particlesx.draw(gl);			
 		
 		//gl.glBlendFunc( GL10.GL_SRC_ALPHA, GL10.GL_ONE_MINUS_SRC_ALPHA );						 
-		//
 		// ENEMY LAYER
+		gl.glBlendFunc( GL10.GL_SRC_ALPHA, GL10.GL_ONE_MINUS_SRC_ALPHA );
 		_enemyLayer.move();
 		_enemyLayer.draw(gl);
 		// ANIMATION - vzbuch apod
+		gl.glEnable(GL10.GL_BLEND);
+		gl.glBlendFunc(GL10.GL_ONE, GL10.GL_ONE); 
 		_animation.animation();
 		_animation.draw(gl);
 		// explosions
 		_explosions.animation();
 		_explosions.draw(gl);
-		// PLAYER
+		// PLAYER		
 		_player.movePlayer(gl);
 		//
 		_text.draw(gl);
@@ -164,6 +164,9 @@ public class SpatterRenderer implements Renderer {
 	//
 	public void onSurfaceCreated(GL10 gl, EGLConfig config) 
 	{
+		int[] max = new int[1];
+		gl.glGetIntegerv(GL10.GL_MAX_TEXTURE_SIZE, max, 0); 
+		
 		///
 		gl.glEnable(GL10.GL_TEXTURE_2D);
 		gl.glClearDepthf(1.0f);
@@ -230,6 +233,10 @@ public class SpatterRenderer implements Renderer {
 			for(int f = 0; f < fire.size();f++)
 			{
 			  WeaponFire wf = fire.get(f);
+			  if (wf.CheckCollision(en)==true)
+			  {
+				  
+			  }
 			}
 		}
 	}

@@ -41,7 +41,63 @@ public class ExplosionEmitter
 		spr.setTexture(txID);
 		spr.X = X;
 		spr.Y = Y;
-		spr.setFramesParameter(16, _textures.GetBitmap(SpatterEngine.explose_animation).getWidth(),128, 128);
+		spr.setSizeRatio(0.25f);
+		spr.setFramesParameter(16, _textures.GetBitmap(SpatterEngine.explose_animation).getWidth(),128, 128);		
+		spr.setFrame(0);
+		_animations.add(spr);
+	}
+	
+	// vloz explosi
+	public void setBigExplosion(float X, float Y)
+	{
+		SpriteAnimation big = new SpriteAnimation(false);		
+		Integer rand = generator.nextInt(9);
+		int txID = _array.get(rand);
+		big.setTexture(txID);
+		big.setSizeRatio(0.4f);
+		big.X = X;
+		big.Y = Y;		
+		big.setFramesParameter(16, _textures.GetBitmap(SpatterEngine.explose_animation).getWidth(),128, 128);		
+		big.setFrame(0);
+		_animations.add(big);
+		SpriteAnimation spr = new SpriteAnimation(false);		
+		rand = generator.nextInt(9);
+		txID = _array.get(rand);
+		spr.setTexture(txID);
+		spr.setSizeRatio(0.2f);
+		spr.X = X;
+		spr.Y = Y;
+		spr.setFramesParameter(16, _textures.GetBitmap(SpatterEngine.explose_animation).getWidth(),128, 128);		
+		spr.setFrame(0);
+		_animations.add(spr);
+		spr = new SpriteAnimation(false);		
+		rand = generator.nextInt(9);
+		txID = _array.get(rand);
+		spr.setTexture(txID);
+		spr.setSizeRatio(0.2f);
+		spr.X = X+big.Width-spr.Width;
+		spr.Y = Y;		
+		spr.setFramesParameter(16, _textures.GetBitmap(SpatterEngine.explose_animation).getWidth(),128, 128);		
+		spr.setFrame(0);
+		_animations.add(spr);
+		spr = new SpriteAnimation(false);		
+		rand = generator.nextInt(9);
+		txID = _array.get(rand);
+		spr.setTexture(txID);
+		spr.setSizeRatio(0.2f);
+		spr.X = X;
+		spr.Y = Y+big.Height-spr.Height;		
+		spr.setFramesParameter(16, _textures.GetBitmap(SpatterEngine.explose_animation).getWidth(),128, 128);		
+		spr.setFrame(0);
+		_animations.add(spr);
+		spr = new SpriteAnimation(false);		
+		rand = generator.nextInt(9);
+		txID = _array.get(rand);
+		spr.setTexture(txID);
+		spr.setSizeRatio(0.2f);
+		spr.X = X+big.Width-spr.Width;
+		spr.Y = Y+big.Height-spr.Height;		
+		spr.setFramesParameter(16, _textures.GetBitmap(SpatterEngine.explose_animation).getWidth(),128, 128);		
 		spr.setFrame(0);
 		_animations.add(spr);
 	}
@@ -54,7 +110,7 @@ public class ExplosionEmitter
 		{
 		  if (switch_pos== false)
 		  {
-			  this.setExplosion(0.2f, 0.2f);
+			  this.setBigExplosion(0.2f, 0.2f);
 			  switch_pos = true;
 		  }
 		  else			 
