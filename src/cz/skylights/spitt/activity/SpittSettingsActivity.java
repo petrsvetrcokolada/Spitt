@@ -6,7 +6,9 @@ import java.io.IOException;
 import org.xmlpull.v1.XmlPullParserException;
 
 import cz.skylights.spitt.R;
+import cz.skylights.spitt.TextureManager;
 import cz.skylights.spitt.model.PlayerModel;
+import cz.skylights.spitt.model.ResourceManager;
 import cz.skylights.spitt.xml.GameDataParser;
 import android.os.Bundle;
 import android.os.Handler;
@@ -20,6 +22,10 @@ public class SpittSettingsActivity extends Activity {
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.settings);
+		
+		//getResources().
+		
+		ResourceManager res = new ResourceManager();
 		
 		GameDataParser parser = new GameDataParser(this);
 		try {

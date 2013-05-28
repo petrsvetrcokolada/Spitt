@@ -13,32 +13,56 @@ public class GameModel extends AbstarctModel{
 	
 	public static final String elName = "GAME";
 	
+	private EpisodeModel episoda;
 	private List<EpisodeModel> episodes;
+	private ResourceManager resources;
 	
-
+	Integer episodeId;
+	String episodeName;
+	
 	public GameModel(GameDataParser gameDataParser) {
 		try {
 			parse(gameDataParser);
 		} catch (XmlPullParserException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+	}
+	
+
+	public List<EpisodeModel> getEpisodes() {
+		return episodes;
+	}
+
+	public void setEpisodes(List<EpisodeModel> episodes) {
+		this.episodes = episodes;
 	}
 	
 	@Override
 	protected void onStartElement() {
 		
+		if("EPISODE".equals(this.xmlResParser.getName())){
+			for(int i = 0, n = this.xmlResParser.getAttributeCount(); i < n; ++i) {								
+				if(this.xmlResParser.getAttributeName(i).equals("id")){
+					episodeId = this.xmlResParser.getAttributeIntValue(i, 0);
+					break;
+				}
+				if(this.xmlResParser.getAttributeName(i).equals("name")){
+					episodeName = this.xmlResParser.getAttributeValue(i);				
+					break;
+				}
+			}
+			episoda = new EpisodeModel(parser,episodeId,episodeName);
+		}
 	}
 	@Override
 	protected boolean onEndElement() {
 		if (elName.equals(this.xmlResParser.getName())) {
 			return false;
 		} 
-		else if("LEVEL".equals(this.xmlResParser.getName())){
-			//gameProgress.add(position);
+		else if("EPISODE".equals(this.xmlResParser.getName())){
+			episodes.add(episoda);
 		}
 		
 		return true;

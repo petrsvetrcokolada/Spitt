@@ -4,6 +4,22 @@
     	    <SPEED>0.1</SPEED>
     	    <OBJECTS>
     	        <OBJECT type="background" opaque="3">
+    	            <TYPE_ID>pozadi1</TYPE_ID>
+    	            <SPEED>0.1</SPEED>    	        
+    	            <TRAJECTORY>LineY</TRAJECTORY>
+    	        </OBJECT>
+    	        <OBJECT type="background" opaque="1">
+    	            <TYPE_ID>tile1</TYPE_ID>
+    	            <SPEED>0.1</SPEED>
+    	            <TRAJECTORY>LineY</TRAJECTORY>
+    	        </OBJECT>
+    	        <OBJECT type="background" opaque="1">
+    	            <TYPE_ID>tile2</TYPE_ID>
+    	            <SPEED>0.1</SPEED>
+    	            <TRAJECTORY>LineY</TRAJECTORY>
+    	        </OBJECT>
+    	        <OBJECT type="background" opaque="1">
+    	            <TYPE_ID>tile2</TYPE_ID>
     	            <SPEED>0.1</SPEED>
     	            <TRAJECTORY>LineY</TRAJECTORY>
     	        </OBJECT>
@@ -12,6 +28,10 @@
     	<LAYER id="1" name="BGOBJ">
     	    <OBJECTS>
     	        <OBJECT type="gr_obj">
+    	            <TYPE_ID>asteroid1</TYPE_ID>
+    	            <WIDTH></WIDTH>
+    	            <HEIGHT></HEIGHT>
+    	            <FRAMES></FRAMES>
     	            <SPEED>0.1</SPEED>
     	            <TRAJECTORY>LineY</TRAJECTORY>
     	            <START_TIME>0</START_TIME>
@@ -22,9 +42,14 @@
     	<LAYER id="2" name="COLISION">
     	    <OBJECTS>
     	        <OBJECT type="enemy">
-    	            <TYPE_ID>mina01</TYPE_ID>
+    	            <TYPE_ID>enemy1</TYPE_ID>
+    	            <WIDTH>130</WIDTH>
+    	            <HEIGHT>120</HEIGHT>
+    	            <FRAMES>6</FRAMES>
     	            <SPEED>0.1</SPEED>
     	            <TRAJECTORY>LineY</TRAJECTORY>
+    	            <WEAPON_TYPE></WEAPON_TYPE>
+    	            <WEAPON_TRAJECTORY></WEAPON_TRAJECTORY>
     	            <START_TIME>0</START_TIME>
     	            <X_POS>0.4</X_POS>
     	            <MOVE_DELAY>1000</MOVE_DELAY>
@@ -35,6 +60,7 @@
     	<LAYER id="3" name="FOREGROUND">
 			<OBJECTS>
     	        <OBJECT type="gr_obj">
+    	            <TYPE_ID>plosina1</TYPE_ID>
     	            <SPEED>0.1</SPEED>
     	            <TRAJECTORY>LineY</TRAJECTORY>
     	            <START_TIME>0</START_TIME>

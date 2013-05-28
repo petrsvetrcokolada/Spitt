@@ -102,9 +102,7 @@ public class PlayerModel extends AbstarctModel{
 			}			
 		}
 		else if("EPIZODE".equals(this.xmlResParser.getName())){
-			
-			//position = new GamePosition();
-			
+
 			for(int i = 0, n = this.xmlResParser.getAttributeCount(); i < n; ++i) {								
 				if(this.xmlResParser.getAttributeName(i).equals("id")){
 					 episodeId = this.xmlResParser.getAttributeIntValue(i, 0);

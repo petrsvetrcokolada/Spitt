@@ -17,10 +17,12 @@ public class LevelModel extends AbstarctModel{
 	private String type;
 	private String name;
 	private String resource;
-	
+	private String bigIcon;
+	private String smallIcon;
 	
 
-	public LevelModel(GameDataParser gameDataParser) {
+	public LevelModel(GameDataParser gameDataParser,Integer levelId) {
+		levelNum=levelId;
 		try {
 			parse(gameDataParser);
 		} catch (XmlPullParserException e) {
@@ -32,30 +34,6 @@ public class LevelModel extends AbstarctModel{
 		}
 	}
 	
-	
-	@Override
-	protected void onStartElement() {
-		
-		
-	}
-	@Override
-	protected boolean onEndElement() {
-		if (elName.equals(this.xmlResParser.getName())) {
-			return false;
-		} 
-		else if("LEVEL".equals(this.xmlResParser.getName())){
-			//gameProgress.add(position);
-		}
-		
-		return true;
-	}
-	@Override
-	protected void onCharacters() {
-		
-		
-	}
-
-
 	public Integer getLevelNum() {
 		return levelNum;
 	}
@@ -93,6 +71,56 @@ public class LevelModel extends AbstarctModel{
 
 	public void setResource(String resource) {
 		this.resource = resource;
+	}
+	
+	
+	public String getBigIcon() {
+		return bigIcon;
+	}
+
+
+	public void setBigIcon(String bigIcon) {
+		this.bigIcon = bigIcon;
+	}
+
+
+	public String getSmallIcon() {
+		return smallIcon;
+	}
+
+
+	public void setSmallIcon(String smallIcon) {
+		this.smallIcon = smallIcon;
+	}
+
+
+	@Override
+	protected void onStartElement() {
+		
+		
+	}
+	@Override
+	protected boolean onEndElement() {
+		if (elName.equals(this.xmlResParser.getName())) {
+			return false;
+		} 
+		
+		return true;
+	}
+	@Override
+	protected void onCharacters() {
+		if("NAME".equals(currEl)){
+			this.setName(xmlResParser.getText());
+		}else if ("TYPE".equals(currEl)){
+			this.setType(xmlResParser.getText());
+		}else if ("RESOURCE".equals(currEl)){
+			this.setResource(xmlResParser.getText());
+		}else if ("BIG_ICON".equals(currEl)){
+			this.setBigIcon(xmlResParser.getText());
+		}else if ("SMALL_ICON".equals(currEl)){
+			this.setSmallIcon(xmlResParser.getText());
+		}
+		
 	}
 
 }

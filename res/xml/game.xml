@@ -1,29 +1,30 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <GAME>
-	<EPIZODE id="1">
-		<GRAPHICTYPE>tech</GRAPHICTYPE>
-		<LEVELS>
-		    <LEVEL id="0">
+	<EPIZODE id="1" name="All will be wreck peaces">
+		 <LEVEL id="0">
 				<NAME>PROLOG</NAME>
 				<TYPE>intro</TYPE>
 				<RESOURCE>strip0.png</RESOURCE>
+				<BIG_ICON>strip_b.png</BIG_ICON>
+				<SMALL_ICON>strip_s.png</SMALL_ICON>
 			</LEVEL>
 			<LEVEL id="1">
 			    <LEVELNUM>1</LEVELNUM>
 				<NAME>EXODUS</NAME>
 				<TYPE>game</TYPE>
 				<RESOURCE>level1.xml</RESOURCE>
+				<BIG_ICON>tplanet01_b.png</BIG_ICON>
+				<SMALL_ICON>tplanet01_s.png</SMALL_ICON>
 			</LEVEL>
 			 <LEVEL id="3">
 				<NAME>UNKNOWN</NAME>
 				<TYPE>intro</TYPE>
 				<RESOURCE>level2.xml</RESOURCE>
-			</LEVEL>
-		</LEVELS>
+				<BIG_ICON>strip_b.png</BIG_ICON>
+				<SMALL_ICON>strip_s.png</SMALL_ICON>
+			</LEVEL>   
 	</EPIZODE>
-	<EPIZODE id="2">
-		<GRAPHICTYPE>bio</GRAPHICTYPE>
-		<LEVELS>
+	<EPIZODE id="2" name="where is not green, no lives">
 		     <LEVEL id="0">
 				<NAME>NEXT</NAME>
 				<TYPE>intro</TYPE>
@@ -34,24 +35,38 @@
 				<NAME>GREENPAECE</NAME>
 				<TYPE>game</TYPE>
 				<RESOURCE>level8.xml</RESOURCE>
+				<BIG_ICON>tplanet01_b.png</BIG_ICON>
+				<SMALL_ICON>tplanet01_s.png</SMALL_ICON>
 			</LEVEL>
 			<LEVEL id="2">
 			    <LEVELNUM>2</LEVELNUM>
-				<NAME>GREENPAECE</NAME>
+				<NAME>composting</NAME>
 				<TYPE>game</TYPE>
 				<RESOURCE>level9.xml</RESOURCE>
+				<BIG_ICON>tplanet01_b.png</BIG_ICON>
+				<SMALL_ICON>tplanet01_s.png</SMALL_ICON>
 			</LEVEL>
-		</LEVELS>
+			<LEVEL id="3">
+			    <LEVELNUM>3</LEVELNUM>
+				<NAME>Spinach</NAME>
+				<TYPE>game</TYPE>
+				<RESOURCE>level9.xml</RESOURCE>
+				<BIG_ICON>tplanet01_b.png</BIG_ICON>
+				<SMALL_ICON>tplanet01_s.png</SMALL_ICON>
+			</LEVEL>
 	</EPIZODE>
-	<EPIZODE id="2">
-		<GRAPHICTYPE>maso</GRAPHICTYPE>
-		<LEVELS>
+	<EPIZODE id="3" name="the worst big fucking steak incomming">
 			<LEVEL id="1">
 			    <LEVELNUM>1</LEVELNUM>
 				<NAME>ROSTBEEF</NAME>
 				<TYPE>game</TYPE>
 				<RESOURCE>level10.xml</RESOURCE>
 			</LEVEL>
-		</LEVELS>
+			<LEVEL id="2">
+			    <LEVELNUM>1</LEVELNUM>
+				<NAME>MEDIUM RARE</NAME>
+				<TYPE>game</TYPE>
+				<RESOURCE>level10.xml</RESOURCE>
+			</LEVEL>
 	</EPIZODE>
 </GAME>
