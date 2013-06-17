@@ -20,6 +20,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.telephony.SmsManager;
 import android.util.Log;
+import android.view.Display;
 import android.view.Menu;
 import android.view.WindowManager;
 
@@ -49,7 +50,8 @@ public class MainActivity extends Activity {
 			LogFile.Write(e.getMessage());
 		}
     	
-        SpatterEngine.display = ((WindowManager)getSystemService(Context.WINDOW_SERVICE)).getDefaultDisplay();        
+        SpatterEngine.display = ((WindowManager)getSystemService(Context.WINDOW_SERVICE)).getDefaultDisplay();
+        //SpatterEngine.screen_ratio = (float)SpatterEngine.display.getHeight() / (float)SpatterEngine.display.getWidth();
     	super.onCreate(savedInstanceState);
         setContentView(R.layout.splashscreen);
         

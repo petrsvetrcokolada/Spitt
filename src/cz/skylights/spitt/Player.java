@@ -16,15 +16,16 @@ import android.util.Log;
 /// Class player
 public class Player extends GameObject {
 	// sprites
-    private int[] spriteSheets = new int[2];
-	private int[] textures = new int[1];
-	private Textures textureLoader; 
+	private TextureManager _textures;
     
     public int playerXState=0;
     public int playerYState=0;
     private int _playerFrame=0;
     private float _moveToX = 0;
     private float _moveToY = 0;
+    
+    //
+    BitmapTexture _texturePlayer;
     // 
     private float _incrementX=SpatterEngine.PLAYER_BANK_SPEED;
     private float _incrementY=SpatterEngine.PLAYER_BANK_SPEED;
@@ -56,12 +57,15 @@ public class Player extends GameObject {
     }; 
 
     ///
-    public Player() 
+    public Player(TextureManager text_manager) 
     {         
     	X = 0.375f;
     	Width = 0.25f;
     	Height = 0.25f;
     	_lastFire = System.currentTimeMillis();
+    	_textures = text_manager;
+    	_texturePlayer = _textures.AddTexture("sm", true);
+    	BitmapTexture shoot = _textures.AddTexture("shoot2", true);
     	
         ByteBuffer byteBuf = ByteBuffer.allocateDirect(vertices.length * 4); 
         byteBuf.order(ByteOrder.nativeOrder()); 
@@ -80,7 +84,7 @@ public class Player extends GameObject {
         indexBuffer.position(0);
         
 		/// inicializace
-		initializePrimaryWeapons();
+		initializePrimaryWeapons(shoot);
     } 
     
     public ArrayList<WeaponFire> GetFiredWeapon()
@@ -91,7 +95,7 @@ public class Player extends GameObject {
     ///
     public void draw(GL10 gl) { 
     	gl.glBlendFunc( GL10.GL_SRC_ALPHA, GL10.GL_ONE_MINUS_SRC_ALPHA );
-        gl.glBindTexture(GL10.GL_TEXTURE_2D, textures[0]); 
+        gl.glBindTexture(GL10.GL_TEXTURE_2D, _texturePlayer.textureID); 
         gl.glFrontFace(GL10.GL_CCW); 
         gl.glEnable(GL10.GL_CULL_FACE); 
         gl.glCullFace(GL10.GL_BACK); 
@@ -109,48 +113,6 @@ public class Player extends GameObject {
         gl.glDisableClientState(GL10.GL_TEXTURE_COORD_ARRAY); 
         gl.glDisable(GL10.GL_CULL_FACE);
                 
-    }
-	
-    ///
-    public void loadTexture(GL10 gl,int texture_player, int texture_bullet, Context context) {
-        
-    	textureLoader = new Textures(gl); 
-        spriteSheets = textureLoader.loadTexture(gl, SpatterEngine.PLAYER_SHIP, 
-                                                 SpatterEngine.context, 1); 
-        spriteSheets = textureLoader.loadTexture(gl, SpatterEngine.PLAYER_BULLET,        
-                                                 SpatterEngine.context, 2);                
-        ///--- ---///           	
-        InputStream imagestream = context.getResources().openRawResource(texture_player); 
-        Bitmap bitmap = null; 
-        try { 
-            bitmap = BitmapFactory.decodeStream(imagestream); 
-        }
-        catch(Exception e) { 
-        } 
-        finally { 
-            try { 
-                imagestream.close(); 
-                imagestream = null; 
-            } 
-            catch (IOException e) { 
-            } 
-        } 
-
-        gl.glGenTextures(1, textures, 0); 
-        gl.glBindTexture(GL10.GL_TEXTURE_2D, textures[0]); 
-
-        gl.glTexParameterf(GL10.GL_TEXTURE_2D, GL10.GL_TEXTURE_MIN_FILTER, 
-                           GL10.GL_NEAREST); 
-        gl.glTexParameterf(GL10.GL_TEXTURE_2D, GL10.GL_TEXTURE_MAG_FILTER, 
-                           GL10.GL_LINEAR); 
-        gl.glTexParameterf(GL10.GL_TEXTURE_2D, GL10.GL_TEXTURE_WRAP_S, 
-                           GL10.GL_REPEAT); 
-        gl.glTexParameterf(GL10.GL_TEXTURE_2D, GL10.GL_TEXTURE_WRAP_T, 
-                           GL10.GL_REPEAT); 
-
-        GLUtils.texImage2D(GL10.GL_TEXTURE_2D, 0, bitmap, 0); 
-        bitmap.recycle();
-           	
     }
     
     ///
@@ -343,10 +305,11 @@ public class Player extends GameObject {
     }  
     
     ///
-    private void initializePrimaryWeapons() { 
+    private void initializePrimaryWeapons(BitmapTexture texture) { 
         for (int x = 0; x < SpatterEngine.fire_count; x++) { 
         	WeaponFire weapon = new WeaponFire(0.02f, this.X, this.Y); 
             weapon.shotFired = false;           
+            weapon.setTexture(texture);
             weapon.X = this.X; 
             weapon.Y = this.Y;
             _playerFire.add(weapon);
@@ -401,7 +364,7 @@ public class Player extends GameObject {
                 else 
                 {                  	
                     weapon.Y += SpatterEngine.bullet_speed; 
-                    weapon.draw(gl,spriteSheets);  
+                    weapon.draw(gl);  
                 }             	
             } 
         } 

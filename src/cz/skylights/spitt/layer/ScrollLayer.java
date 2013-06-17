@@ -70,11 +70,11 @@ public class ScrollLayer {
     	_textures.AddTexture(SpatterEngine.lev1_52);
     	*/
     	//
-    	_textures.AddTexture("level1a");
-    	_textures.AddTexture("level1b");
-    	_textures.AddTexture("level1c");
-    	_textures.AddTexture("level1d");
-    	_textures.AddTexture("level1e");    	    
+    	_textures.AddTexture("level1a",false);
+    	_textures.AddTexture("level1b",false);
+    	_textures.AddTexture("level1c",false);
+    	_textures.AddTexture("level1d",false);
+    	_textures.AddTexture("level1e",false);    	    
         /*
     	for(int i = 0; i < vertices.length;i++)
     	{
@@ -106,19 +106,6 @@ public class ScrollLayer {
     	int txt = 0;
     	for(int i =0; i < 25; i++)    		
     	{
-    		/*
-    		ScrollTile t = null;
-    		if (txt == 0)    			
-    			t = new ScrollTile(_textures.GetTexture(SpatterEngine.lev1_11),3);
-    		if (txt == 1)    			
-    			t = new ScrollTile(_textures.GetTexture(SpatterEngine.lev1_21),3);
-    		if (txt == 2)    			
-    			t = new ScrollTile(_textures.GetTexture(SpatterEngine.lev1_31),3);
-    		if (txt == 3)    			
-    			t = new ScrollTile(_textures.GetTexture(SpatterEngine.lev1_41),3);
-    		if (txt == 4)    			
-    			t = new ScrollTile(_textures.GetTexture(SpatterEngine.lev1_51),3);
-    			*/
     		ScrollTile t = null;
     		if (txt == 0)    			
     			t = new ScrollTile(_textures.GetTexture(SpatterEngine.level1a),3);
@@ -136,34 +123,6 @@ public class ScrollLayer {
     			txt = 0;
     		_tiles_left.add(t);    	
     	}
-    	/*
-    	txt=0;
-    	for(int i =0; i < 25; i++)    		
-    	{
-    		ScrollTile t = null;
-    		if (txt == 0)    			
-    			t = new ScrollTile(_textures.GetTexture(SpatterEngine.lev1_12),3);
-    		if (txt == 1)    			
-    			t = new ScrollTile(_textures.GetTexture(SpatterEngine.lev1_22),3);
-    		if (txt == 2)    			
-    			t = new ScrollTile(_textures.GetTexture(SpatterEngine.lev1_32),3);
-    		if (txt == 3)    			
-    			t = new ScrollTile(_textures.GetTexture(SpatterEngine.lev1_42),3);
-    		if (txt == 4)    			
-    			t = new ScrollTile(_textures.GetTexture(SpatterEngine.lev1_52),3);
-    		t.Offset = i*0.5f;
-    		txt++;
-    		if (txt == 4)
-    			txt = 0;
-    		_tiles_right.add(t);
-    	}*/
-    	
-    	/*
-    	t = new ScrollTile(_textures.GetTexture(SpatterEngine.tile2),3);
-    	_tiles.add(t);
-    	t = new ScrollTile(_textures.GetTexture(SpatterEngine.tile3),3);
-    	_tiles.add(t);    	
-    	*/
     }
     
     public void scrollBackground(GL10 gl)

@@ -5,17 +5,18 @@ import java.nio.ByteOrder;
 
 import javax.microedition.khronos.opengles.GL10;
 
+import cz.skylights.geometry.Vertex2D;
+import cz.skylights.spitt.collision.CollisionArray;
 import cz.skylights.spitt.collision.CollisionRectangle;
 import cz.skylights.spitt.collision.CollisionType;
 import cz.skylights.spitt.collision.ICollision;
 
 
-public class WeaponFire extends GameObject implements ICollision {
+public class WeaponFire extends GameObject {
 	private float  _speed;
 	public boolean shotFired=false;
 	public float _ratio;	
-	
-	private CollisionRectangle _collision;
+	private BitmapTexture _texture;
 	
 	private float vertices[] = { 
         0.0f, 0.0f, 0.0f, 
@@ -41,7 +42,6 @@ public class WeaponFire extends GameObject implements ICollision {
 		super(sx,sy);
 		this.X = sx;
 		this.Y = sy;
-		_collision = new CollisionRectangle(0.1f,0.1f, 0.9f, 0.9f);
 		
 		this.setSizeRatio(ratio);			
 		// 
@@ -74,19 +74,25 @@ public class WeaponFire extends GameObject implements ICollision {
 		Height = 1.0f*ratio;					
 	}
 	
-	public void draw(GL10 gl, int[] sprite)
+	public void setTexture(BitmapTexture texture)
+	{
+		_texture = texture;
+	}
+	
+	public void draw(GL10 gl)
 	{
         gl.glMatrixMode(GL10.GL_MODELVIEW); 
         gl.glLoadIdentity(); 
         gl.glPushMatrix(); 
         //gl.glScalef(this.scaleX, this.scaleY, 0f); 
-        gl.glTranslatef(X, Y, 0f); 
+        //gl.glTranslatef(X, Y*SpatterEngine.screen_ratio, 0f); 
+        gl.glTranslatef(X, Y, 0f);
 
         gl.glMatrixMode(GL10.GL_TEXTURE); 
         gl.glLoadIdentity(); 
         gl.glTranslatef(0.0f,0.0f, 0.0f); 
 		
-        gl.glBindTexture(GL10.GL_TEXTURE_2D, sprite[1]); 
+        gl.glBindTexture(GL10.GL_TEXTURE_2D, _texture.textureID); 
         gl.glFrontFace(GL10.GL_CCW); 
         gl.glEnable(GL10.GL_CULL_FACE); 
         gl.glCullFace(GL10.GL_BACK);
@@ -113,13 +119,51 @@ public class WeaponFire extends GameObject implements ICollision {
 		_speed = speed;
 	}
 
-	public boolean CheckCollision(GameObject obj2) {
+	public boolean CheckCollision(Enemy obj2) {
+	   float X1 = X;
+	   float Y1 = Y;
+	   float X1W = X+Width;
+	   float Y1H = Y+(Height/SpatterEngine.screen_ratio);
+
+	   float X2 = obj2.X;
+	   float Y2 = obj2.Y;
+	   float X2W = obj2.X+obj2.Width;
+	   float Y2H = obj2.Y+(obj2.Height/SpatterEngine.screen_ratio);
+	   
+	   boolean check = false;
+	   
+	   if (X1W < X2 || X2W < X1 || Y1H < Y2 || Y2H < Y1)
+		    check = false;
+		else
+		    check = true;
+
+	   if (check == true)
+	   {
+		   // vrat body, ktere jsou s kolizni oblasti
+		   CollisionArray l1 = _texture.getCollision(X1, Y1, Width, Height/SpatterEngine.screen_ratio, X2, Y2, X2W, Y2H);
+		   CollisionArray l2 = obj2.getTexture().getCollision(X2, Y2, obj2.Width, obj2.Height/SpatterEngine.screen_ratio, X1, Y1, X1W, Y1H);
+		   ///
+		   float psize = (l1.Unit+l2.Unit)/2;
+		   ///
+		   for(int i = 0; i < l1.size();i++)
+		   {
+			 Vertex2D v1 = l1.get(i);
+		     for(int j = 0; j < l2.size();j++)
+		     {
+		    	 Vertex2D v2 = l2.get(j);
+		    	 float rozdilX = Math.abs(v1.X-v2.X);		    
+		    	 float rozdilY = Math.abs(v1.Y-v2.Y);
+		    	 
+		    	 if (rozdilX < psize && rozdilY < psize)
+		    	 {
+		    		 return true;
+		    	 }
+		     }
+		   }		   		  	
+	   }
+	    
 		return false;
 	}
 
-	public CollisionType GetType() {
-		return CollisionType.collisionCircle;
-	}	
-	
 }
 

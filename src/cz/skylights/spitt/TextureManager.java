@@ -11,6 +11,7 @@ import java.util.List;
 import javax.microedition.khronos.opengles.GL10;
 
 import cz.skylights.geometry.Vertex2D;
+import cz.skylights.spitt.collision.CollisionArray;
 
 import android.content.Context;
 import android.content.res.Resources;
@@ -53,13 +54,15 @@ public class TextureManager {
 	    	_list.add(texture);	    		    	
 	    }*/
 	    
-	    public void AddTexture(String name)
+	    public BitmapTexture AddTexture(String name, boolean build_edge)
 	    {
 	    	int dr = getAndroidDrawable(name);	    	
 	    	
-	    	BitmapTexture texture = new BitmapTexture(name,dr,true);
+	    	BitmapTexture texture = new BitmapTexture(name,dr,build_edge);
 	    	_textures.put(name, texture);
 	    	_list_textures.add(texture);
+	    	
+	    	return texture;
 	    }
 	    
 	    static public int getAndroidDrawable(String DrawableName){
@@ -111,7 +114,13 @@ public class TextureManager {
 	    public int GetTexture(int resourceID)
 	    {
 	    	return _table.get(resourceID);
-	    }	
+	    }
+	    
+	    public BitmapTexture GetTexture(String name)
+	    {
+	    	BitmapTexture tex = _textures.get(name);
+	    	return tex;
+	    }
 	    
 	    public Bitmap GetBitmap(int resourceID)
 	    {
@@ -130,7 +139,7 @@ public class TextureManager {
 	            _bitmaps.put(texture.getResourceId(), bitmap);
 	            if (texture.hasEdge() == true)
 	            {
-	            	texture.setEdge(this.EdgeBitmap(bitmap));
+	            	this.EdgeBitmap(texture);
 	            }
 	        }
 	        catch(Exception e) { 
@@ -162,17 +171,28 @@ public class TextureManager {
 	    
 	    // potrebuju pole ... jako hranice
 	    // nebo 0...1
-	    public ArrayList<Vertex2D> EdgeBitmap(Bitmap source)
+	    public CollisionArray EdgeBitmap(BitmapTexture texture)
 	    {
+	    	
+	    	Bitmap source = texture.getBitmap();
+	    	
 	    	int len = (source.getWidth()*source.getHeight());
 	    	int[] pixels = new int[len];
 	    	source.getPixels(pixels, 0, source.getWidth(), 0, 0, source.getWidth(), source.getHeight());
 	    	
-	    	ArrayList<Vertex2D> list=new ArrayList();
+	    	CollisionArray list=new CollisionArray();
+  		    float jednotkax = 1 / (float)source.getWidth(); 
+  		    float jednotkay = 1 / (float)source.getHeight();
+  		  
+  		    list.setUnit((jednotkax+jednotkay)/2);
+  		    
+  		    float min_x = 1, min_y = 1;
+  		    float max_x = 0, max_y = 0;  		    
+  		    
 	    	for(int idx = 0; idx < pixels.length;idx++)
 	    	{
 	    		int val = pixels[idx];
-	    		if (val > 0)
+	    		if (val != 0)
 	    		{
 	    			
 	    		  int valA = 0;
@@ -191,19 +211,28 @@ public class TextureManager {
 	    		  if (idx < pixels.length-source.getWidth())
 	    			  valD = pixels[idx+source.getWidth()];
 	    		  
-	    		  if (valA > 0 && valB > 0 && valC > 0 && valD > 0)
+	    		  if (valA != 0 && valB != 0 && valC != 0 && valD != 0)
 	    			  continue;
 	    		  
 	    		  int x = idx / source.getWidth();
-	    		  int y = idx % source.getWidth();
-	    		  
-	    		  float jednotkax = 1 / (float)source.getWidth(); 
-	    		  float jednotkay = 1 / (float)source.getHeight();
+	    		  int y = idx % source.getWidth();	    		  
 	    		  
 	    		  Vertex2D vert = new Vertex2D(jednotkax*x, jednotkay*y);
+	    		  if (vert.X < min_x)
+	    			  min_x = vert.X;
+	    		  if (vert.Y < min_y)
+	    			  min_y = vert.Y;
+	    		  if (vert.X > max_x)
+	    			  max_x = vert.X;
+	    		  if (vert.Y > max_y)
+	    			  max_y = vert.Y;
 	    		  list.add(vert);
 	    		}
 	    	}
+	    	
+	    	list.setRectangle(min_x, min_y, max_x-min_x, max_y-min_y);
+	    	
+	    	texture.setEdge(list);
 	    	return list;
 	    }
 }

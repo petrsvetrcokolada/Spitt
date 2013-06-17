@@ -36,24 +36,28 @@ public class SpatterRenderer implements Renderer {
 	protected SpriteAnimation _animation = new SpriteAnimation(true);
 	private Sprite[] _sprite;
 	
-	private Player _player = new Player();
+	private Player _player = null;
 	//	
 	private long _loopStart=0;
 	private long _loopEnd=0;
 	private long _loopRunTime=0;
+	//private Thread _thread = new 
 	
 	public SpatterRenderer()
 	{
-		SpatterEngine.Player = _player;
+		
 		_background1 = new BackgroundLayer(SpatterEngine.scroll_bg1);
 		_background2 = new BackgroundLayer(3*SpatterEngine.scroll_bg2/2);
 		_background3 = new BackgroundLayer(5*SpatterEngine.scroll_bg2/4);		
 		_enemyLayer = new EnemyLayer();
-		_textures.AddTexture("particle");
-		_textures.AddTexture("star");
-		_textures.AddTexture("explose");
-		_textures.AddTexture("explose1");
-		_textures.AddTexture("explose2");
+		_textures.AddTexture("particle", false);
+		_textures.AddTexture("star", false);
+		_textures.AddTexture("explose", false);
+		_textures.AddTexture("explose1", false);
+		_textures.AddTexture("explose2", false);
+		
+		_player = new Player(_textures);
+		SpatterEngine.Player = _player;
 		
 		_scroll = new ScrollLayer(_textures, SpatterEngine.scroll_bg1);
 		
@@ -156,10 +160,13 @@ public class SpatterRenderer implements Renderer {
 	//
 	public void onSurfaceChanged(GL10 gl, int width, int height) {
 		SpatterEngine.screen_ratio = (float)height / (float)width;
+		OptionsEngine.startY = 1.1f * SpatterEngine.screen_ratio;
 		gl.glViewport(0, 0, width, height);
 		gl.glMatrixMode(GL10.GL_PROJECTION);
 		gl.glLoadIdentity();
 		gl.glOrthof(0f, 1f, 0f, SpatterEngine.screen_ratio, -1f, 1f);
+		
+		loadLevel(gl);
 	}
 	//
 	public void onSurfaceCreated(GL10 gl, EGLConfig config) 
@@ -174,11 +181,15 @@ public class SpatterRenderer implements Renderer {
 		gl.glDepthFunc(GL10.GL_LEQUAL);		
 		gl.glEnable(GL10.GL_BLEND);
 		gl.glBlendFunc(GL10.GL_SRC_ALPHA, GL10.GL_SRC_ALPHA);	
+		
+	}
+	
+	public void loadLevel(GL10 gl)
+	{
 		// zde zavedeme nahrani textury
 		_background1.loadTexture(gl, SpatterEngine.space_background,SpatterEngine.context);
 		_background2.loadTexture(gl, SpatterEngine.space_stars1, SpatterEngine.context);
 		_background3.loadTexture(gl, SpatterEngine.space_stars2, SpatterEngine.context);
-		_player.loadTexture(gl, SpatterEngine.PLAYER_SHIP, SpatterEngine.PLAYER_BULLET, SpatterEngine.context);
 		_text.loadTexture(gl, SpatterEngine.text_characters, SpatterEngine.context);
 		_text.BuildCharacters("!()LivesJ", 0.25f, 0.95f);
 		_textures.buildTextures(gl, SpatterEngine.context);
@@ -210,7 +221,7 @@ public class SpatterRenderer implements Renderer {
 		_sprite[1].setScale(0.05f,  0.05f);
 		_sprite[2].X = 0.25f;
 		_sprite[2].Y = 0.96f;
-		_sprite[2].setScale(0.05f,  0.05f);		
+		_sprite[2].setScale(0.05f,  0.05f);	
 	}
 	
 	private void CheckCollision()
@@ -235,7 +246,7 @@ public class SpatterRenderer implements Renderer {
 			  WeaponFire wf = fire.get(f);
 			  if (wf.CheckCollision(en)==true)
 			  {
-				  
+				  wf.shotFired = false;
 			  }
 			}
 		}

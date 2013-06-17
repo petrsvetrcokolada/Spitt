@@ -9,7 +9,8 @@ import cz.skylights.spitt.interfaces.ITrajectory;
 
 public class Enemy extends GameObject {
 	float _ratio;		
-	private int _textureID=-1;
+	//private int _textureID=-1;
+	private BitmapTexture _texture;
 	
 	private float vertices[] = { 
         0.0f, 0.0f, 0.0f, 
@@ -32,8 +33,7 @@ public class Enemy extends GameObject {
 	
 	public Enemy(float sx, float sy)	
 	{
-		super(sx, sy);
-	
+		super(sx, sy);	
 	}
 	
 	private void refreshArray()
@@ -56,9 +56,15 @@ public class Enemy extends GameObject {
         indexBuffer.position(0); 	
 	}
 	
-	public void setTexture(int tx)
+	public void setTexture(BitmapTexture texture)
 	{
-	  _textureID =tx;
+	  _texture = texture;
+	  //_textureID =tx;
+	}
+	
+	public BitmapTexture getTexture()
+	{
+		return _texture;
 	}
 	
 	public void setTrajectory(ITrajectory traject)
@@ -78,9 +84,9 @@ public class Enemy extends GameObject {
 		Height = 1.0f*ratio;
 		Speed *= ratio;
 		refreshArray();
-	}
+	}	
 	
-	
+	// kresleni
 	public void draw(GL10 gl)
 	{
 		gl.glEnable(GL10.GL_TEXTURE_2D);
@@ -88,13 +94,13 @@ public class Enemy extends GameObject {
         gl.glLoadIdentity(); 
         gl.glPushMatrix(); 
         //gl.glScalef(scaleX, scaleY, 0f);       
-        gl.glTranslatef(X, Y*SpatterEngine.screen_ratio, 0f); 
+        gl.glTranslatef(X, Y, 0f); 
 
         gl.glMatrixMode(GL10.GL_TEXTURE); 
         gl.glLoadIdentity(); 
         gl.glTranslatef(0.0f,0.0f, 0.0f); 
 		
-        gl.glBindTexture(GL10.GL_TEXTURE_2D, _textureID); 
+        gl.glBindTexture(GL10.GL_TEXTURE_2D, _texture.textureID); 
         gl.glFrontFace(GL10.GL_CCW); 
         gl.glEnable(GL10.GL_CULL_FACE); 
         gl.glCullFace(GL10.GL_BACK);

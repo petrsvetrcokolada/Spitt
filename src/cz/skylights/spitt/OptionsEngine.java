@@ -11,7 +11,7 @@ public class OptionsEngine {
     public static final boolean loop_background_music = true;
     public static final float scroll_bg1 = 0.002f;
     public static final float scroll_bg2 = 0.0035f;
-    public static final int fps_thread_sleep = (1000/50); 
+    public static final int fps_thread_sleep = (1000/80); 
     public static float screen_ratio = 1f;
     // textures
     public static final int space_background=R.drawable.pozadi1;
@@ -44,7 +44,7 @@ public class OptionsEngine {
     public static final float PLAYER_BANK_SPEED = .1f;
     // fire
     public static final int fire_count = 24;
-    public static final float bullet_speed = .01f;
+    public static final float bullet_speed = .005f;
     public static final int bullet_timeout = 250;
     //public static float playerX=1.75f;
     public static final int lives=3;
@@ -55,5 +55,6 @@ public class OptionsEngine {
     public static float playerY=0.3f;
     public static float scaleX = .25f;
     static float scaleY = .25f;
+    public static float startY = 1.0f;
     public static boolean onTouch = false;    
 }

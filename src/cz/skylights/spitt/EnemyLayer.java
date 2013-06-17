@@ -14,6 +14,8 @@ public class EnemyLayer {
 	// pole aktivnich objektu
 	ArrayList<Enemy> _enemies;	
 	ArrayList<Enemy> _allenemies;
+	
+	BitmapTexture _texture;
 		
 	Trajectory _trajectory = new Trajectory();
 	
@@ -21,8 +23,8 @@ public class EnemyLayer {
 	{
 		_enemies = new ArrayList<Enemy>();
 		_allenemies = new ArrayList<Enemy>();
-		_textures.AddTexture("enemy");
-		_textures.AddTexture("enemy1");		
+		_textures.AddTexture("enemy",true);
+		_texture = _textures.AddTexture("enemy1", true);		
 	}
 	
 	public void loadTextures(GL10 gl, Context context)
@@ -49,13 +51,13 @@ public class EnemyLayer {
 				t = _trajectory;
 			}
 				
-			sy = 1.1f;
+			sy = OptionsEngine.startY;
 						
 			Enemy en = new Enemy(sx,sy);		
 			en.setSizeRatio(0.125f);
-			en.Speed = 0.007f;
+			en.Speed = 0.003f;
 			en.setTrajectory(t);
-			en.setTexture(_textures.GetTexture(SpatterEngine.enemy1));
+			en.setTexture(_texture);
 		  
 			en.StartTime = i*1500;
 			_allenemies.add(en);			
