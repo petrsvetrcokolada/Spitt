@@ -15,16 +15,26 @@ public class EnemyLayer {
 	ArrayList<Enemy> _enemies;	
 	ArrayList<Enemy> _allenemies;
 	
-	BitmapTexture _texture;
-		
+	BitmapTexture _texture1;
+	BitmapTexture _texture2;	
+	BitmapTexture _texture3;
+	BitmapTexture _texture4;
+	BitmapTexture _texture6;
+	BitmapTexture _texture7;
+	
 	Trajectory _trajectory = new Trajectory();
 	
 	public EnemyLayer()
 	{
 		_enemies = new ArrayList<Enemy>();
-		_allenemies = new ArrayList<Enemy>();
-		_textures.AddTexture("enemy",true);
-		_texture = _textures.AddTexture("enemy1", true);		
+		_allenemies = new ArrayList<Enemy>();		
+		
+		_texture1 = _textures.AddTexture("enemy1", 2,64,64,true);
+		_texture2 = _textures.AddTexture("enemy2",2,128,128,true);
+		_texture3 = _textures.AddTexture("enemy3",2,128,128,true);
+		_texture4 = _textures.AddTexture("enemy4",3,256,256,true);
+		_texture6 = _textures.AddTexture("enemy6",1,128,128,true);
+		_texture7 = _textures.AddTexture("enemy7",1,64,64,true);
 	}
 	
 	public void loadTextures(GL10 gl, Context context)
@@ -39,7 +49,7 @@ public class EnemyLayer {
 		ITrajectory t = null;
 		for(int i = 0; i < cnt; i++)
 		{
-			float sx, sy;
+			float sx, sy;			
 			if ((i%2) == 0)
 			{							
 				sx = 0.25f;
@@ -50,14 +60,43 @@ public class EnemyLayer {
 				sx = 0.75f;
 				t = _trajectory;
 			}
-				
 			sy = OptionsEngine.startY;
-						
-			Enemy en = new Enemy(sx,sy);		
-			en.setSizeRatio(0.125f);
+			
+			Enemy en = new Enemy(sx,sy);
+			if ((i%2) == 0)
+			{					
+				en.setTexture(_texture1);
+				en.setSizeRatio(0.125f);
+			}
+			else if ((i%3) == 0)
+			{				
+				en.setTexture(_texture3);
+				en.setSizeRatio(0.185f);
+			}
+			else if ((i%5) == 0)
+			{
+				en.setTexture(_texture4);
+				en.setSizeRatio(0.25f);				
+			}
+			else if ((i%7) == 0)
+			{
+				en.setTexture(_texture6);
+				en.setSizeRatio(0.185f);					
+			}
+			else if ((i%11) == 0)
+			{
+				en.setTexture(_texture7);
+				en.setSizeRatio(0.185f);					
+			}
+			else
+			{				
+				en.setTexture(_texture2);
+				en.setSizeRatio(0.185f);
+			}
+														
+			en.AnimationSpeed = 500;			
 			en.Speed = 0.003f;
-			en.setTrajectory(t);
-			en.setTexture(_texture);
+			en.setTrajectory(t);			
 		  
 			en.StartTime = i*1500;
 			_allenemies.add(en);			

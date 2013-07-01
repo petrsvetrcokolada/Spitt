@@ -21,6 +21,11 @@ public class GameObject {
 	public float startY;
 	
 	protected ITrajectory _trajectory= null;
+	protected BitmapTexture _texture;
+	//
+	protected int _frame=0;
+	protected boolean _animation=true;	
+	public float AnimationSpeed=500;
 	
     protected FloatBuffer vertexBuffer; 
     protected FloatBuffer textureBuffer; 
@@ -41,6 +46,16 @@ public class GameObject {
 	public void setTrajectory(ITrajectory trajectory)
 	{
 		_trajectory = trajectory;
+	}
+	
+	public BitmapTexture getTexture()
+	{
+	  return _texture;
+	}
+	
+	public int getFrame()
+	{
+		return _frame;
 	}
 	
 	public void move()

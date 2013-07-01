@@ -56,9 +56,20 @@ public class TextureManager {
 	    
 	    public BitmapTexture AddTexture(String name, boolean build_edge)
 	    {
+	    	return AddTexture(name, 1,-1,-1, build_edge);
+	    }
+	    
+	    public BitmapTexture AddTexture(String name, int frames,int fwidth,int fheight,boolean build_edge)
+	    {
 	    	int dr = getAndroidDrawable(name);	    	
 	    	
-	    	BitmapTexture texture = new BitmapTexture(name,dr,build_edge);
+	    	BitmapTexture texture = new BitmapTexture(name,dr, build_edge);
+	    	texture.Frames = frames;
+	    	if (fwidth > 0 && fheight > 0)
+	    	{
+	    		texture.FrameWidth = fwidth;
+	    		texture.FrameHeight = fheight;
+	    	}
 	    	_textures.put(name, texture);
 	    	_list_textures.add(texture);
 	    	
@@ -143,6 +154,9 @@ public class TextureManager {
 	            }
 	        }
 	        catch(Exception e) { 
+	        	String str = e.getMessage();
+	        	Log.w("ERR", str);
+	        	int a = 0;
 	        }
 	        finally { 
 	            try { 
@@ -176,63 +190,97 @@ public class TextureManager {
 	    	
 	    	Bitmap source = texture.getBitmap();
 	    	
-	    	int len = (source.getWidth()*source.getHeight());
-	    	int[] pixels = new int[len];
-	    	source.getPixels(pixels, 0, source.getWidth(), 0, 0, source.getWidth(), source.getHeight());
-	    	
-	    	CollisionArray list=new CollisionArray();
-  		    float jednotkax = 1 / (float)source.getWidth(); 
-  		    float jednotkay = 1 / (float)source.getHeight();
-  		  
-  		    list.setUnit((jednotkax+jednotkay)/2);
-  		    
-  		    float min_x = 1, min_y = 1;
-  		    float max_x = 0, max_y = 0;  		    
-  		    
-	    	for(int idx = 0; idx < pixels.length;idx++)
+	    	int len =-1;
+	    	int width=0;
+	    	int height=0;
+	    	if (texture.Frames == 1)
 	    	{
-	    		int val = pixels[idx];
-	    		if (val != 0)
-	    		{
-	    			
-	    		  int valA = 0;
-	    		  if (idx > 0)
-	    			  valA = pixels[idx-1];
-	    		  
-	    		  int valB = 0;
-	    		  if (idx <  pixels.length-1)
-	    			  valB = pixels[idx+1];
-	    		  
-	    		  int valC = 0;
-	    		  if (idx > source.getWidth()-1)
-	    			  valC = pixels[idx-source.getWidth()];
-	    		  
-	    		  int valD = 0;
-	    		  if (idx < pixels.length-source.getWidth())
-	    			  valD = pixels[idx+source.getWidth()];
-	    		  
-	    		  if (valA != 0 && valB != 0 && valC != 0 && valD != 0)
-	    			  continue;
-	    		  
-	    		  int x = idx / source.getWidth();
-	    		  int y = idx % source.getWidth();	    		  
-	    		  
-	    		  Vertex2D vert = new Vertex2D(jednotkax*x, jednotkay*y);
-	    		  if (vert.X < min_x)
-	    			  min_x = vert.X;
-	    		  if (vert.Y < min_y)
-	    			  min_y = vert.Y;
-	    		  if (vert.X > max_x)
-	    			  max_x = vert.X;
-	    		  if (vert.Y > max_y)
-	    			  max_y = vert.Y;
-	    		  list.add(vert);
-	    		}
+	    		len = (source.getWidth()*source.getHeight());
+	    		width = source.getWidth();
+	    		height = source.getHeight();
+	    	}
+	    	else
+	    	{
+	    		len = texture.FrameWidth * texture.FrameHeight;
+	    		width = texture.FrameWidth;
+	    		height = texture.FrameHeight;
 	    	}
 	    	
-	    	list.setRectangle(min_x, min_y, max_x-min_x, max_y-min_y);
-	    	
-	    	texture.setEdge(list);
-	    	return list;
+	    	///	     	
+	    	for(int frame = 0; frame < texture.Frames; frame++)
+	    	{
+	    		int pocx = frame % width;
+	    		int pocy = frame / height;	  
+	    		
+	    		    	    	
+		    	int[] pixels = new int[len];
+		    	source.getPixels(pixels, 0, width, pocx*width, pocy*height, width, height);
+		    	/*
+		    	int data = 0;
+		    	for(int c= 0; c < len; c++)
+		    	{
+		    		if (pixels[c]!=0)
+		    		{
+		    			data =c;
+		    			break;
+		    		}
+		    	}*/
+		    	
+		    	CollisionArray list=new CollisionArray();
+	  		    float jednotkax = 1 / (float)width; 
+	  		    float jednotkay = 1 / (float)height;
+	  		  
+	  		    texture.setUnit((jednotkax+jednotkay)/2);
+	  		    list.setUnit((jednotkax+jednotkay)/2);
+	  		    
+	  		    float min_x = 1, min_y = 1;
+	  		    float max_x = 0, max_y = 0;  		    
+	  		    
+		    	for(int idx = 0; idx < pixels.length;idx++)
+		    	{
+		    		int val = pixels[idx];
+		    		if (val != 0)
+		    		{
+		    			
+		    		  int valA = 0;
+		    		  if (idx > 0)
+		    			  valA = pixels[idx-1];
+		    		  
+		    		  int valB = 0;
+		    		  if (idx <  pixels.length-1)
+		    			  valB = pixels[idx+1];
+		    		  
+		    		  int valC = 0;
+		    		  if (idx > width-1)
+		    			  valC = pixels[idx-width];
+		    		  
+		    		  int valD = 0;
+		    		  if (idx < pixels.length-width)
+		    			  valD = pixels[idx+width];
+		    		  
+		    		  if (valA != 0 && valB != 0 && valC != 0 && valD != 0)
+		    			  continue;
+		    		  
+		    		  int x = idx / width;
+		    		  int y = idx % height;	    		  
+		    		  
+		    		  Vertex2D vert = new Vertex2D(jednotkax*x, jednotkay*y);
+		    		  if (vert.X < min_x)
+		    			  min_x = vert.X;
+		    		  if (vert.Y < min_y)
+		    			  min_y = vert.Y;
+		    		  if (vert.X > max_x)
+		    			  max_x = vert.X;
+		    		  if (vert.Y > max_y)
+		    			  max_y = vert.Y;
+		    		  list.add(vert);
+		    		}
+		    	}
+		    	
+		    	list.setRectangle(min_x, min_y, max_x-min_x, max_y-min_y);
+		    	texture.setEdge(frame,list);
+	    	}
+	    		    
+	    	return null; /// pozor
 	    }
 }

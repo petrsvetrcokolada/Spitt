@@ -10,7 +10,7 @@ import cz.skylights.spitt.interfaces.ITrajectory;
 public class Enemy extends GameObject {
 	float _ratio;		
 	//private int _textureID=-1;
-	private BitmapTexture _texture;
+	//private BitmapTexture _texture;
 	
 	private float vertices[] = { 
         0.0f, 0.0f, 0.0f, 
@@ -56,16 +56,25 @@ public class Enemy extends GameObject {
         indexBuffer.position(0); 	
 	}
 	
+	
 	public void setTexture(BitmapTexture texture)
 	{
+	 if (texture.Frames > 1)
+		 _animation = true;
+	 
 	  _texture = texture;
-	  //_textureID =tx;
+	  float podil = (float)_texture.FrameWidth/(float)_texture.Width;
+	  for(int i = 0; i < this.texture.length; i++)
+	  {
+	    this.texture[i] = this.texture[i]*podil;
+	  }
+	  
 	}
-	
+	/*
 	public BitmapTexture getTexture()
 	{
 		return _texture;
-	}
+	}*/
 	
 	public void setTrajectory(ITrajectory traject)
 	{
@@ -86,6 +95,30 @@ public class Enemy extends GameObject {
 		refreshArray();
 	}	
 	
+	long _nextTime = SpatterEngine.GameTime+(long)AnimationSpeed;
+	public void animation()
+	{
+		
+		if (_nextTime > SpatterEngine.GameTime)
+		{
+			return;
+		}
+		
+		if (_frame < _texture.Frames)
+		  _frame++;
+		
+		if (_animation == true && _frame >= _texture.Frames)
+			_frame = 0;
+			
+		_nextTime = SpatterEngine.GameTime+(long)AnimationSpeed;
+	}
+	
+	public void move()
+	{
+		this.animation();
+		super.move();
+	}
+	
 	// kresleni
 	public void draw(GL10 gl)
 	{
@@ -98,7 +131,12 @@ public class Enemy extends GameObject {
 
         gl.glMatrixMode(GL10.GL_TEXTURE); 
         gl.glLoadIdentity(); 
-        gl.glTranslatef(0.0f,0.0f, 0.0f); 
+        float factor = (float)_texture.Width/(float)_texture.FrameWidth; 
+        float frame_width = (1/(float)factor);
+
+        int tx = _frame % (int)factor;
+        int ty = _frame / (int)factor;
+        gl.glTranslatef(frame_width*tx,frame_width*ty, 0.0f); 
 		
         gl.glBindTexture(GL10.GL_TEXTURE_2D, _texture.textureID); 
         gl.glFrontFace(GL10.GL_CCW); 

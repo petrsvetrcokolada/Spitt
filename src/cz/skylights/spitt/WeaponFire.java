@@ -7,7 +7,6 @@ import javax.microedition.khronos.opengles.GL10;
 
 import cz.skylights.geometry.Vertex2D;
 import cz.skylights.spitt.collision.CollisionArray;
-import cz.skylights.spitt.collision.CollisionRectangle;
 import cz.skylights.spitt.collision.CollisionType;
 import cz.skylights.spitt.collision.ICollision;
 
@@ -15,8 +14,7 @@ import cz.skylights.spitt.collision.ICollision;
 public class WeaponFire extends GameObject {
 	private float  _speed;
 	public boolean shotFired=false;
-	public float _ratio;	
-	private BitmapTexture _texture;
+	public float _ratio;		
 	
 	private float vertices[] = { 
         0.0f, 0.0f, 0.0f, 
@@ -27,8 +25,8 @@ public class WeaponFire extends GameObject {
 
     private float texture[] = { 
         0.0f, 0.0f, 
-        1.0f, 0.0f, 
         1.0f, 1.0f, 
+        1.0f, 0.0f, 
         0.0f, 1.0f, 
     }; 
 
@@ -140,8 +138,8 @@ public class WeaponFire extends GameObject {
 	   if (check == true)
 	   {
 		   // vrat body, ktere jsou s kolizni oblasti
-		   CollisionArray l1 = _texture.getCollision(X1, Y1, Width, Height/SpatterEngine.screen_ratio, X2, Y2, X2W, Y2H);
-		   CollisionArray l2 = obj2.getTexture().getCollision(X2, Y2, obj2.Width, obj2.Height/SpatterEngine.screen_ratio, X1, Y1, X1W, Y1H);
+		   CollisionArray l1 = _texture.getCollision(0,X1, Y1, Width, Height/SpatterEngine.screen_ratio, X2, Y2, X2W, Y2H);
+		   CollisionArray l2 = obj2.getTexture().getCollision(obj2.getFrame(),X2, Y2, obj2.Width, obj2.Height/SpatterEngine.screen_ratio, X1, Y1, X1W, Y1H);
 		   ///
 		   float psize = (l1.Unit+l2.Unit)/2;
 		   ///

@@ -4,6 +4,7 @@ import java.util.ArrayList;
 
 import cz.skylights.geometry.Vertex2D;
 import cz.skylights.spitt.collision.CollisionArray;
+import cz.skylights.spitt.collision.Collisions;
 
 import android.graphics.Bitmap;
 
@@ -14,21 +15,47 @@ public class BitmapTexture {
 	private int resourceID;
 	public int textureID;
 	private String _name;	
-	private CollisionArray _edge = null;
+	//private CollisionArray _edge = null;
+	private Collisions _edge=null;
+	//
+	public int Frames=1;
+	public int FrameWidth=-1;
+	public int FrameHeight=-1;
+	public int Width = -1;
+	public int Height = -1;
 	
-	public BitmapTexture(String name, int resid, boolean build_edge)
+	
+	public BitmapTexture(String name, int resid,boolean build_edge)
 	{
 		_name = name;
 		resourceID = resid;
 		
 		if (build_edge == true)
 		{
-			_edge = new CollisionArray();
+			_edge = new Collisions();
 		}
 	}
 	
 	public void setBitmap(Bitmap bitmap)
 	{
+		if (Frames == 1)
+			this.setBitmap(bitmap, 1,bitmap.getWidth(), bitmap.getHeight());
+		else
+			this.setBitmap(bitmap, -1,-1,-1);
+			
+	}
+	
+	public void setBitmap(Bitmap bitmap, int frames, int frame_w, int frame_h)
+	{
+		if (frames>0)
+		{
+			Frames = frames;
+			FrameWidth = frame_w;
+			FrameHeight = frame_h;
+		}
+		Width =  bitmap.getWidth();
+		Height = bitmap.getHeight();
+		
 		_texture = bitmap;
 	}
 	
@@ -58,14 +85,19 @@ public class BitmapTexture {
 		return _name;
 	}
 	
-	public void setEdge(CollisionArray edge)
+	public void setUnit(float unit)
 	{
-	  _edge = edge;	
+		_edge.Unit = unit;
 	}
 	
-	public CollisionArray getEdge()
+	public void setEdge(int frame, CollisionArray edge)
 	{
-		return _edge;
+	  _edge.add(frame, edge);	
+	}
+	
+	public CollisionArray getEdge(int frame)
+	{
+		return _edge.get(frame);
 	}
 	
 	public boolean hasEdge()
@@ -73,14 +105,19 @@ public class BitmapTexture {
 		return _edge!=null;
 	}
 	
-	public CollisionArray getCollision(float x1, float y1, float w1, float h1, float x2, float y2, float w2, float h2)
+	public CollisionArray getCollision(int frame,float x1, float y1, float w1, float h1, float x2, float y2, float w2, float h2)
 	{
+		if (frame < 0 || frame >= Frames)
+			return null;
+		
+		CollisionArray frame_array = _edge.get(frame);
+		
 		CollisionArray list = new CollisionArray();
 		list.setUnit(_edge.Unit*(w1+h1)/2);
 		
-		for(int i = 0; i < _edge.size();i++)
+		for(int i = 0; i < frame_array.size();i++)
 		{
-			Vertex2D vert = _edge.get(i);
+			Vertex2D vert = frame_array.get(i);
 			float px = w1*vert.X+x1;
 			float py = h1*vert.Y+y1;
 			if (px < x2 || px > x2+w2 || py < y2 || py > y2+h2)

@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import javax.microedition.khronos.egl.EGLConfig;
 import javax.microedition.khronos.opengles.GL10;
 
+import cz.skylights.spitt.collision.Collisions;
 import cz.skylights.spitt.layer.ScrollLayer;
 import cz.skylights.spitt.particle.ParticleCreator;
 import cz.skylights.spitt.particle.ParticleEmitter;
@@ -52,9 +53,9 @@ public class SpatterRenderer implements Renderer {
 		_enemyLayer = new EnemyLayer();
 		_textures.AddTexture("particle", false);
 		_textures.AddTexture("star", false);
-		_textures.AddTexture("explose", false);
-		_textures.AddTexture("explose1", false);
-		_textures.AddTexture("explose2", false);
+		_textures.AddTexture("explose", 16,128,128,false);
+		_textures.AddTexture("explose1", 16,128,128,false);
+		_textures.AddTexture("explose2", 16,128,128,false);
 		
 		_player = new Player(_textures);
 		SpatterEngine.Player = _player;
@@ -191,7 +192,7 @@ public class SpatterRenderer implements Renderer {
 		_background2.loadTexture(gl, SpatterEngine.space_stars1, SpatterEngine.context);
 		_background3.loadTexture(gl, SpatterEngine.space_stars2, SpatterEngine.context);
 		_text.loadTexture(gl, SpatterEngine.text_characters, SpatterEngine.context);
-		_text.BuildCharacters("!()LivesJ", 0.25f, 0.95f);
+		_text.BuildCharacters("Lives", 0.25f, 0.95f);
 		_textures.buildTextures(gl, SpatterEngine.context);
 		
 		_scroll.buildLayer();
@@ -244,7 +245,8 @@ public class SpatterRenderer implements Renderer {
 			for(int f = 0; f < fire.size();f++)
 			{
 			  WeaponFire wf = fire.get(f);
-			  if (wf.CheckCollision(en)==true)
+			  if (Collisions.CheckCollision(wf, en)==true)
+			  //if (wf.CheckCollision(en)==true)
 			  {
 				  wf.shotFired = false;
 			  }

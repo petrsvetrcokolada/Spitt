@@ -14,7 +14,7 @@ public class GLText {
 	   private Context _context;
 	   private ArrayList _text;
 	   // znaky ... zatim neeresim diakritiku
-	   public static String CharString = " !\"#$%&'()*+,-. 0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[/]^_┤abcdefghijklmnopqrstuvwxyz{|}~ ýÜŔ°×řßÝÚ˙¨╠�?╚ÄŢ┴�?╔┌�?˛Ď´¤�?Źě";
+	   public static String CharString = " !\"#$%&'()*+,-. 0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[/]^_�abcdefghijklmnopqrstuvwxyz{|}~";
 
 	   
 	   public void BuildCharacters(String text, float X, float Y)

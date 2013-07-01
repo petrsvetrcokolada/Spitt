@@ -64,8 +64,8 @@ public class Player extends GameObject {
     	Height = 0.25f;
     	_lastFire = System.currentTimeMillis();
     	_textures = text_manager;
-    	_texturePlayer = _textures.AddTexture("sm", true);
-    	BitmapTexture shoot = _textures.AddTexture("shoot2", true);
+    	_texturePlayer = _textures.AddTexture("sm", 1,128,128,true);
+    	BitmapTexture shoot = _textures.AddTexture("shoot4a", true);
     	
         ByteBuffer byteBuf = ByteBuffer.allocateDirect(vertices.length * 4); 
         byteBuf.order(ByteOrder.nativeOrder()); 
