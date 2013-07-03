@@ -19,6 +19,7 @@ import android.util.Log;
 public class SpatterRenderer implements Renderer {
 	// text
 	protected GLText _text;
+	protected GLText _score;
 	// Layer 1 - scroolujici pozadi
 	protected BackgroundLayer _background1;
 	protected BackgroundLayer _background2;
@@ -38,6 +39,7 @@ public class SpatterRenderer implements Renderer {
 	private Sprite[] _sprite;
 	
 	private Player _player = null;
+	private int Score = 0;
 	//	
 	private long _loopStart=0;
 	private long _loopEnd=0;
@@ -65,6 +67,7 @@ public class SpatterRenderer implements Renderer {
 		_particles = new ParticleEmitter(40, new ParticleShapeCreator());
 		_particlesx = new ParticleEmitter(60, new ParticleCreator(_textures));	
 		_text = new GLText();
+		_score = new GLText();
 		/*
 		_shape = new Shape();
 		_shape.X = 1.75f;
@@ -139,6 +142,7 @@ public class SpatterRenderer implements Renderer {
 		_player.movePlayer(gl);
 		//
 		_text.draw(gl);
+		_score.draw(gl);
 		if (SpatterEngine.lives >=1 )
 		  _sprite[0].draw(gl);
 		if (SpatterEngine.lives >=1) 
@@ -193,7 +197,10 @@ public class SpatterRenderer implements Renderer {
 		_background3.loadTexture(gl, SpatterEngine.space_stars2, SpatterEngine.context);
 		_text.loadTexture(gl, SpatterEngine.text_characters, SpatterEngine.context);
 		_text.BuildCharacters("Lives", 0.25f, 0.95f);
+		_score.loadTexture(gl, SpatterEngine.text_characters, SpatterEngine.context);
+		_score.BuildCharacters("Score:"+String.valueOf(Score), 0.9f*16, 0.95f);
 		_textures.buildTextures(gl, SpatterEngine.context);
+		
 		
 		_scroll.buildLayer();
 		// vrstva nepratel
@@ -245,10 +252,22 @@ public class SpatterRenderer implements Renderer {
 			for(int f = 0; f < fire.size();f++)
 			{
 			  WeaponFire wf = fire.get(f);
+			  if (wf.shotFired == false)
+				  continue;
+			  
 			  if (Collisions.CheckCollision(wf, en)==true)
 			  //if (wf.CheckCollision(en)==true)
 			  {
 				  wf.shotFired = false;
+				  en.Live-=wf.Strength;
+				  if(en.Live <=0)
+				  {
+					  _enemyLayer.hitEnemy(en);
+					  Score += en.Strength;
+					  _score.BuildCharacters("Score:"+String.valueOf(Score), 0.9f*16, 0.95f);
+					  //vybuch
+					  _explosions.setExplosion(en.X, en.Y);
+				  }
 			  }
 			}
 		}

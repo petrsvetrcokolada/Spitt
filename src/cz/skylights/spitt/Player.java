@@ -338,6 +338,7 @@ public class Player extends GameObject {
                 weapon.shotFired = true; 
                 weapon.X = X+(Width/2)-weapon.Width/2; // pulka rakety 
                 weapon.Y = Y+Height; // vyska ... ta je nasobena pomerem obrazovky
+                weapon.Strength = 25;
                 _fired.add(weapon);
                 break;
             } 	       

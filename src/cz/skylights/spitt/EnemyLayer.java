@@ -109,7 +109,9 @@ public class EnemyLayer {
 	private int _lastIndex = 0;
 	public void move()
 	{
-		for(int i = _lastIndex; i < _allenemies.size(); i++)
+		ArrayList<Enemy> remove = new ArrayList<Enemy>();
+		
+		for(int i = 0; i < _allenemies.size(); i++)
 		{
 			Enemy en = _allenemies.get(i);
 			if (en.StartTime <= SpatterEngine.GameTime)
@@ -117,13 +119,21 @@ public class EnemyLayer {
 				en.X = en.startX;
 				en.Y = en.startY;
 				_enemies.add(en);
+				//_allenemies.remove(en);
+				remove.add(en);
 			}
 			else
 			{
-				_lastIndex = i;
+				//_lastIndex = i;
 				break;
 			}
 			
+		}
+		
+		for(int c = 0; c< remove.size();c++)
+		{
+		  Enemy en = remove.get(c);
+		  _allenemies.remove(en);
 		}
 		
 		// pracovat by se melo pouze s aktivnimy objekty
@@ -131,7 +141,7 @@ public class EnemyLayer {
 		for (int i =_enemies.size()-1; i >=0; i--)
 		{
 			Enemy en = _enemies.get(i);
-			if (en.Y >= 0)
+			if (en.Y > -en.Height)
 			{
 				en.move();
 			}
@@ -142,13 +152,15 @@ public class EnemyLayer {
 		}		
 	}
 	
+	
+	
 	public void draw(GL10 gl)
 	{
 		// draw only with active object
 		for (int i =0; i < _enemies.size(); i++)
 		{
 			Enemy en = _enemies.get(i);
-			if (en.Y > 0)
+			if (en.Y > -en.Height)
 				en.draw(gl);
 		}
 	}
@@ -158,4 +170,11 @@ public class EnemyLayer {
 		return _enemies;	
 	}
 	
+	public void hitEnemy(Enemy en)
+	{
+		if (en.Live <= 0)
+		{
+		  _enemies.remove(en);
+		}
+	}
 }

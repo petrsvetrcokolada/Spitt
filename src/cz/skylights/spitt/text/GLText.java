@@ -24,7 +24,7 @@ public class GLText {
 		   for(int i = 0; i < text.length();i++)
 		   {
 			   GLCharacter chr = new GLCharacter(text.charAt(i));
-			   chr.X = 0.25f+0.5f*i;
+			   chr.X = X+0.5f*i;
 			   chr.Y = Y;
 			   _text.add(chr);			   
 		   }

@@ -29,7 +29,7 @@ public class Enemy extends GameObject {
     private byte indices[] = { 
         0,1,2, 
         0,2,3, 
-    };    
+    };
 	
 	public Enemy(float sx, float sy)	
 	{

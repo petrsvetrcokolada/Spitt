@@ -106,6 +106,7 @@ public class ExplosionEmitter
 	private boolean switch_pos=false;
 	public void animation()
 	{
+		/*
 		if ((SpatterEngine.GameTime % 1500) == 0)
 		{
 		  if (switch_pos== false)
@@ -117,9 +118,8 @@ public class ExplosionEmitter
 		  {
 			  this.setExplosion(0.7f, 0.7f);
 			  switch_pos = false;
-		  }
-		  
-		}
+		  }		  
+		}*/
 				
 		for(int i =_animations.size()-1; i >= 0; i--)
 		{

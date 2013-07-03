@@ -17,6 +17,7 @@ public class GameObject {
 	public float Speed=0; // ma rychlost
 	public int StartTime=0;  // aktivni zacina byt v case
 	public int Strength=100; // pokud je znicitelny, ma silu
+	public int Live = 100; // musi byt vetsi nez 0
 	public float startX;
 	public float startY;
 	
