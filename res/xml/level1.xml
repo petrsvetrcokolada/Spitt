@@ -2,33 +2,30 @@
 <LEVEL>
 	<LAYER id="0" name="SCROLL">
     	    <SPEED>0.1</SPEED>
-    	    <OBJECTS>
     	        <OBJECT type="background" opaque="3">
-    	            <TYPE_ID>pozadi1</TYPE_ID>
+    	            <RESOURCE_ID>pozadi1</RESOURCE_ID>
     	            <SPEED>0.1</SPEED>    	        
     	            <TRAJECTORY>LineY</TRAJECTORY>
     	        </OBJECT>
     	        <OBJECT type="background" opaque="1">
-    	            <TYPE_ID>tile1</TYPE_ID>
+    	            <RESOURCE_ID>tile1</RESOURCE_ID>
     	            <SPEED>0.1</SPEED>
     	            <TRAJECTORY>LineY</TRAJECTORY>
     	        </OBJECT>
     	        <OBJECT type="background" opaque="1">
-    	            <TYPE_ID>tile2</TYPE_ID>
+    	            <RESOURCE_ID>tile2</RESOURCE_ID>
     	            <SPEED>0.1</SPEED>
     	            <TRAJECTORY>LineY</TRAJECTORY>
     	        </OBJECT>
     	        <OBJECT type="background" opaque="1">
-    	            <TYPE_ID>tile2</TYPE_ID>
+    	            <RESOURCE_ID>tile2</RESOURCE_ID>
     	            <SPEED>0.1</SPEED>
     	            <TRAJECTORY>LineY</TRAJECTORY>
     	        </OBJECT>
-    	    </OBJECTS>
     	</LAYER>
     	<LAYER id="1" name="BGOBJ">
-    	    <OBJECTS>
     	        <OBJECT type="gr_obj">
-    	            <TYPE_ID>asteroid1</TYPE_ID>
+    	            <RESOURCE_ID>asteroid1</RESOURCE_ID>
     	            <WIDTH></WIDTH>
     	            <HEIGHT></HEIGHT>
     	            <FRAMES></FRAMES>
@@ -37,35 +34,34 @@
     	            <START_TIME>0</START_TIME>
     	            <X_POS>0.4</X_POS>
     	        </OBJECT>
-    	    </OBJECTS>
     	</LAYER>
     	<LAYER id="2" name="COLISION">
-    	    <OBJECTS>
     	        <OBJECT type="enemy">
-    	            <TYPE_ID>enemy1</TYPE_ID>
+    	            <RESOURCE_ID>enemy1</RESOURCE_ID>
     	            <WIDTH>130</WIDTH>
     	            <HEIGHT>120</HEIGHT>
-    	            <FRAMES>6</FRAMES>
+    	            <FRAMES speed="0.2">6</FRAMES>
     	            <SPEED>0.1</SPEED>
-    	            <TRAJECTORY>LineY</TRAJECTORY>
-    	            <WEAPON_TYPE></WEAPON_TYPE>
-    	            <WEAPON_TRAJECTORY></WEAPON_TRAJECTORY>
     	            <START_TIME>0</START_TIME>
     	            <X_POS>0.4</X_POS>
     	            <MOVE_DELAY>1000</MOVE_DELAY>
     	            <STRENGH></STRENGH>
+    	            <TRAJECTORY>LineY</TRAJECTORY>
+    	            <WEAPON_TYPE></WEAPON_TYPE>
+    	            <WEAPON_TRAJECTORY></WEAPON_TRAJECTORY>
+    	            <EFFECTS>
+    	                <EFFECT>vybuch01</EFFECT>
+    	                <EFFECT>destroy01</EFFECT>
+    	            </EFFECTS>
     	        </OBJECT>
-    	    </OBJECTS>
     	</LAYER>
     	<LAYER id="3" name="FOREGROUND">
-			<OBJECTS>
     	        <OBJECT type="gr_obj">
-    	            <TYPE_ID>plosina1</TYPE_ID>
+    	            <RESOURCE_ID>plosina1</RESOURCE_ID>
     	            <SPEED>0.1</SPEED>
     	            <TRAJECTORY>LineY</TRAJECTORY>
     	            <START_TIME>0</START_TIME>
     	            <X_POS>0.4</X_POS>
     	        </OBJECT>
-    	    </OBJECTS>
     	</LAYER>    	
 </LEVEL>

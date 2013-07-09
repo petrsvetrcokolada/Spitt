@@ -11,8 +11,16 @@ public class GameObjectModel extends AbstarctModel{
 	public static final String elName = "OBJECT";
 	
 	private String id;
-	private String graphicType;
-	private String sourceFileName;
+	private String ResourceId;
+	private Integer width;
+	private Integer height;
+	private float speedObject;
+	private String trajectoryType;
+	private Long startTime;
+	private Long xPosition;
+	private Long moveDelay;
+	private Integer frames;
+	
 	
 	public GameObjectModel(GameDataParser gameDataParser){
 		try {
@@ -32,20 +40,78 @@ public class GameObjectModel extends AbstarctModel{
 		this.id = id;
 	}
 
-	public String getGraphicType() {
-		return graphicType;
+	
+
+	public String getResourceId() {
+		return ResourceId;
 	}
 
-	public void setGraphicType(String graphicType) {
-		this.graphicType = graphicType;
+	public void setResourceId(String resourceId) {
+		ResourceId = resourceId;
 	}
 
-	public String getSourceFileName() {
-		return sourceFileName;
+	public Integer getWidth() {
+		return width;
 	}
 
-	public void setSourceFileName(String sourceFileName) {
-		this.sourceFileName = sourceFileName;
+	public void setWidth(Integer width) {
+		this.width = width;
+	}
+
+	public Integer getHeight() {
+		return height;
+	}
+
+	public void setHeight(Integer height) {
+		this.height = height;
+	}
+
+	public float getSpeedObject() {
+		return speedObject;
+	}
+
+	public void setSpeedObject(float speedObject) {
+		this.speedObject = speedObject;
+	}
+
+	public String getTrajectoryType() {
+		return trajectoryType;
+	}
+
+	public void setTrajectoryType(String trajectoryType) {
+		this.trajectoryType = trajectoryType;
+	}
+
+	public Long getStartTime() {
+		return startTime;
+	}
+
+	public void setStartTime(Long startTime) {
+		this.startTime = startTime;
+	}
+
+	public Long getxPosition() {
+		return xPosition;
+	}
+
+	public void setxPosition(Long xPosition) {
+		this.xPosition = xPosition;
+	}
+
+	public Long getMoveDelay() {
+		return moveDelay;
+	}
+
+	public void setMoveDelay(Long moveDelay) {
+		this.moveDelay = moveDelay;
+	}
+
+	public Integer getFrames() {
+		return frames;
+	}
+
+	public void setFrames(Integer frames) {
+		this.frames = frames;
 	}
 
 	@Override
@@ -62,14 +128,32 @@ public class GameObjectModel extends AbstarctModel{
 
 	@Override
 	protected void onCharacters() {
-		if("ID".equals(currEl)){
-			this.setId(xmlResParser.getText());
+		if("RESOURCE_ID".equals(currEl)){
+			this.setResourceId(xmlResParser.getText());
 		}
-		else if("GR_TYPE".equals(currEl)){
-			this.setGraphicType(xmlResParser.getText());
+		else if("SPEED".equals(currEl)){
+			this.setSpeedObject(Double.valueOf(xmlResParser.getText()).floatValue());
 		}
-		else if("OBJECT_TYPE".equals(currEl)){
-			this.setGraphicType(xmlResParser.getText());
+		else if("TRAJECTORY".equals(currEl)){
+			this.setTrajectoryType(xmlResParser.getText());
+		}
+		else if("WIDTH".equals(currEl)){
+			this.setWidth(Integer.valueOf(xmlResParser.getText()));
+		}
+		else if("HEIGHT".equals(currEl)){
+			this.setHeight(Integer.valueOf(xmlResParser.getText()));
+		}
+		else if("FRAMES".equals(currEl)){
+			this.setFrames(Integer.valueOf(xmlResParser.getText()));
+		}
+		else if("START_TIME".equals(currEl)){
+			this.setStartTime(Long.valueOf(xmlResParser.getText()));
+		}
+		else if("X_POS".equals(currEl)){
+			this.setxPosition(Long.valueOf(xmlResParser.getText()));
+		}
+		else if("MOVE_DELAY".equals(currEl)){
+			this.setMoveDelay(Long.valueOf(xmlResParser.getText()));
 		}
 	}
 
