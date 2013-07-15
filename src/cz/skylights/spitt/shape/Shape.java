@@ -27,28 +27,33 @@ public class Shape extends GameObject {
 
    public Shape(float width, float height) 
    {
-	  vertices[3]=width;
-	  vertices[6]=width;
-	  vertices[7]=height;
-	  vertices[10]=height;
-	  Width = width;
-	  Height = height;
-	   
-      ByteBuffer vbb = ByteBuffer.allocateDirect(vertices.length * 4);
-      vbb.order(ByteOrder.nativeOrder()); 
-      vertexBuffer = vbb.asFloatBuffer();
-      vertexBuffer.put(vertices);        
-      vertexBuffer.position(0);          
-     
-      ByteBuffer cbb = ByteBuffer.allocateDirect(colors.length * 4);
-      cbb.order(ByteOrder.nativeOrder());
-      colorBuffer = cbb.asFloatBuffer();  
-      colorBuffer.put(colors);           
-      colorBuffer.position(0);           
-         
-      indexBuffer = ByteBuffer.allocateDirect(indices.length);
-      indexBuffer.put(indices);
-      indexBuffer.position(0);
+	  updateShape(width, height);
+   }
+   
+   public void updateShape(float width, float height)
+   {
+		  vertices[3]=width;
+		  vertices[6]=width;
+		  vertices[7]=height;
+		  vertices[10]=height;
+		  Width = width;
+		  Height = height;
+		   
+	      ByteBuffer vbb = ByteBuffer.allocateDirect(vertices.length * 4);
+	      vbb.order(ByteOrder.nativeOrder()); 
+	      vertexBuffer = vbb.asFloatBuffer();
+	      vertexBuffer.put(vertices);        
+	      vertexBuffer.position(0);          
+	     
+	      ByteBuffer cbb = ByteBuffer.allocateDirect(colors.length * 4);
+	      cbb.order(ByteOrder.nativeOrder());
+	      colorBuffer = cbb.asFloatBuffer();  
+	      colorBuffer.put(colors);           
+	      colorBuffer.position(0);           
+	         
+	      indexBuffer = ByteBuffer.allocateDirect(indices.length);
+	      indexBuffer.put(indices);
+	      indexBuffer.position(0);
    }
   
    // Render this shape

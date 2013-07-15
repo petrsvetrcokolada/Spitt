@@ -25,7 +25,7 @@ public class Player extends GameObject {
     private float _moveToY = 0;
     
     //
-    BitmapTexture _texturePlayer;
+    //BitmapTexture _texturePlayer;
     // 
     private float _incrementX=SpatterEngine.PLAYER_BANK_SPEED;
     private float _incrementY=SpatterEngine.PLAYER_BANK_SPEED;
@@ -37,17 +37,17 @@ public class Player extends GameObject {
     private float vertices[] = 
     { 
         0.0f, 0.0f, 0.0f, 
-        0.25f, 0.0f, 0.0f, 
-        0.25f, 0.25f, 0.0f, 
-        0.0f, 0.25f, 0.0f, 
+        1.0f, 0.0f, 0.0f, 
+        1.0f, 1.0f, 0.0f, 
+        0.0f, 1.0f, 0.0f, 
     }; 
 
     private float texture[] = 
     { 
+        0.0f, 1.0f, 
+        1.0f, 1.0f, 
+        1.0f, 0.0f, 
         0.0f, 0.0f, 
-        0.25f, 0.0f, 
-        0.25f, 0.25f, 
-        0.0f, 0.25f, 
     }; 
 
     private byte indices[] =
@@ -64,9 +64,15 @@ public class Player extends GameObject {
     	Height = 0.25f;
     	_lastFire = System.currentTimeMillis();
     	_textures = text_manager;
-    	_texturePlayer = _textures.AddTexture("sm", 1,128,128,true);
+    	_texture = _textures.AddTexture("small",10 ,128,128,true);
     	BitmapTexture shoot = _textures.AddTexture("shoot4a", true);
-    	
+            
+		/// inicializace
+		initializePrimaryWeapons(shoot);
+    }
+    
+    public void refreshArray()
+    {
         ByteBuffer byteBuf = ByteBuffer.allocateDirect(vertices.length * 4); 
         byteBuf.order(ByteOrder.nativeOrder()); 
         vertexBuffer = byteBuf.asFloatBuffer(); 
@@ -82,10 +88,25 @@ public class Player extends GameObject {
         indexBuffer = ByteBuffer.allocateDirect(indices.length); 
         indexBuffer.put(indices); 
         indexBuffer.position(0);
-        
-		/// inicializace
-		initializePrimaryWeapons(shoot);
-    } 
+    }
+    
+	// kazda kulka by mela mit svuj pomer velikosti ... individualne k bitmape
+	public void setSizeRatio(float ratio)
+	{		
+		for(int i = 0; i < vertices.length;i++)
+			vertices[i]*=ratio;
+		
+	  float podil = (float)_texture.FrameWidth/(float)_texture.Width;
+	  for(int i = 0; i < this.texture.length; i++)
+	  {
+	    this.texture[i] = this.texture[i]*podil;
+	  }
+		
+		Width = 1.0f*ratio;
+		Height = 1.0f*ratio;
+		Speed *= ratio;
+		refreshArray();
+	}	
     
     public ArrayList<WeaponFire> GetFiredWeapon()
     {
@@ -95,7 +116,7 @@ public class Player extends GameObject {
     ///
     public void draw(GL10 gl) { 
     	gl.glBlendFunc( GL10.GL_SRC_ALPHA, GL10.GL_ONE_MINUS_SRC_ALPHA );
-        gl.glBindTexture(GL10.GL_TEXTURE_2D, _texturePlayer.textureID); 
+        gl.glBindTexture(GL10.GL_TEXTURE_2D, _texture.textureID); 
         gl.glFrontFace(GL10.GL_CCW); 
         gl.glEnable(GL10.GL_CULL_FACE); 
         gl.glCullFace(GL10.GL_BACK); 
@@ -202,7 +223,7 @@ public class Player extends GameObject {
                 gl.glTranslatef(X, Y, 0f); 
                 gl.glMatrixMode(GL10.GL_TEXTURE); 
                 gl.glLoadIdentity();  
-                gl.glTranslatef(0.25f,0.0f, 0.0f);
+                gl.glTranslatef(0.0f,0.25f, 0.0f);
                 _playerFrame += 1;
             } 
             else if (_playerFrame >= SpatterEngine.PLAYER_FRAMES_BETWEEN_ANI && X > 0) { 
@@ -215,7 +236,7 @@ public class Player extends GameObject {
                 gl.glMatrixMode(GL10.GL_TEXTURE); 
                 gl.glLoadIdentity(); 
                 //gl.glTranslatef(0.0f,0.25f, 0.0f);                
-                gl.glTranslatef(0.50f,0.0f, 0.0f);
+                gl.glTranslatef(0.25f,0.25f, 0.0f);
             }
             else  { 
                 gl.glTranslatef(X, Y, 0f); 
@@ -234,8 +255,7 @@ public class Player extends GameObject {
             gl.glPushMatrix(); 
             //gl.glScalef(SpatterEngine.scaleX, SpatterEngine.scaleY, 1f); 
 
-            if (_playerFrame < SpatterEngine.PLAYER_FRAMES_BETWEEN_ANI && SpatterEngine.Player.X < 1) {
-            	
+            if (_playerFrame < SpatterEngine.PLAYER_FRAMES_BETWEEN_ANI && SpatterEngine.Player.X < 1) {            
             	if (fl_playerx < _moveToX)
             		X += _incrementX;
             	else
@@ -245,7 +265,7 @@ public class Player extends GameObject {
                 gl.glMatrixMode(GL10.GL_TEXTURE); 
                 gl.glLoadIdentity(); 
                 //gl.glTranslatef(0.25f,0.0f, 0.0f); 
-                gl.glTranslatef(0.75f, 0.0f, 0.0f);
+                gl.glTranslatef(0.0f, 0.5f, 0.0f);
                 _playerFrame += 1;             	
             }
             else if (_playerFrame >= SpatterEngine.PLAYER_FRAMES_BETWEEN_ANI && SpatterEngine.Player.X < 1) {
@@ -259,7 +279,7 @@ public class Player extends GameObject {
                 gl.glMatrixMode(GL10.GL_TEXTURE); 
                 gl.glLoadIdentity(); 
                 //gl.glTranslatef(0.50f,0.0f, 0.0f);
-                gl.glTranslatef(0.0f,0.25f, 0.0f);
+                gl.glTranslatef(0.25f,0.5f, 0.0f);
             } 
             else { 
                 gl.glTranslatef(X, Y, 0f); 
@@ -307,7 +327,7 @@ public class Player extends GameObject {
     ///
     private void initializePrimaryWeapons(BitmapTexture texture) { 
         for (int x = 0; x < SpatterEngine.fire_count; x++) { 
-        	WeaponFire weapon = new WeaponFire(0.02f, this.X, this.Y); 
+        	WeaponFire weapon = new WeaponFire(0.04f, this.X, this.Y); 
             weapon.shotFired = false;           
             weapon.setTexture(texture);
             weapon.X = this.X; 

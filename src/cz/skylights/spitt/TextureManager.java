@@ -206,11 +206,12 @@ public class TextureManager {
 	    		height = texture.FrameHeight;
 	    	}
 	    	
-	    	///	     	
+	    	///	
+	    	int kolikx = source.getWidth()/width;
 	    	for(int frame = 0; frame < texture.Frames; frame++)
 	    	{
-	    		int pocx = frame % width;
-	    		int pocy = frame / height;	  
+	    		int pocx = frame % kolikx;
+	    		int pocy = frame / kolikx;	  
 	    		
 	    		    	    	
 		    	int[] pixels = new int[len];
@@ -261,10 +262,10 @@ public class TextureManager {
 		    		  if (valA != 0 && valB != 0 && valC != 0 && valD != 0)
 		    			  continue;
 		    		  
-		    		  int x = idx / width;
-		    		  int y = idx % height;	    		  
+		    		  int x = idx % width;
+		    		  int y = idx / height;	    		  
 		    		  
-		    		  Vertex2D vert = new Vertex2D(jednotkax*x, jednotkay*y);
+		    		  Vertex2D vert = new Vertex2D(jednotkax*x, 1-jednotkay*y);
 		    		  if (vert.X < min_x)
 		    			  min_x = vert.X;
 		    		  if (vert.Y < min_y)

@@ -19,6 +19,9 @@ public class LevelModel extends AbstarctModel{
 	private String resource;
 	private String bigIcon;
 	private String smallIcon;
+	 
+	private List<LayerModel> layerList;
+	private LayerModel layer;
 	
 
 	public LevelModel(GameDataParser gameDataParser,Integer levelId) {
@@ -26,10 +29,8 @@ public class LevelModel extends AbstarctModel{
 		try {
 			parse(gameDataParser);
 		} catch (XmlPullParserException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}

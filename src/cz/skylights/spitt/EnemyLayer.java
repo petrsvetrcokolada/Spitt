@@ -63,6 +63,7 @@ public class EnemyLayer {
 			sy = OptionsEngine.startY;
 			
 			Enemy en = new Enemy(sx,sy);
+			en.Strength = 5;
 			if ((i%2) == 0)
 			{					
 				en.setTexture(_texture1);

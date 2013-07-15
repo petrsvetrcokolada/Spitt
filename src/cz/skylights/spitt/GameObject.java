@@ -3,6 +3,7 @@ package cz.skylights.spitt;
 import java.nio.ByteBuffer;
 import java.nio.FloatBuffer;
 
+import cz.skylights.spitt.collision.CollisionArray;
 import cz.skylights.spitt.interfaces.ITrajectory;
 
 public class GameObject {
@@ -72,5 +73,45 @@ public class GameObject {
 			  Y = _trajectory.getY(this);
 			}
 		}
+	}
+	
+	public float getMinX()
+	{
+		if (_texture == null)
+			return X;
+		
+		CollisionArray col_array = _texture.getEdge(_frame);		
+		float minx = X+col_array.X*Width; 
+		return minx;
+	}
+	
+	public float getMinY()
+	{
+		if (_texture == null)
+			return Y;
+		
+		CollisionArray col_array = _texture.getEdge(_frame);		
+		float miny = Y+col_array.Y*Height; 
+		return miny;
+	}
+	
+	public float getMinWidth()
+	{
+		if (_texture == null)
+			return Width;
+		
+		CollisionArray col_array = _texture.getEdge(_frame);		
+		float miny = col_array.Width*Width; 
+		return miny;		
+	}
+	
+	public float getMinHeight()
+	{
+		if (_texture == null)
+			return Height;
+		
+		CollisionArray col_array = _texture.getEdge(_frame);		
+		float miny = col_array.Height*Height; 
+		return miny;		
 	}
 }

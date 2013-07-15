@@ -151,7 +151,9 @@ public class SpatterRenderer implements Renderer {
 			_sprite[2].draw(gl);
 		
 		// FOREGROUND LAYER
-		_shape.draw(gl); // live rectangle	
+		float live_sh = 0.35f * (float)_player.Live/(float)100;		
+		_shape.updateShape(live_sh, 0.02f);
+		_shape.draw(gl); // live rectangle			
 		gl.glDisable(GL10.GL_BLEND);
 		gl.glShadeModel(GL10.GL_SMOOTH);	
 				
@@ -205,7 +207,8 @@ public class SpatterRenderer implements Renderer {
 		_scroll.buildLayer();
 		// vrstva nepratel
 		_enemyLayer.loadTextures(gl,SpatterEngine.context);
-		_enemyLayer.createEnemies();		
+		_enemyLayer.createEnemies();
+		_player.setSizeRatio(0.25f);
 		
 		_explosions = new ExplosionEmitter(_textures);
 		
@@ -239,7 +242,8 @@ public class SpatterRenderer implements Renderer {
 		ArrayList<Enemy> enemies = _enemyLayer.GetActive();
 		CheckWeapon(fire, enemies);
 		// collision enemies width player
-		// xxxx
+		CheckEnemy(enemies);
+		
 	}
 	
 	// check collision enemies and weapon
@@ -255,7 +259,7 @@ public class SpatterRenderer implements Renderer {
 			  if (wf.shotFired == false)
 				  continue;
 			  
-			  if (Collisions.CheckCollision(wf, en)==true)
+			  if (Collisions.CheckCollision(wf,true, en,false)==true)
 			  //if (wf.CheckCollision(en)==true)
 			  {
 				  wf.shotFired = false;
@@ -269,6 +273,28 @@ public class SpatterRenderer implements Renderer {
 					  _explosions.setExplosion(en.X, en.Y);
 				  }
 			  }
+			}
+		}
+	}
+	
+	private void CheckEnemy(ArrayList<Enemy> enemies)
+	{
+		for(int i =0; i < enemies.size(); i++)
+		{
+			//
+			Enemy en = enemies.get(i);
+			try
+			{
+				if (Collisions.CheckCollision(en,false, _player, true) == true)
+				{					 
+					enemies.remove(en);
+					_explosions.setExplosion(en.X, en.Y);
+					_player.Live -= en.Strength;
+				}
+			}
+			catch(Exception e)
+			{
+				Log.w("CheckEnemy", e.getMessage());
 			}
 		}
 	}
