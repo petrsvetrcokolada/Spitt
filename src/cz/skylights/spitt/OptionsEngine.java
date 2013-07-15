@@ -56,5 +56,8 @@ public class OptionsEngine {
     public static float scaleX = .25f;
     static float scaleY = .25f;
     public static float startY = 1.0f;
-    public static boolean onTouch = false;    
+    public static boolean onTouch = false;
+    // enum
+    public enum gameState {gameLoading, game, gameOver};
+    public static gameState game_state = gameState.gameLoading;
 }

@@ -6,6 +6,8 @@ import javax.microedition.khronos.egl.EGLConfig;
 import javax.microedition.khronos.opengles.GL10;
 
 import cz.skylights.spitt.collision.Collisions;
+import cz.skylights.spitt.layer.BackgroundLayer;
+import cz.skylights.spitt.layer.EnemyLayer;
 import cz.skylights.spitt.layer.ScrollLayer;
 import cz.skylights.spitt.particle.ParticleCreator;
 import cz.skylights.spitt.particle.ParticleEmitter;
@@ -35,7 +37,7 @@ public class SpatterRenderer implements Renderer {
 	protected ExplosionEmitter _explosions;
 	// Layer - Engine objekty - live prouzek
 	protected Shape _shape;
-	protected SpriteAnimation _animation = new SpriteAnimation(true);
+	//protected SpriteAnimation _animation = new SpriteAnimation(true);
 	private Sprite[] _sprite;
 	
 	private Player _player = null;
@@ -128,13 +130,14 @@ public class SpatterRenderer implements Renderer {
 		//gl.glBlendFunc( GL10.GL_SRC_ALPHA, GL10.GL_ONE_MINUS_SRC_ALPHA );						 
 		// ENEMY LAYER
 		gl.glBlendFunc( GL10.GL_SRC_ALPHA, GL10.GL_ONE_MINUS_SRC_ALPHA );
+		_enemyLayer.updateEnemies();
 		_enemyLayer.move();
 		_enemyLayer.draw(gl);
 		// ANIMATION - vzbuch apod
 		gl.glEnable(GL10.GL_BLEND);
 		gl.glBlendFunc(GL10.GL_ONE, GL10.GL_ONE); 
-		_animation.animation();
-		_animation.draw(gl);
+		//_animation.animation();
+		//_animation.draw(gl);
 		// explosions
 		_explosions.animation();
 		_explosions.draw(gl);
@@ -213,12 +216,13 @@ public class SpatterRenderer implements Renderer {
 		_explosions = new ExplosionEmitter(_textures);
 		
 		// nastaveni parametru animace
+		/*
 		_animation.setTexture(_textures.GetTexture(SpatterEngine.explose_animation));
 		_animation.setSizeRatio(0.25f);
 		_animation.setFramesParameter(16, _textures.GetBitmap(SpatterEngine.explose_animation).getWidth(),128, 128);
 		_animation.X = 0.4f;
 		_animation.Y = 0.4f;
-		_animation.setFrame(0);
+		_animation.setFrame(0);*/
 		_particles.createParticles();
 		_particlesx.createParticles();
 		_sprite[0].loadTexture(gl,SpatterEngine.sprite_live, SpatterEngine.context);
@@ -253,6 +257,11 @@ public class SpatterRenderer implements Renderer {
 		{
 			//
 			Enemy en = enemies.get(i);
+			if (en.Live <= 0)
+			{
+				continue;
+			}
+			
 			for(int f = 0; f < fire.size();f++)
 			{
 			  WeaponFire wf = fire.get(f);
@@ -265,17 +274,17 @@ public class SpatterRenderer implements Renderer {
 				  wf.shotFired = false;
 				  en.Live-=wf.Strength;
 				  if(en.Live <=0)
-				  {
-					  _enemyLayer.hitEnemy(en);
+				  {							  
 					  Score += en.Strength;
 					  _score.BuildCharacters("Score:"+String.valueOf(Score), 0.9f*16, 0.95f);
 					  //vybuch
-					  _explosions.setExplosion(en.X, en.Y);
+					  en.Adorner = _explosions.setExplosion(en);
 				  }
 			  }
 			}
 		}
 	}
+	
 	
 	private void CheckEnemy(ArrayList<Enemy> enemies)
 	{
@@ -288,8 +297,13 @@ public class SpatterRenderer implements Renderer {
 				if (Collisions.CheckCollision(en,false, _player, true) == true)
 				{					 
 					enemies.remove(en);
-					_explosions.setExplosion(en.X, en.Y);
+					_explosions.setExplosion(en);
 					_player.Live -= en.Strength;
+					if (_player.Live <= 0)
+					{
+						SpatterEngine.game_state = OptionsEngine.gameState.gameOver;
+						_explosions.setExplosion(_player);						
+					}
 				}
 			}
 			catch(Exception e)

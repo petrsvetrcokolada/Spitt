@@ -6,6 +6,7 @@ import java.util.Random;
 
 import javax.microedition.khronos.opengles.GL10;
 
+import cz.skylights.spitt.GameObject;
 import cz.skylights.spitt.SpatterEngine;
 import cz.skylights.spitt.TextureManager;
 
@@ -32,8 +33,16 @@ public class ExplosionEmitter
 		_array.add(_textures.GetTexture(SpatterEngine.explose_animation));
 	}
 	
+	public SpriteAnimation setExplosion(GameObject obj)
+	{		
+		SpriteAnimation spr = setExplosion(obj.X, obj.Y);
+		spr.X = obj.X+obj.Width/2-spr.Width/2;
+		spr.Y = obj.Y+obj.Height/2-spr.Height/2;
+		return spr;
+	}
+	
 	// vloz explosi
-	public void setExplosion(float X, float Y)
+	public SpriteAnimation setExplosion(float X, float Y)
 	{
 		SpriteAnimation spr = new SpriteAnimation(false);		
 		Integer rand = generator.nextInt(9);
@@ -45,6 +54,7 @@ public class ExplosionEmitter
 		spr.setFramesParameter(16, _textures.GetBitmap(SpatterEngine.explose_animation).getWidth(),128, 128);		
 		spr.setFrame(0);
 		_animations.add(spr);
+		return spr;
 	}
 	
 	// vloz explosi

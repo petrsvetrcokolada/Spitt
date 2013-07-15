@@ -5,6 +5,7 @@ import java.nio.FloatBuffer;
 
 import cz.skylights.spitt.collision.CollisionArray;
 import cz.skylights.spitt.interfaces.ITrajectory;
+import cz.skylights.spitt.shape.SpriteAnimation;
 
 public class GameObject {
 	public float X;
@@ -12,8 +13,7 @@ public class GameObject {
     public float scaleX = 0.25f;
     public float scaleY = 0.25f;
 	public float Width;  // bylo by dobre znat sirku
-	public float Height; // bylo by dobre znat vysku
-	
+	public float Height; // bylo by dobre znat vysku	
 	// aktivni objekt se muze pohybovat
 	public float Speed=0; // ma rychlost
 	public int StartTime=0;  // aktivni zacina byt v case
@@ -21,6 +21,8 @@ public class GameObject {
 	public int Live = 100; // musi byt vetsi nez 0
 	public float startX;
 	public float startY;
+	// adorner
+	public SpriteAnimation Adorner=null;
 	
 	protected ITrajectory _trajectory= null;
 	protected BitmapTexture _texture;
