@@ -1,5 +1,6 @@
 package cz.skylights.spitt.model;
 
+import java.math.BigDecimal;
 import java.util.List;
 
 import cz.skylights.spitt.xml.GameDataParser;
@@ -9,6 +10,7 @@ public class ActiveGameObjectModel extends GameObjectModel{
 	private Integer strenght;
 	private String weaponType;
 	private String weaponTrajectory;
+	private BigDecimal weaponTrajectoryspeed;
 	private List<EffectObjectModel> efekty;
 	
 	public ActiveGameObjectModel(GameDataParser gameDataParser) {
@@ -49,6 +51,16 @@ public class ActiveGameObjectModel extends GameObjectModel{
 		this.efekty = efekty;
 	}
 	
+	public BigDecimal getWeaponTrajectoryspeed() {
+		return weaponTrajectoryspeed;
+	}
+
+
+	public void setWeaponTrajectoryspeed(BigDecimal weaponTrajectoryspeed) {
+		this.weaponTrajectoryspeed = weaponTrajectoryspeed;
+	}
+
+
 	@Override
 	protected void onStartElement() {
 		// TODO Auto-generated method stub
@@ -73,7 +85,14 @@ public class ActiveGameObjectModel extends GameObjectModel{
 			this.setTrajectoryType(xmlResParser.getText());
 		}
 		else if("WEAPON_TRAJECTORY".equals(currEl)){
-			this.setWidth(Integer.valueOf(xmlResParser.getText()));
+			this.setWeaponTrajectory(xmlResParser.getText());
+			
+			for(int i = 0, n = this.xmlResParser.getAttributeCount(); i < n; ++i) {								
+				if(this.xmlResParser.getAttributeName(i).equals("speed")){
+					weaponTrajectoryspeed = new BigDecimal(this.xmlResParser.getAttributeValue(i));
+					break;
+				}
+			}
 		}
 		
 	}

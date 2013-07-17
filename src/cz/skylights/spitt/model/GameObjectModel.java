@@ -1,6 +1,7 @@
 package cz.skylights.spitt.model;
 
 import java.io.IOException;
+import java.math.BigDecimal;
 
 import org.xmlpull.v1.XmlPullParserException;
 
@@ -20,6 +21,7 @@ public class GameObjectModel extends AbstarctModel{
 	private Long xPosition;
 	private Long moveDelay;
 	private Integer frames;
+	private BigDecimal frameSpeed;
 	
 	
 	public GameObjectModel(GameDataParser gameDataParser){
@@ -114,6 +116,14 @@ public class GameObjectModel extends AbstarctModel{
 		this.frames = frames;
 	}
 
+	public BigDecimal getFrameSpeed() {
+		return frameSpeed;
+	}
+
+	public void setFrameSpeed(BigDecimal frameSpeed) {
+		this.frameSpeed = frameSpeed;
+	}
+
 	@Override
 	protected void onStartElement() {
 		// TODO Auto-generated method stub
@@ -154,6 +164,16 @@ public class GameObjectModel extends AbstarctModel{
 		}
 		else if("MOVE_DELAY".equals(currEl)){
 			this.setMoveDelay(Long.valueOf(xmlResParser.getText()));
+		}
+		else if("FRAMES".equals(currEl)){
+			this.setFrames(Integer.valueOf(xmlResParser.getText()));
+			
+			for(int i = 0, n = this.xmlResParser.getAttributeCount(); i < n; ++i) {								
+				if(this.xmlResParser.getAttributeName(i).equals("speed")){
+					this.frameSpeed = new BigDecimal(this.xmlResParser.getAttributeValue(i));
+					break;
+				}
+			}
 		}
 	}
 

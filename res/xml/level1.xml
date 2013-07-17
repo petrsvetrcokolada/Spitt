@@ -45,10 +45,10 @@
     	            <START_TIME>0</START_TIME>
     	            <X_POS>0.4</X_POS>
     	            <MOVE_DELAY>1000</MOVE_DELAY>
-    	            <STRENGH></STRENGH>
+    	            <STRENGH>200</STRENGH>
     	            <TRAJECTORY>LineY</TRAJECTORY>
-    	            <WEAPON_TYPE></WEAPON_TYPE>
-    	            <WEAPON_TRAJECTORY></WEAPON_TRAJECTORY>
+    	            <WEAPON_TYPE>blast1</WEAPON_TYPE>
+    	            <WEAPON_TRAJECTORY speed="0.2">lineY</WEAPON_TRAJECTORY>
     	            <EFFECTS>
     	                <EFFECT>vybuch01</EFFECT>
     	                <EFFECT>destroy01</EFFECT>
@@ -58,10 +58,14 @@
     	<LAYER id="3" name="FOREGROUND">
     	        <OBJECT type="gr_obj">
     	            <RESOURCE_ID>plosina1</RESOURCE_ID>
+    	            <WIDTH>130</WIDTH>
+    	            <HEIGHT>120</HEIGHT>
+    	            <FRAMES speed="0.2">6</FRAMES>
     	            <SPEED>0.1</SPEED>
-    	            <TRAJECTORY>LineY</TRAJECTORY>
     	            <START_TIME>0</START_TIME>
     	            <X_POS>0.4</X_POS>
+    	            <MOVE_DELAY>0</MOVE_DELAY>
+    	            <TRAJECTORY>LineY</TRAJECTORY>
     	        </OBJECT>
     	</LAYER>    	
 </LEVEL>
