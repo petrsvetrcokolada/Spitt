@@ -16,7 +16,5 @@ public class SinTimeTrajectory implements ITrajectory
 		float s = SpatterEngine.GameObjectTime(enemy);
 		float y = enemy.startY-SpatterEngine.GameObjectTime(enemy)*enemy.Speed; 
 		return y;
-	}
-
-	
+	}		
 }

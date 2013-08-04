@@ -3,14 +3,15 @@ package cz.skylights.spitt.layer;
 import java.util.*;
 import javax.microedition.khronos.opengles.GL10;
 
+
 import cz.skylights.spitt.BitmapTexture;
 import cz.skylights.spitt.Enemy;
 import cz.skylights.spitt.EnemyComparator;
 import cz.skylights.spitt.OptionsEngine;
 import cz.skylights.spitt.SpatterEngine;
 import cz.skylights.spitt.TextureManager;
-import cz.skylights.spitt.Trajectory;
 import cz.skylights.spitt.interfaces.ITrajectory;
+import cz.skylights.spitt.trajectory.Trajectory;
 
 import android.content.Context;
 

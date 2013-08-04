@@ -1,8 +1,10 @@
-package cz.skylights.spitt;
+package cz.skylights.spitt.trajectory;
 
  import android.graphics.Point;
 import android.util.Log;
 
+import cz.skylights.spitt.GameObject;
+import cz.skylights.spitt.SpatterEngine;
 import cz.skylights.spitt.interfaces.*;
 
 /// Trajektorie

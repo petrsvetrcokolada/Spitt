@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import javax.microedition.khronos.egl.EGLConfig;
 import javax.microedition.khronos.opengles.GL10;
 
+import cz.skylights.spitt.collision.AsyncCollision;
 import cz.skylights.spitt.collision.Collisions;
 import cz.skylights.spitt.layer.BackgroundLayer;
 import cz.skylights.spitt.layer.EnemyLayer;
@@ -46,7 +47,8 @@ public class SpatterRenderer implements Renderer {
 	private long _loopStart=0;
 	private long _loopEnd=0;
 	private long _loopRunTime=0;
-	//private Thread _thread = new 
+	//private Thread _thread = new
+	AsyncCollision collision_th = new AsyncCollision();
 	
 	public SpatterRenderer()
 	{
@@ -85,6 +87,7 @@ public class SpatterRenderer implements Renderer {
 		_sprite[0] = new Sprite();
 		_sprite[1] = new Sprite();
 		_sprite[2] = new Sprite();		
+		collision_th.execute();
 	}	
 	
 	//
@@ -175,7 +178,7 @@ public class SpatterRenderer implements Renderer {
 		gl.glMatrixMode(GL10.GL_PROJECTION);
 		gl.glLoadIdentity();
 		gl.glOrthof(0f, 1f, 0f, SpatterEngine.screen_ratio, -1f, 1f);
-		
+					
 		loadLevel(gl);
 	}
 	//
@@ -214,6 +217,8 @@ public class SpatterRenderer implements Renderer {
 		_player.setSizeRatio(0.25f);
 		
 		_explosions = new ExplosionEmitter(_textures);
+		collision_th.setExplosions(_explosions);
+		collision_th.setEnemies(_enemyLayer.GetActive());
 		
 		// nastaveni parametru animace
 		/*
@@ -267,7 +272,8 @@ public class SpatterRenderer implements Renderer {
 			  WeaponFire wf = fire.get(f);
 			  if (wf.shotFired == false)
 				  continue;
-			  
+		
+			  //col.execute(wf, en);			  
 			  if (Collisions.CheckCollision(wf,true, en,false)==true)
 			  //if (wf.CheckCollision(en)==true)
 			  {
@@ -294,6 +300,13 @@ public class SpatterRenderer implements Renderer {
 			Enemy en = enemies.get(i);
 			try
 			{
+								
+				GameObject[] list = new GameObject[2];
+				if (Collisions.CheckCollisionRect(en, _player)==true)
+				{
+					collision_th.Add(en, _player);
+				}
+				/*
 				if (Collisions.CheckCollision(en,false, _player, true) == true)
 				{					 
 					enemies.remove(en);
@@ -304,7 +317,7 @@ public class SpatterRenderer implements Renderer {
 						SpatterEngine.game_state = OptionsEngine.gameState.gameOver;
 						_explosions.setExplosion(_player);						
 					}
-				}
+				}*/
 			}
 			catch(Exception e)
 			{

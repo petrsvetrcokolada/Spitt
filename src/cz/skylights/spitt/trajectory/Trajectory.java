@@ -1,5 +1,6 @@
-package cz.skylights.spitt;
+package cz.skylights.spitt.trajectory;
 
+import cz.skylights.spitt.GameObject;
 import cz.skylights.spitt.interfaces.ITrajectory;
 
 public class Trajectory  implements ITrajectory 
