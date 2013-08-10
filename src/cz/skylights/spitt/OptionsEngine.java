@@ -33,6 +33,8 @@ public class OptionsEngine {
     public static final int text_characters = R.drawable.arial;
     // player
     public static Player Player;
+    public static int maxlives = 3;
+    //
     public static final int PLAYER_SHIP = R.drawable.sm;
     public static final int PLAYER_BULLET = R.drawable.shoot2;
     public static final int PLAYER_LEFT = 1; 
@@ -47,7 +49,7 @@ public class OptionsEngine {
     public static final float bullet_speed = .005f;
     public static final int bullet_timeout = 250;
     //public static float playerX=1.75f;
-    public static final int lives=3;
+    //public static final int lives=3;
     // enemy
     public static final int enemy=R.drawable.enemy;
     public static final int enemy1=R.drawable.enemy1;

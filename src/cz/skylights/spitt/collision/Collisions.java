@@ -2,11 +2,11 @@ package cz.skylights.spitt.collision;
 
 import java.util.ArrayList;
 
-import cz.skylights.geometry.Vertex2D;
 import cz.skylights.spitt.BitmapTexture;
 import cz.skylights.spitt.Enemy;
 import cz.skylights.spitt.GameObject;
 import cz.skylights.spitt.SpatterEngine;
+import cz.skylights.spitt.geometry.Vertex2D;
 
 public class Collisions extends ArrayList<CollisionArray> {
 		

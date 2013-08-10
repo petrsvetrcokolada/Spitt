@@ -23,6 +23,8 @@ public class Player extends GameObject {
     private int _playerFrame=0;
     private float _moveToX = 0;
     private float _moveToY = 0;
+    public int Score = 0;
+    public int TotalLives = SpatterEngine.maxlives; 
     
     //
     //BitmapTexture _texturePlayer;
@@ -332,6 +334,7 @@ public class Player extends GameObject {
             weapon.setTexture(texture);
             weapon.X = this.X; 
             weapon.Y = this.Y;
+            weapon.Parent=this;
             _playerFire.add(weapon);
         }            
         

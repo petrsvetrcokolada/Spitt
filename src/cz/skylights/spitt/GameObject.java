@@ -3,6 +3,8 @@ package cz.skylights.spitt;
 import java.nio.ByteBuffer;
 import java.nio.FloatBuffer;
 
+import javax.microedition.khronos.opengles.GL10;
+
 import cz.skylights.spitt.collision.CollisionArray;
 import cz.skylights.spitt.interfaces.ITrajectory;
 import cz.skylights.spitt.shape.SpriteAnimation;
@@ -115,5 +117,11 @@ public class GameObject {
 		CollisionArray col_array = _texture.getEdge(_frame);		
 		float miny = col_array.Height*Height; 
 		return miny;		
+	}
+	
+	
+	public void draw(GL10 gl)
+	{
+	
 	}
 }

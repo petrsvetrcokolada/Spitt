@@ -2,9 +2,9 @@ package cz.skylights.spitt;
 
 import java.util.ArrayList;
 
-import cz.skylights.geometry.Vertex2D;
 import cz.skylights.spitt.collision.CollisionArray;
 import cz.skylights.spitt.collision.Collisions;
+import cz.skylights.spitt.geometry.Vertex2D;
 
 import android.graphics.Bitmap;
 

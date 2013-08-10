@@ -4,7 +4,7 @@ import java.util.ArrayList;
 
 import android.view.animation.OvershootInterpolator;
 
-import cz.skylights.geometry.Vertex2D;
+import cz.skylights.spitt.geometry.Vertex2D;
 
 public class CollisionArray extends ArrayList<Vertex2D> {
 	

@@ -74,14 +74,7 @@ public class ScrollLayer {
     	_textures.AddTexture("level1b",false);
     	_textures.AddTexture("level1c",false);
     	_textures.AddTexture("level1d",false);
-    	_textures.AddTexture("level1e",false);    	    
-        /*
-    	for(int i = 0; i < vertices.length;i++)
-    	{
-    		vertices[i]=vertices[i]*0.5f;
-    	}
-    	*/
-    	
+    	_textures.AddTexture("level1e",false);    	        	
     	/// alokace bufferu
     	ByteBuffer byteBuf = ByteBuffer.allocateDirect(vertices.length * 4); 
         byteBuf.order(ByteOrder.nativeOrder()); 
@@ -178,40 +171,5 @@ public class ScrollLayer {
 	        gl.glDisableClientState(GL10.GL_TEXTURE_COORD_ARRAY); 
 	        gl.glDisable(GL10.GL_CULL_FACE);
 		}
-		/*
-		for(int i = _begin_index; i < _begin_index+5; i+=1)
-		{
-			gl.glMatrixMode(GL10.GL_MODELVIEW);
-			gl.glLoadIdentity();
-			gl.glPushMatrix();
-			
-	    	ScrollTile t = _tiles_right.get(i);
-	    	int txID = t.Texture();	    
-			gl.glTranslatef(0.5f, _offset+t.Offset, 0f);
-			
-			gl.glMatrixMode(GL10.GL_TEXTURE);
-			gl.glLoadIdentity();
-			gl.glTranslatef(0.0f, 0.0f, 0.0f);	    
-	    	
-	        gl.glBindTexture(GL10.GL_TEXTURE_2D, txID); 
-	
-	        gl.glFrontFace(GL10.GL_CCW); 
-	        gl.glEnable(GL10.GL_CULL_FACE); 
-	        gl.glCullFace(GL10.GL_BACK); 
-	
-	        gl.glEnableClientState(GL10.GL_VERTEX_ARRAY); 
-	        gl.glEnableClientState(GL10.GL_TEXTURE_COORD_ARRAY); 
-	
-	        gl.glVertexPointer(3, GL10.GL_FLOAT, 0, vertexBuffer); 
-	        gl.glTexCoordPointer(2, GL10.GL_FLOAT, 0, textureBuffer); 
-	
-	        gl.glDrawElements(GL10.GL_TRIANGLES, indices.length, 
-	                          GL10.GL_UNSIGNED_BYTE, indexBuffer); 
-	
-	        gl.glDisableClientState(GL10.GL_VERTEX_ARRAY); 
-	        gl.glDisableClientState(GL10.GL_TEXTURE_COORD_ARRAY); 
-	        gl.glDisable(GL10.GL_CULL_FACE);
-		}
-		*/
     }     
 }

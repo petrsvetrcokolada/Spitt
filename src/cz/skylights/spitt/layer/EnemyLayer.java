@@ -5,12 +5,15 @@ import javax.microedition.khronos.opengles.GL10;
 
 
 import cz.skylights.spitt.BitmapTexture;
+import cz.skylights.spitt.Bonus;
 import cz.skylights.spitt.Enemy;
-import cz.skylights.spitt.EnemyComparator;
+import cz.skylights.spitt.GameObjectComparator;
+import cz.skylights.spitt.GameObject;
 import cz.skylights.spitt.OptionsEngine;
 import cz.skylights.spitt.SpatterEngine;
 import cz.skylights.spitt.TextureManager;
 import cz.skylights.spitt.interfaces.ITrajectory;
+import cz.skylights.spitt.trajectory.SinTrajectory;
 import cz.skylights.spitt.trajectory.Trajectory;
 
 import android.content.Context;
@@ -20,8 +23,8 @@ public class EnemyLayer {
      
 	TextureManager _textures = new TextureManager();
 	// pole aktivnich objektu
-	ArrayList<Enemy> _enemies;	
-	ArrayList<Enemy> _allenemies;
+	ArrayList<GameObject> _enemies;	
+	ArrayList<GameObject> _allenemies;
 	
 	BitmapTexture _texture1;
 	BitmapTexture _texture2;	
@@ -29,13 +32,16 @@ public class EnemyLayer {
 	BitmapTexture _texture4;
 	BitmapTexture _texture6;
 	BitmapTexture _texture7;
+	//
+	BitmapTexture _bonus1;
 	
 	Trajectory _trajectory = new Trajectory();
+	SinTrajectory _sintrajectory = new SinTrajectory();
 	
 	public EnemyLayer()
 	{
-		_enemies = new ArrayList<Enemy>();
-		_allenemies = new ArrayList<Enemy>();		
+		_enemies = new ArrayList<GameObject>();
+		_allenemies = new ArrayList<GameObject>();		
 		
 		_texture1 = _textures.AddTexture("enemy1", 2,64,64,true);
 		_texture2 = _textures.AddTexture("enemy2",2,128,128,true);
@@ -43,6 +49,8 @@ public class EnemyLayer {
 		_texture4 = _textures.AddTexture("enemy4",3,256,256,true);
 		_texture6 = _textures.AddTexture("enemy6",1,128,128,true);
 		_texture7 = _textures.AddTexture("enemy7",1,64,64,true);
+		//
+		_bonus1 = _textures.AddTexture("energy",2, 128,128,true);
 	}
 	
 	public void loadTextures(GL10 gl, Context context)
@@ -111,18 +119,33 @@ public class EnemyLayer {
 			_allenemies.add(en);			
 		}
 		
-		Collections.sort(_enemies, new EnemyComparator());
+		
+		for(int c=0; c < 5; c++)
+		{
+			float sx=0.5f, sy;
+			sy = OptionsEngine.startY;
+			Bonus b = new Bonus(sx,sy);
+			b.setTexture(_bonus1);
+			b.AnimationSpeed = 500;			
+			b.StartTime = (c+1)*5000;
+			b.setSizeRatio(0.125f);
+			b.Speed = 0.003f;
+			b.setTrajectory(_sintrajectory);
+			_allenemies.add(b);			
+		}
+		
+		Collections.sort(_allenemies, new GameObjectComparator());
 	}
 	
 
 	private int _lastIndex = 0;
 	public void move()
 	{
-		ArrayList<Enemy> remove = new ArrayList<Enemy>();
+		ArrayList<GameObject> remove = new ArrayList<GameObject>();
 		
 		for(int i = 0; i < _allenemies.size(); i++)
 		{
-			Enemy en = _allenemies.get(i);
+			GameObject en = _allenemies.get(i);
 			if (en.StartTime <= SpatterEngine.GameTime)
 			{
 				en.X = en.startX;
@@ -141,7 +164,7 @@ public class EnemyLayer {
 		
 		for(int c = 0; c< remove.size();c++)
 		{
-		  Enemy en = remove.get(c);
+		  GameObject en = remove.get(c);
 		  _allenemies.remove(en);
 		}
 		
@@ -149,7 +172,7 @@ public class EnemyLayer {
 		// work only with active objects
 		for (int i =_enemies.size()-1; i >=0; i--)
 		{
-			Enemy en = _enemies.get(i);
+			GameObject en = (GameObject)_enemies.get(i);
 			if (en.Y > -en.Height)
 			{
 				en.move();
@@ -159,22 +182,20 @@ public class EnemyLayer {
 				_enemies.remove(i);
 			}
 		}		
-	}
-	
-	
+	}		
 	
 	public void draw(GL10 gl)
 	{
 		// draw only with active object
 		for (int i =0; i < _enemies.size(); i++)
 		{
-			Enemy en = _enemies.get(i);
-			if (en.Y > -en.Height)
+			GameObject en = (GameObject)_enemies.get(i);
+			if (en.Y > - en.Height)
 				en.draw(gl);
 		}
 	}
 	
-	public ArrayList<Enemy> GetActive()
+	public ArrayList<GameObject> GetActive()
 	{
 		return _enemies;	
 	}
@@ -183,10 +204,9 @@ public class EnemyLayer {
 	{
 		for(int i = 0; i < _enemies.size();i++)
 		{
-			Enemy en = _enemies.get(i);
+			GameObject en = (GameObject)_enemies.get(i);
 			if (en.Live <= 0/* && en.Adorner != null && en.Adorner.isAnimate() == false*/)
-			{
-				
+			{				
 			  _enemies.remove(en);
 			}
 		}

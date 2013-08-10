@@ -5,16 +5,17 @@ import java.nio.ByteOrder;
 
 import javax.microedition.khronos.opengles.GL10;
 
-import cz.skylights.geometry.Vertex2D;
 import cz.skylights.spitt.collision.CollisionArray;
 import cz.skylights.spitt.collision.CollisionType;
 import cz.skylights.spitt.collision.ICollision;
+import cz.skylights.spitt.geometry.Vertex2D;
 
 
 public class WeaponFire extends GameObject {
 	private float  _speed;
 	public boolean shotFired=false;
 	public float _ratio;		
+	public GameObject Parent;
 	
 	private float vertices[] = { 
         0.0f, 0.0f, 0.0f, 

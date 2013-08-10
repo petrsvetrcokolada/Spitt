@@ -10,8 +10,8 @@ import java.util.List;
 
 import javax.microedition.khronos.opengles.GL10;
 
-import cz.skylights.geometry.Vertex2D;
 import cz.skylights.spitt.collision.CollisionArray;
+import cz.skylights.spitt.geometry.Vertex2D;
 
 import android.content.Context;
 import android.content.res.Resources;

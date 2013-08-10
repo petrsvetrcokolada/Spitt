@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import javax.microedition.khronos.egl.EGLConfig;
 import javax.microedition.khronos.opengles.GL10;
 
+import cz.skylights.spitt.OptionsEngine.gameState;
 import cz.skylights.spitt.collision.AsyncCollision;
 import cz.skylights.spitt.collision.Collisions;
 import cz.skylights.spitt.layer.BackgroundLayer;
@@ -38,11 +39,11 @@ public class SpatterRenderer implements Renderer {
 	protected ExplosionEmitter _explosions;
 	// Layer - Engine objekty - live prouzek
 	protected Shape _shape;
-	//protected SpriteAnimation _animation = new SpriteAnimation(true);
-	private Sprite[] _sprite;
+	protected Sprite _gameover = new Sprite();
+	private Sprite[] _lives;	
 	
 	private Player _player = null;
-	private int Score = 0;
+	private int Score = 100;
 	//	
 	private long _loopStart=0;
 	private long _loopEnd=0;
@@ -62,6 +63,7 @@ public class SpatterRenderer implements Renderer {
 		_textures.AddTexture("explose", 16,128,128,false);
 		_textures.AddTexture("explose1", 16,128,128,false);
 		_textures.AddTexture("explose2", 16,128,128,false);
+		//_textures.AddTexture("gameover", false);
 		
 		_player = new Player(_textures);
 		SpatterEngine.Player = _player;
@@ -72,21 +74,15 @@ public class SpatterRenderer implements Renderer {
 		_particlesx = new ParticleEmitter(60, new ParticleCreator(_textures));	
 		_text = new GLText();
 		_score = new GLText();
-		/*
-		_shape = new Shape();
-		_shape.X = 1.75f;
-		_shape.Y = 0.5f;
-		_shape.Width = 0.5f;
-		_shape.Height = 0.5f;
-		*/
+
 		_shape = new Shape(0.35f,0.02f);
 		_shape.X = 0.015f;
 		_shape.Y = 0.015f;
 		
-		_sprite = new Sprite[3];
-		_sprite[0] = new Sprite();
-		_sprite[1] = new Sprite();
-		_sprite[2] = new Sprite();		
+		_lives = new Sprite[3];
+		_lives[0] = new Sprite();
+		_lives[1] = new Sprite();
+		_lives[2] = new Sprite();		
 		collision_th.execute();
 	}	
 	
@@ -122,53 +118,78 @@ public class SpatterRenderer implements Renderer {
 		_scroll.scrollBackground(gl);
 		gl.glEnable(GL10.GL_BLEND);
 		gl.glBlendFunc(GL10.GL_ONE, GL10.GL_ONE);
-		// missing BackgroundObject - moving objects
-		///
-		// PARTICLE
-		_particles.move();
-		_particles.draw(gl);		
-		_particlesx.move();		
-		_particlesx.draw(gl);			
 		
-		//gl.glBlendFunc( GL10.GL_SRC_ALPHA, GL10.GL_ONE_MINUS_SRC_ALPHA );						 
-		// ENEMY LAYER
-		gl.glBlendFunc( GL10.GL_SRC_ALPHA, GL10.GL_ONE_MINUS_SRC_ALPHA );
-		_enemyLayer.updateEnemies();
-		_enemyLayer.move();
-		_enemyLayer.draw(gl);
-		// ANIMATION - vzbuch apod
-		gl.glEnable(GL10.GL_BLEND);
-		gl.glBlendFunc(GL10.GL_ONE, GL10.GL_ONE); 
-		//_animation.animation();
-		//_animation.draw(gl);
-		// explosions
-		_explosions.animation();
-		_explosions.draw(gl);
-		// PLAYER		
-		_player.movePlayer(gl);
-		//
-		_text.draw(gl);
-		_score.draw(gl);
-		if (SpatterEngine.lives >=1 )
-		  _sprite[0].draw(gl);
-		if (SpatterEngine.lives >=1) 
-			_sprite[1].draw(gl);
-		if (SpatterEngine.lives >=1 )
-			_sprite[2].draw(gl);
-		
-		// FOREGROUND LAYER
-		float live_sh = 0.35f * (float)_player.Live/(float)100;		
-		_shape.updateShape(live_sh, 0.02f);
-		_shape.draw(gl); // live rectangle			
-		gl.glDisable(GL10.GL_BLEND);
-		gl.glShadeModel(GL10.GL_SMOOTH);	
-				
-		/// COLLISION
-		CheckCollision();
-		
+		if (SpatterEngine.game_state == gameState.game)
+		{		
+			// missing BackgroundObject - moving objects
+			///
+			// PARTICLE
+			_particles.move();
+			_particles.draw(gl);		
+			_particlesx.move();		
+			_particlesx.draw(gl);			
+			
+			//gl.glBlendFunc( GL10.GL_SRC_ALPHA, GL10.GL_ONE_MINUS_SRC_ALPHA );						 
+			// ENEMY LAYER
+			gl.glBlendFunc( GL10.GL_SRC_ALPHA, GL10.GL_ONE_MINUS_SRC_ALPHA );
+			_enemyLayer.updateEnemies();
+			_enemyLayer.move();
+			_enemyLayer.draw(gl);
+			// ANIMATION - vzbuch apod
+			gl.glEnable(GL10.GL_BLEND);
+			gl.glBlendFunc(GL10.GL_ONE, GL10.GL_ONE); 
+			// explosions
+			_explosions.animation();
+			_explosions.draw(gl);
+			// PLAYER		
+			if (_player.Live <= 0)
+			{
+				if (_player.TotalLives > 1)
+				{
+					_player.TotalLives--;
+					_player.Live=100;
+				}
+				else
+				{
+					_player.TotalLives--;
+					SpatterEngine.game_state = OptionsEngine.gameState.gameOver;
+				}
+			}
+			_player.movePlayer(gl);
+			//
+			_text.draw(gl);
+			if (Score != _player.Score)
+			{
+				Score = _player.Score;
+				_score.BuildCharacters("Score:"+String.valueOf(Score), 0.9f*16, 0.95f);			
+			}
+			_score.draw(gl);
+			if (_player.TotalLives >=1 )
+			  _lives[0].draw(gl);
+			if (_player.TotalLives >=2) 
+				_lives[1].draw(gl);
+			if (_player.TotalLives >=3)
+				_lives[2].draw(gl);
+			
+			// FOREGROUND LAYER
+			float live_sh = 0.35f * (float)_player.Live/(float)100;		
+			_shape.updateShape(live_sh, 0.02f);
+			_shape.draw(gl); // live rectangle			
+			gl.glDisable(GL10.GL_BLEND);
+			gl.glShadeModel(GL10.GL_SMOOTH);	
+					
+			/// COLLISION
+			CheckCollision();
+		}
+		else if (SpatterEngine.game_state == gameState.gameOver)
+		{
+			// game over		
+			//_gameover.animation();
+			_gameover.draw(gl);
+		}
 		///
 		_loopEnd = System.currentTimeMillis();
-		_loopRunTime = (_loopEnd-_loopStart);
+		_loopRunTime = (_loopEnd-_loopStart);		
 	}
 	//
 	public void onSurfaceChanged(GL10 gl, int width, int height) {
@@ -178,15 +199,14 @@ public class SpatterRenderer implements Renderer {
 		gl.glMatrixMode(GL10.GL_PROJECTION);
 		gl.glLoadIdentity();
 		gl.glOrthof(0f, 1f, 0f, SpatterEngine.screen_ratio, -1f, 1f);
-					
+		///			
 		loadLevel(gl);
 	}
 	//
 	public void onSurfaceCreated(GL10 gl, EGLConfig config) 
 	{
 		int[] max = new int[1];
-		gl.glGetIntegerv(GL10.GL_MAX_TEXTURE_SIZE, max, 0); 
-		
+		gl.glGetIntegerv(GL10.GL_MAX_TEXTURE_SIZE, max, 0); 		
 		///
 		gl.glEnable(GL10.GL_TEXTURE_2D);
 		gl.glClearDepthf(1.0f);
@@ -208,8 +228,7 @@ public class SpatterRenderer implements Renderer {
 		_score.loadTexture(gl, SpatterEngine.text_characters, SpatterEngine.context);
 		_score.BuildCharacters("Score:"+String.valueOf(Score), 0.9f*16, 0.95f);
 		_textures.buildTextures(gl, SpatterEngine.context);
-		
-		
+				
 		_scroll.buildLayer();
 		// vrstva nepratel
 		_enemyLayer.loadTextures(gl,SpatterEngine.context);
@@ -220,35 +239,37 @@ public class SpatterRenderer implements Renderer {
 		collision_th.setExplosions(_explosions);
 		collision_th.setEnemies(_enemyLayer.GetActive());
 		
-		// nastaveni parametru animace
-		/*
-		_animation.setTexture(_textures.GetTexture(SpatterEngine.explose_animation));
-		_animation.setSizeRatio(0.25f);
-		_animation.setFramesParameter(16, _textures.GetBitmap(SpatterEngine.explose_animation).getWidth(),128, 128);
-		_animation.X = 0.4f;
-		_animation.Y = 0.4f;
-		_animation.setFrame(0);*/
+		// nastaveni parametru animace		
+		_gameover.loadTexture(gl, R.drawable.gameover, SpatterEngine.context);
+		_gameover.setScale(1.0f, 1.0f);
+		//_gameover.setFramesParameter(1, _textures.GetBitmap(R.drawable.gameover).getWidth(),256, 256);
+		_gameover.X = 0.0f;
+		_gameover.Y = 0.15f;
+		//_gameover.setFrame(0);
+		
 		_particles.createParticles();
 		_particlesx.createParticles();
-		_sprite[0].loadTexture(gl,SpatterEngine.sprite_live, SpatterEngine.context);
-		_sprite[1].loadTexture(gl,SpatterEngine.sprite_live, SpatterEngine.context);
-		_sprite[2].loadTexture(gl,SpatterEngine.sprite_live, SpatterEngine.context);
-		_sprite[0].X = 0.15f;
-		_sprite[0].Y = 0.96f;
-		_sprite[0].setScale(0.05f,  0.05f);
-		_sprite[1].X = 0.20f;
-		_sprite[1].Y = 0.96f;
-		_sprite[1].setScale(0.05f,  0.05f);
-		_sprite[2].X = 0.25f;
-		_sprite[2].Y = 0.96f;
-		_sprite[2].setScale(0.05f,  0.05f);	
+		_lives[0].loadTexture(gl,SpatterEngine.sprite_live, SpatterEngine.context);
+		_lives[1].loadTexture(gl,SpatterEngine.sprite_live, SpatterEngine.context);
+		_lives[2].loadTexture(gl,SpatterEngine.sprite_live, SpatterEngine.context);
+		_lives[0].X = 0.15f;
+		_lives[0].Y = 0.96f;
+		_lives[0].setScale(0.05f,  0.05f);
+		_lives[1].X = 0.20f;
+		_lives[1].Y = 0.96f;
+		_lives[1].setScale(0.05f,  0.05f);
+		_lives[2].X = 0.25f;
+		_lives[2].Y = 0.96f;
+		_lives[2].setScale(0.05f,  0.05f);	
+		///
+		SpatterEngine.game_state = gameState.game;
 	}
 	
 	private void CheckCollision()
 	{
 		// collision enemies with weapon
 		ArrayList<WeaponFire> fire = _player.GetFiredWeapon(); // 
-		ArrayList<Enemy> enemies = _enemyLayer.GetActive();
+		ArrayList<GameObject> enemies = _enemyLayer.GetActive();
 		CheckWeapon(fire, enemies);
 		// collision enemies width player
 		CheckEnemy(enemies);
@@ -256,12 +277,12 @@ public class SpatterRenderer implements Renderer {
 	}
 	
 	// check collision enemies and weapon
-	private void CheckWeapon(ArrayList<WeaponFire> fire, ArrayList<Enemy> enemies)
+	private void CheckWeapon(ArrayList<WeaponFire> fire, ArrayList<GameObject> enemies)
 	{
 		for(int i =0; i < enemies.size(); i++)
 		{
 			//
-			Enemy en = enemies.get(i);
+			GameObject en = (GameObject)enemies.get(i);
 			if (en.Live <= 0)
 			{
 				continue;
@@ -272,10 +293,20 @@ public class SpatterRenderer implements Renderer {
 			  WeaponFire wf = fire.get(f);
 			  if (wf.shotFired == false)
 				  continue;
-		
-			  //col.execute(wf, en);			  
-			  if (Collisions.CheckCollision(wf,true, en,false)==true)
-			  //if (wf.CheckCollision(en)==true)
+			  
+			  try
+			  {
+					if (Collisions.CheckCollisionRect(en, wf)==true)
+					{
+						collision_th.Add(en, wf);	
+					}
+			  }
+			  catch(Exception e)
+			  {
+				  
+			  }
+			  /*	 			  
+			  if (Collisions.CheckCollision(wf,true, en,false)==true)		
 			  {
 				  wf.shotFired = false;
 				  en.Live-=wf.Strength;
@@ -287,37 +318,26 @@ public class SpatterRenderer implements Renderer {
 					  en.Adorner = _explosions.setExplosion(en);
 				  }
 			  }
+			  */
 			}
 		}
 	}
 	
-	
-	private void CheckEnemy(ArrayList<Enemy> enemies)
+	private void CheckEnemy(ArrayList<GameObject> enemies)
 	{
 		for(int i =0; i < enemies.size(); i++)
 		{
 			//
-			Enemy en = enemies.get(i);
+			GameObject en = (GameObject)enemies.get(i);
 			try
 			{
-								
+				
+				// kolize enemy - player se dela pres vlakno
 				GameObject[] list = new GameObject[2];
 				if (Collisions.CheckCollisionRect(en, _player)==true)
 				{
 					collision_th.Add(en, _player);
 				}
-				/*
-				if (Collisions.CheckCollision(en,false, _player, true) == true)
-				{					 
-					enemies.remove(en);
-					_explosions.setExplosion(en);
-					_player.Live -= en.Strength;
-					if (_player.Live <= 0)
-					{
-						SpatterEngine.game_state = OptionsEngine.gameState.gameOver;
-						_explosions.setExplosion(_player);						
-					}
-				}*/
 			}
 			catch(Exception e)
 			{
